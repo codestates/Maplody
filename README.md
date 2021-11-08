@@ -1,1 +1,2 @@
 # Maplody
+STACK:
