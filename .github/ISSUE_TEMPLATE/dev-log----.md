@@ -1,7 +1,7 @@
 ---
 name: DEV-LOG 템플릿
 about: DEV-LOG 작성을 위한 템플릿
-title: ''
+title: "[Dev-Log]"
 labels: dev-log
 assignees: ''
 

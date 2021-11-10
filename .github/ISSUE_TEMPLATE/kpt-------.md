@@ -1,8 +1,8 @@
 ---
 name: KPT 회고 템플릿
 about: 회고 작성을 위한 템플릿
-title: ''
-labels: retrospect
+title: "[KPT]"
+labels: ''
 assignees: ''
 
 ---

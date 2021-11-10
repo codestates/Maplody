@@ -1,7 +1,7 @@
 ---
 name: ERROR Handling 템플릿
 about: 에러 해결을 위해 작성해보는 템플릿
-title: ''
+title: "[Error]"
 labels: ''
 assignees: ''
 
