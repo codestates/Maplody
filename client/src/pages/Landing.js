@@ -2,14 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import Footer from '../components/Footer';
 
 const LandingContainer = styled.div`
   margin: 40px;
   width: 100vw;
   height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('');
 `;
 
 const AboutContainer = styled.div`
@@ -17,12 +15,6 @@ const AboutContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 620px;
-`;
-
-const MapContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
 `;
 
 const Logo = styled.img`
@@ -35,24 +27,22 @@ const About = styled.div`
   border: none;
   border-radius: 15px;
   box-shadow: 2px 2px 4px 4px gray;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
   background-color: white;
 `;
 
+const MapContainer = styled.div``;
+
 const LandingMap = styled.img`
-  position: fixed;
+  position: absolute;
   z-index: -1;
-  top: 0;
-  left: 0;
+  top: 25%;
+  left: 50%;
   bottom: 0;
   right: 0;
   display: grid;
   place-items: center;
   opacity: 80%;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  max-width: 100%;
 `;
 
 const Landing = () => {
@@ -76,8 +66,9 @@ const Landing = () => {
         <Button text="시작하기" />
       </AboutContainer>
       <MapContainer>
-        <LandingMap src={require('../img/잘라낸 서울지도.png').default} />
+        <LandingMap src={require('../img/서울.jpeg').default} />
       </MapContainer>
+      <Footer />
     </LandingContainer>
   );
 };
