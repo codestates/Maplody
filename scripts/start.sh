@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/ubuntu/im-sprint-practice-deploy/server
-authbind --deep pm2 start app.js
+cd /home/ubuntu/Maplody/server
+authbind --deep pm2 start index.js
