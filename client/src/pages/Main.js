@@ -1,19 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Maindiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  width: 70%;
-  height: 92%;
+import SearchInput from '../components/SearchInput';
+
+const MainContainer = styled.div`
+  margin: 30px;
+`;
+
+const Logo = styled.img`
+  position: fixed;
+  height: 120px;
+  top: 85%;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 
 const Main = () => {
-  return <Maindiv>나는야 메인페이지</Maindiv>;
+  return (
+    <MainContainer>
+      <SearchInput />
+      <Logo src={require('../img/Maplody_Logo.png').default} />
+    </MainContainer>
+  );
 };
 export default Main;
