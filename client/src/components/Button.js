@@ -11,7 +11,6 @@ const StratButton = styled.button`
   text-align-last: center;
   min-width: 200px;
   transition: 300ms ease all;
-  padding: 10px;
   font-size: 25px;
 
   &:hover {

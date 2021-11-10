@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import Button from '../components/Button';
 import Footer from '../components/Footer';
@@ -46,6 +47,13 @@ const LandingMap = styled.img`
 `;
 
 const Landing = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModalHandler = () => {
+    setIsOpen(!isOpen);
+    console.log(isOpen);
+  };
+
   return (
     <LandingContainer>
       <AboutContainer>

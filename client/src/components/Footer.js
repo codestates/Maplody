@@ -9,6 +9,10 @@ const FooterContainer = styled.div`
   left: 0;
   bottom: 10px;
   right: 30px;
+
+  @media only screen and (max-width: 923px) {
+    display: none;
+  }
 `;
 
 const Footer = () => {
