@@ -14,6 +14,5 @@ assignees: ''
 -
 -
 # Try (Action Items)
-- [ ] 
-- [ ]
-- [ ]
+- [ ] 예시
+- [ ] 예시2
