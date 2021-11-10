@@ -1,22 +1,23 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+
+import Main from './pages/Main';
+import Loading from './pages/Loading';
+import Landing from './pages/Landing';
+//다하고 지우기!
+import LoginModal from './components/LoginModal';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-       
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<Landing />} />
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/login" element={<LoginModal />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
