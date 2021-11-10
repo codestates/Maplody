@@ -24,14 +24,14 @@ const LoginModalWindow = styled.div`
   border-radius: 15px;
   background-color: white;
   width: 388px;
-  height: 600px;
+  height: 500px;
 `;
 const CloseBtn = styled.a`
   border-radius: 50px;
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #ffad4f;
+  color: black;
 `
 export const IdPasswordContainer = styled.div`
   margin-left: 10px;
@@ -43,12 +43,12 @@ const Title = styled.div`
   text-align: center;
   margin: 0 0 15px 0;
 `;
-const Id_text = styled.div`
+const IdText = styled.div`
   font-size: 25px;
   color: black;
   padding: 10px 0 2px;
 `;
-export const Id_Input = styled.input.attrs({ type: 'text' })`
+export const IdInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
   height: 2.1em;
@@ -62,12 +62,12 @@ export const Id_Input = styled.input.attrs({ type: 'text' })`
     border: hidden;
   }
 `;
-export const Pw_text = styled.div`
+export const PwText = styled.div`
   font-size: 25px;
   color: black;
   padding: 10px 0 2px;
 `;
-export const Pw_Input = styled.input.attrs({ type: 'password' })`
+export const PwInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
   width: 250px;
   height: 2.2em;
@@ -91,7 +91,11 @@ const LoginBtn = styled.div`
   margin-top: 70px;
   margin-left: 25px;
   text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
 `;
+
 const GoogleBtn = styled.div`
   font-size: 20px;
   border: 1px solid black;
@@ -102,6 +106,9 @@ const GoogleBtn = styled.div`
   margin-top: 25px;
   margin-left: 25px;
   text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
 `;
 const SignupBtn = styled.div`
   font-size: 20px;
@@ -113,19 +120,17 @@ const SignupBtn = styled.div`
   margin-top: 25px;
   margin-left: 25px;
   text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
 `;
 
-const LoginModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+
+const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginBtnHandler = () => {
-    setIsOpen(true);
-  };
-  const openModalHandler = () => {
-    setIsOpen(false);
-  };
+  
   const handleChange = (e) => {
     if (e.target.type === 'text') {
       setUserId(e.target.value);
@@ -137,26 +142,27 @@ const LoginModal = () => {
   
 
   return (
+    
     <LoginModalContainer>
      <LoginModalBackdrop onClick={openModalHandler}>
       <LoginModalWindow onClick={(e) => e.stopPropagation()}>
         <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
         <IdPasswordContainer>
               <Title>Login</Title>
-              <Id_text>아이디
-                <Id_Input onChange={handleChange} />
-              </Id_text>
-              <Pw_text>비밀번호
-                <Pw_Input onChange={handleChange} />
-              </Pw_text>
-              
-              <LoginBtn onClick={() => loginBtnHandler()}>로그인</LoginBtn>
-              <GoogleBtn onClick={() => loginBtnHandler()}>Google로 로그인</GoogleBtn>
-              <SignupBtn onClick={() => loginBtnHandler()}> 회원가입</SignupBtn>
+              <IdText>아이디
+                <IdInput onChange={handleChange} />
+              </IdText>
+              <PwText>비밀번호
+                <PwInput onChange={handleChange} />
+              </PwText>
+              <LoginBtn>로그인</LoginBtn>
+              <GoogleBtn>Google로 로그인</GoogleBtn>
+              <SignupBtn> 회원가입</SignupBtn>
             </IdPasswordContainer>
       </LoginModalWindow>
      </LoginModalBackdrop>
     </LoginModalContainer>
+
   );
 };
 
