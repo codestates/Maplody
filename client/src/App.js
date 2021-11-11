@@ -24,10 +24,6 @@ function App() {
           path="/main" 
           element={<Main />} 
           />
-          <Route 
-          path="/login" 
-          element={<LoginModal />} 
-          />
         </Routes>
       </BrowserRouter>
     </div>
