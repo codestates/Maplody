@@ -11,6 +11,13 @@ const SearchInputContainer = styled.span`
   border-radius: 15px;
   padding-left: 15px;
   padding-bottom: 5px;
+  z-index: 998;
+  background-color: white;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  bottom: 0;
+  right: 0;
 `;
 
 const SearchIcon = styled.i`
