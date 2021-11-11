@@ -6,9 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines" : {
+  "engines": {
     "node": "^v16.13.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sequelize-cli": "^6.3.0"
+  },
+  "dependencies": {
+    "mysql2": "^2.3.3-rc.0",
+    "sequelize": "^6.9.0"
+  }
 }
