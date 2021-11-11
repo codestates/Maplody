@@ -15,6 +15,8 @@ app.use(
 app.get('/', (req, res) => {
   res.status(201).send('Hello World');
 });
+server.keepAliveTimeout = 65000;
+server.headersTimeout = 66000;
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
