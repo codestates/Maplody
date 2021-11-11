@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'NanumSquare';
-  src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css') format('woff');
+  font-family: 'NanumBarunpen';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -13,5 +13,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'NanumSquare';
+  font-family: 'NanumBarunpen';
+  font-weight: bolder;
 }
