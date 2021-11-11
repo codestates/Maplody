@@ -12,11 +12,17 @@ app.use(
     credentials: true,
   }),
 );
+
 app.get('/', (req, res) => {
-  res.status(201).send('Hello World');
+  // 데이터베이스 연결 여부 조회
+  db.query('use maplody', (err) => {
+    if (err) {
+      return res.status(200).send('database connection failed!');
+    }
+    // res.status(201).send('Hello World');
+    return res.status(200).send('database connection succeed!');
+  });
 });
-server.keepAliveTimeout = 65000;
-server.headersTimeout = 66000;
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
