@@ -1,8 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 
 import Button from '../components/Button';
+import LoginModal from '../components/LoginModal'
 import Footer from '../components/Footer';
 
 const LandingContainer = styled.div`
@@ -47,13 +49,10 @@ const LandingMap = styled.img`
 `;
 
 const Landing = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [loginOpen, setLoginOpen] = useState(false);
   const openModalHandler = () => {
-    setIsOpen(!isOpen);
-    console.log(isOpen);
+    setLoginOpen(!loginOpen);
   };
-
   return (
     <LandingContainer>
       <AboutContainer>
@@ -71,7 +70,8 @@ const Landing = () => {
           당신을 다시 그곳으로 돌려 놓을
           <p>"Maplody 하세요"</p>
         </About>
-        <Button text="시작하기" />
+        <Button text="시작하기" onClick={openModalHandler}/>
+        {loginOpen ? (<LoginModal  openModalHandler={openModalHandler}/>) : null}
       </AboutContainer>
       <MapContainer>
         <LandingMap src={require('../img/서울.jpeg').default} />
