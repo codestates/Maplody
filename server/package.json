@@ -10,6 +10,9 @@
     "node": "^v16.13.0"
   },
   "dependencies": {
+  "mysql2": "^2.3.3-rc.0",
+    "sequelize": "^6.9.0",
+  "sequelize-cli": "^6.3.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
