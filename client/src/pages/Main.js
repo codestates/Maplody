@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import SearchInput from '../components/SearchInput';
+import MypageSidebar from '../components/MypageSidebar';
 
 const MainContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin: 30px;
 `;
 
@@ -21,7 +24,10 @@ const Main = () => {
     <MainContainer>
       <SearchInput />
       <Logo src={require('../img/Maplody_Logo.png').default} />
+      <MypageSidebar />
     </MainContainer>
   );
 };
 export default Main;
+
+// {sidebarOpen ? <MypageSidebar /> : null}

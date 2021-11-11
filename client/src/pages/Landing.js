@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import Button from '../components/Button';
 import LoginModal from '../components/LoginModal'
@@ -51,7 +52,6 @@ const Landing = () => {
   const [loginOpen, setLoginOpen] = useState(false);
   const openModalHandler = () => {
     setLoginOpen(!loginOpen);
-    console.log(loginOpen)
   };
   return (
     <LandingContainer>
