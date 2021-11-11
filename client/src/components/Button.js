@@ -37,8 +37,8 @@ const StratButton = styled.button`
   }
 `;
 
-const Button = ({ text }) => {
-  return <StratButton>{text}</StratButton>;
+const Button = ({ text, onClick }) => {
+  return <StratButton onClick={onClick}>{text}</StratButton>;
 };
 
 export default Button;

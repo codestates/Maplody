@@ -3,12 +3,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const LoginModalContainer = styled.div`
-  margin: 40px;
-  width: 500px;
-  height: 500px;
-  border: solid 3px red;
+  height: 13.5rem;
 `;
-
 const LoginModalBackdrop = styled.div`
   position: fixed;
   z-index: 999;
@@ -20,8 +16,7 @@ const LoginModalBackdrop = styled.div`
   display: grid;
   place-items: center;
 `;
-
-const LoginModalView = styled.div`
+const LoginModalWindow = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -29,54 +24,113 @@ const LoginModalView = styled.div`
   border-radius: 15px;
   background-color: white;
   width: 388px;
-  height: 435px;
+  height: 500px;
 `;
-
-const CloseBtn = styled.div`
+const CloseBtn = styled.a`
+  border-radius: 50px;
+  border: none;
   font-size: 28px;
-  color: black;
   cursor: pointer;
-`;
-
-const ModalInsideContainer = styled.div`
+  color: black;
+`
+export const IdPasswordContainer = styled.div`
   margin-left: 10px;
 `;
-
 const Title = styled.div`
-  margin: 40px;
+  font-size: 40px;
+  color: black;
+  width: 365px;
+  text-align: center;
+  margin: 0 0 15px 0;
 `;
-
-const Id_text = styled.div`
-  margin: 40px;
+const IdText = styled.div`
+  font-size: 25px;
+  color: black;
+  padding: 10px 0 2px;
 `;
+export const IdInput = styled.input.attrs({ type: 'text' })`
+  font-size: 17px;
+  width: 250px;
+  height: 2.1em;
+  outline: none;
+  cursor: pointer;
+  border: solid 1px black;
+  margin-left: 42px;
 
-const Id_Input = styled.div`
-  margin: 40px;
+  &:focus {
+    outline: 1px solid #FF0066;
+    border: hidden;
+  }
 `;
-
-const Pw_text = styled.div`
-  margin: 40px;
+export const PwText = styled.div`
+  font-size: 25px;
+  color: black;
+  padding: 10px 0 2px;
 `;
+export const PwInput = styled.input.attrs({ type: 'password' })`
+  font-size: 17px;
+  width: 250px;
+  height: 2.2em;
+  outline: none;
+  border: solid 1px black;
+  cursor: pointer;
+  margin-left: 20px;
 
-const Pw_Input = styled.div`
-  margin: 40px;
+  &:focus {
+    outline: 1px solid #FF0066;
+    border: hidden;
+  }
 `;
-
 const LoginBtn = styled.div`
-  margin: 40px;
+  font-size: 20px;
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
+  color: black;
+  cursor: pointer;
+  margin-top: 70px;
+  margin-left: 25px;
+  text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
 `;
 
-const LoginModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const GoogleBtn = styled.div`
+  font-size: 20px;
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
+  color: black;
+  cursor: pointer;
+  margin-top: 25px;
+  margin-left: 25px;
+  text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
+`;
+const SignupBtn = styled.div`
+  font-size: 20px;
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
+  color: black;
+  cursor: pointer;
+  margin-top: 25px;
+  margin-left: 25px;
+  text-align: center;
+  &:hover {
+    box-shadow: gray 3px 3px 3px;
+  }
+`;
+
+
+const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginBtnHandler = () => {
-    setIsOpen(true);
-  };
-  const openModalHandler = () => {
-    setIsOpen(false);
-  };
+  
   const handleChange = (e) => {
     if (e.target.type === 'text') {
       setUserId(e.target.value);
@@ -85,25 +139,30 @@ const LoginModal = () => {
       setPassword(e.target.value);
     }
   };
+  
 
   return (
+    
     <LoginModalContainer>
-      {isOpen === true ? (
-        <LoginModalBackdrop onClick={openModalHandler}>
-          <LoginModalView onClick={(e) => e.stopPropagation()}>
-            <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
-            <ModalInsideContainer>
+     <LoginModalBackdrop onClick={openModalHandler}>
+      <LoginModalWindow onClick={(e) => e.stopPropagation()}>
+        <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
+        <IdPasswordContainer>
               <Title>Login</Title>
-              <Id_text>아이디</Id_text>
-              <Id_Input onChange={handleChange} />
-              <Pw_text>비밀번호</Pw_text>
-              <Pw_Input onChange={handleChange} />
-              <LoginBtn onClick={() => loginBtnHandler()}>Login</LoginBtn>
-            </ModalInsideContainer>
-          </LoginModalView>
-        </LoginModalBackdrop>
-      ) : null}
+              <IdText>아이디
+                <IdInput onChange={handleChange} />
+              </IdText>
+              <PwText>비밀번호
+                <PwInput onChange={handleChange} />
+              </PwText>
+              <LoginBtn>로그인</LoginBtn>
+              <GoogleBtn>Google로 로그인</GoogleBtn>
+              <SignupBtn> 회원가입</SignupBtn>
+            </IdPasswordContainer>
+      </LoginModalWindow>
+     </LoginModalBackdrop>
     </LoginModalContainer>
+
   );
 };
 
