@@ -16,10 +16,17 @@ const MenuContainer = styled.div``;
 const MyProfile = styled.img`
   width: 90px;
   height: 90px;
+  border: 3px solid;
   border-radius: 70%;
   overflow: hidden;
   cursor: pointer;
   transition: 300ms ease all;
+  z-index: 997;
+  position: fixed;
+  top: 35px;
+  left: auto;
+  bottom: 0;
+  right: 50px;
 
   &:hover {
     opacity: 80%;
@@ -46,6 +53,7 @@ const ModalBackdrop = styled.div`
 const SidebarContainer = styled.div`
   display: flex;
   justify-content: center;
+  border-radius: 20px 0 0 20px;
   height: 100%;
   width: 380px;
   margin-right: 0;
@@ -61,10 +69,14 @@ const UserInfo = styled.div`
   height: fit-content;
   margin: 15px;
   padding: 10px;
+  border-radius: 15px;
+  box-shadow: 4px 4px 4px gray;
 `;
 
 const AboutUser = styled.div`
   text-align: end;
+  font-size: 23px;
+  padding-left: 25px;
 `;
 
 const UserNickName = styled.div`
@@ -73,7 +85,7 @@ const UserNickName = styled.div`
 `;
 
 const UserId = styled.div`
-  opacity: 70%;
+  opacity: 60%;
   margin-bottom: 3px;
 `;
 
