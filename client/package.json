@@ -6,9 +6,13 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "dotenv": "^10.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-maps": "^9.4.5",
+    "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.3.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -17,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "engines" : {
+  "engines": {
     "node": "^v16.13.0"
   },
   "eslintConfig": {
