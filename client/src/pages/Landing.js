@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import LoginModal from '../components/LoginModal';
 import Footer from '../components/Footer';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const LandingContainer = styled.div`
   margin: 40px;
@@ -52,6 +55,15 @@ const Landing = () => {
   const openModalHandler = () => {
     setLoginOpen(!loginOpen);
   };
+
+  axios
+    .post('https://localhost:4000/', { userId: 'myid' }, { headers: { 'Content-Type': 'application/json' } })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   return (
     <LandingContainer>
       <AboutContainer>
