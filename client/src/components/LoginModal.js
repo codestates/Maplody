@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import SignupModal from './SignupModal';
 
 const LoginModalContainer = styled.div`
   height: 13.5rem;
@@ -127,6 +128,10 @@ const SignupBtn = styled.div`
 
 
 const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
+  const [signupOpen, setSignupOpen] = useState(false)
+  const openSignupHandler = () => {
+    setSignupOpen(!signupOpen)
+  }
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -157,7 +162,8 @@ const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
               </PwText>
               <LoginBtn>로그인</LoginBtn>
               <GoogleBtn>Google로 로그인</GoogleBtn>
-              <SignupBtn> 회원가입</SignupBtn>
+              <SignupBtn onClick={openSignupHandler}> 회원가입</SignupBtn>
+              {signupOpen ? <SignupModal openSignupHandler={openSignupHandler} /> : null}
             </IdPasswordContainer>
       </LoginModalWindow>
      </LoginModalBackdrop>
