@@ -14,8 +14,8 @@ const SearchInputContainer = styled.span`
   z-index: 998;
   background-color: white;
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 60px;
+  left: 35px;
   bottom: 0;
   right: 0;
 `;

@@ -70,7 +70,7 @@ const UserInfo = styled.div`
   margin: 15px;
   padding: 10px;
   border-radius: 15px;
-  box-shadow: 4px 4px 4px gray;
+  box-shadow: 4px 4px 4px 4px gray;
 `;
 
 const AboutUser = styled.div`
@@ -117,7 +117,7 @@ const MypageSidebar = () => {
         <ModalBackdrop onClick={openModalHandler}>
           <SidebarContainer onClick={(e) => e.stopPropagation()}>
             <UserInfo>
-              <MyProfile src={require('../img/빡빡이아죠시.jpg').default} />
+              <MyProfile onClick={openModalHandler} src={require('../img/빡빡이아죠시.jpg').default} />
               <AboutUser>
                 <UserNickName>갬성폭팔님</UserNickName>
                 <UserId>hhhghg100</UserId>
