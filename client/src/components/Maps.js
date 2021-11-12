@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import MapDummydata from "../static/MapDummydata"
@@ -6,12 +7,13 @@ import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
   display: inline;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -100;
 `;
 
 const Map = () => {
+
   const [ target, setTarget ] = useState({ lat: null, lng: null });
   const [ selected, setSelected ] = useState(null)
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
@@ -28,7 +30,6 @@ const Map = () => {
       defaultCenter={{ lat: 37.51249519205713, lng: 126.99480974427608 }}
       options={{ disableDefaultUI: true }}
       onClick={addMarkerHandler}>
-       
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow>
@@ -49,8 +50,7 @@ const Map = () => {
           onClick={() => {
           setSelected(el)
           }}
-          icon={{url: require('../img/music-notes.png').default}} 
-        >
+          icon={{url: require('../img/music-notes.png').default}}>
           
      {selected && selected.id === el.id && (
         <InfoWindow
@@ -65,6 +65,7 @@ const Map = () => {
       )}  
         </Marker>
       ))}
+
     </GoogleMap>
   );
 };
