@@ -19,8 +19,6 @@ app.use(
     origin: [
       'https://localhost:3000',
       'http://localhost:3000',
-      'http://maplody.site',
-      'http://www.maplody.site',
       'https://www.maplody.site',
       'https://maplody.site',
       `${process.env.S3_ENDPOINT}`,
