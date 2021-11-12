@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       song_image: DataTypes.STRING,
       song_location: DataTypes.STRING,
       content: DataTypes.STRING,
-      //콘텐츠 는 스트링 안됨 다른방식을 알아보자
     },
     {
       sequelize,
