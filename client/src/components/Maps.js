@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { GoogleMap, withScriptjs, withGoogleMap, Marker } from 'react-google-maps';
+import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
   display: inline;
@@ -11,10 +12,14 @@ const MapContainer = styled.div`
 
 const Map = () => {
   const [target, setTarget] = useState({ lat: null, lng: null });
+  const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
 
   const addMarkerHandler = (e) => {
     setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-    console.log({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+  };
+
+  const openNewPostModalHandler = () => {
+    setIsOpenNewPostModal(!isOpenNewPostModal);
   };
 
   return (
@@ -23,7 +28,14 @@ const Map = () => {
       defaultCenter={{ lat: 37.51249519205713, lng: 126.99480974427608 }}
       options={{ disableDefaultUI: true }}
       onClick={addMarkerHandler}>
-      <Marker position={target} />;{/* 마커를 찍으면 저장하고 그 이후 그 갯수마다 다 불러온다. */}
+      <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
+        {isOpenNewPostModal ? (
+          <InfoWindow>
+            <NewPostModal />
+          </InfoWindow>
+        ) : null}
+      </Marker>
+      ;
     </GoogleMap>
   );
 };
