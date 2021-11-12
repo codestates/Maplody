@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import LoginModal from '../components/LoginModal';
 import Footer from '../components/Footer';
 import axios from 'axios';
+require('dotenv').config();
 
 axios.defaults.withCredentials = true;
 
@@ -57,7 +58,7 @@ const Landing = () => {
   };
 
   axios
-    .post('https://localhost:4000/', { userId: 'myid' }, { headers: { 'Content-Type': 'application/json' } })
+    .post(`${process.env.REACT_APP_API_URL}`, { userId: 'myid' }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
       console.log(res.data);
     })
