@@ -2,6 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import Post from './Post';
+import Button from './Button';
+
 const slideIn = keyframes`
     from {
       right: -380px;
@@ -52,10 +55,11 @@ const ModalBackdrop = styled.div`
 
 const SidebarContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   border-radius: 20px 0 0 20px;
   height: 100%;
-  width: 380px;
+  width: 385px;
   margin-right: 0;
   margin-left: auto;
   background-color: white;
@@ -103,6 +107,60 @@ const UserPostCount = styled.div``;
 
 const UserCreatedAt = styled.div``;
 
+const CreatedPostContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 650px;
+  width: 340px;
+  padding: 15px;
+  box-shadow: 4px 4px 4px 4px gray;
+  border-radius: 15px;
+`;
+
+const UserInfoButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 335px;
+  margin-top: 15px;
+`;
+
+const UserInfoButton = styled.button`
+  height: 50px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 150px;
+  transition: 300ms ease all;
+  font-size: 25px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
+
 const MypageSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -128,6 +186,13 @@ const MypageSidebar = () => {
                 <UserCreatedAt>2021.11.08</UserCreatedAt>
               </AboutUser>
             </UserInfo>
+            <CreatedPostContainer>
+              <Post />
+            </CreatedPostContainer>
+            <UserInfoButtonContainer>
+              <UserInfoButton>로그아웃</UserInfoButton>
+              <UserInfoButton>회원정보 수정</UserInfoButton>
+            </UserInfoButtonContainer>
           </SidebarContainer>
         </ModalBackdrop>
       ) : null}
