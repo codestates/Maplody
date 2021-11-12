@@ -43,6 +43,6 @@ let server;
 //   server.listen(HTTPS_PORT, () => console.log('server runnning at 4000'));
 // } else {
 console.log(`server running at ${HTTPS_PORT}`);
-server = app.listen(port);
+server = app.listen(HTTPS_PORT);
 // }
 module.exports = server;
