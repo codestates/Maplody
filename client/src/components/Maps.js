@@ -1,27 +1,7 @@
-<<<<<<< HEAD
-import React from 'react';
-import styled from 'styled-components';
-import { GoogleMap, withScriptjs, withGoogleMap } from 'react-google-maps';
-
-const map = () => {
-  return <GoogleMap defaultZoom={10} defaultCenter={{ lat: 45.421532, lng: -75.697189 }} />;
-};
-
-const WrappedMap = withScriptjs(withGoogleMap(map));
-
-const MapContainer = styled.div`
-  display: inline;
-  width: 100vw;
-  height: 100vh;
-  z-index: -100;
-`;
-
-=======
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import MapDummydata from "../static/MapDummydata"
+import MapDummydata from '../static/MapDummydata';
 import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
@@ -32,9 +12,8 @@ const MapContainer = styled.div`
 `;
 
 const Map = () => {
-
-  const [ target, setTarget ] = useState({ lat: null, lng: null });
-  const [ selected, setSelected ] = useState(null)
+  const [target, setTarget] = useState({ lat: null, lng: null });
+  const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const addMarkerHandler = (e) => {
     setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
@@ -42,7 +21,7 @@ const Map = () => {
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
- 
+
   return (
     <GoogleMap
       defaultZoom={13}
@@ -59,39 +38,36 @@ const Map = () => {
 
       {MapDummydata.map((el) => (
         <Marker
-          key={el.id} 
+          key={el.id}
           position={{
-                    lat: el.lat,
-                    lng: el.lng
-                  }}
+            lat: el.lat,
+            lng: el.lng,
+          }}
           place={el.place}
           music={el.music}
           onClick={() => {
-          setSelected(el)
+            setSelected(el);
           }}
-          icon={{url: require('../img/music-notes.png').default}}>
-          
-     {selected && selected.id === el.id && (
-        <InfoWindow
-            onCloseClick={() => {
-            setSelected(null)
-            }}>
-          <div>
-            <h2>{selected.music}</h2>
-            <p>{selected.place}</p>
-          </div>
-        </InfoWindow>
-      )}  
+          icon={{ url: require('../img/music-notes.png').default }}>
+          {selected && selected.id === el.id && (
+            <InfoWindow
+              onCloseClick={() => {
+                setSelected(null);
+              }}>
+              <div>
+                <h2>{selected.music}</h2>
+                <p>{selected.place}</p>
+              </div>
+            </InfoWindow>
+          )}
         </Marker>
       ))}
-
     </GoogleMap>
   );
 };
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
->>>>>>> 8df027883b9a3af47e187664460c93c146fd44b1
 const Maps = () => {
   return (
     <MapContainer>
@@ -106,8 +82,4 @@ const Maps = () => {
   );
 };
 
-<<<<<<< HEAD
 export default Maps;
-=======
-export default Maps;
->>>>>>> 8df027883b9a3af47e187664460c93c146fd44b1
