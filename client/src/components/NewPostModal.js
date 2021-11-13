@@ -1,5 +1,6 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
 
 const NewPostModalContainer = styled.div`
   z-index: 998;
@@ -58,7 +59,19 @@ const PostInfoContainer = styled.div`
   justify-content: space-around;
 `;
 
-const MusicAlbumJaket = styled.div`
+const MarkerAddress = styled.div`
+  z-index: 998;
+  text-align: left;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  margin-bottom: 10px;
+  padding: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: fit-content;
+`;
+
+const MusicVideo = styled.iframe`
   z-index: 998;
   width: 100px;
   height: 100px;
@@ -68,7 +81,7 @@ const MusicAlbumJaket = styled.div`
   box-shadow: gray 4px 4px 4px;
 `;
 
-const StoryBord = styled.textarea`
+const StoryBoard = styled.textarea`
   z-index: 998;
   width: 60%;
   padding: 3px;
@@ -120,18 +133,52 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = () => {
+const NewPostModal = ({ getAddress }) => {
+  const [singerName, setSingerName] = useState('');
+  const [musicTitle, setMusicTitle] = useState('');
+  const [storyBoard, setStoryBoard] = useState('');
+  // 나중에 악시오스 데이터 보낼때 써야하는 storyBoard 값
+
+  const [getVideo, setGetVideo] = useState({});
+
+  const paramsVideo = {
+    q: `${singerName} ${musicTitle}`,
+  };
+
+  const videoSearchHandler = () => {
+    axios
+      .get(
+        `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_KEY}&part=snippet&q=${paramsVideo.q}&maxResults=1&type=video&regionCode=KR&videoDuration=short`,
+      )
+      .then((res) => {
+        setGetVideo(res);
+      });
+  };
+
+  const handleChange = (e) => {
+    if (e.target.placeholder === '가수 이름') {
+      setSingerName(e.target.value);
+    }
+    if (e.target.placeholder === '노래 제목') {
+      setMusicTitle(e.target.value);
+    }
+    if (e.target.placeholder === '사연을 적어 주세요.') {
+      setStoryBoard(e.target.value);
+    }
+  };
+
   return (
     <NewPostModalContainer>
       <MusicInfoContainer>
-        <SingerName placeholder="가수이름" />
-        <MusicTitle placeholder="노래 제목" />
+        <SingerName placeholder="가수 이름" onChange={handleChange} />
+        <MusicTitle placeholder="노래 제목" onChange={handleChange} />
       </MusicInfoContainer>
+      <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-        <MusicAlbumJaket>앨범자켓</MusicAlbumJaket>
-        <StoryBord placeholder="사연을 적어 주세요." />
+        <MusicVideo>동영상</MusicVideo>
+        <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
-      <RegisterButton>등록하기</RegisterButton>
+      <RegisterButton onClick={videoSearchHandler}>등록하기</RegisterButton>
     </NewPostModalContainer>
   );
 };

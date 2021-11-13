@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import MapDummydata from '../static/MapDummydata';
@@ -15,9 +16,27 @@ const Map = () => {
   const [target, setTarget] = useState({ lat: null, lng: null });
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
+  const [getAddress, setGetAddress] = useState(null);
+
+  const paramsAddress = {
+    latlng: `${target.lat},${target.lng}`,
+  };
+
+  const markerAddressHandler = () => {
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
+      )
+      .then((res) => {
+        setGetAddress(res.data.results[0].formatted_address);
+      });
+  };
+
   const addMarkerHandler = (e) => {
     setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+    markerAddressHandler();
   };
+
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
@@ -31,7 +50,7 @@ const Map = () => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow>
-            <NewPostModal />
+            <NewPostModal getAddress={getAddress} />
           </InfoWindow>
         ) : null}
       </Marker>
