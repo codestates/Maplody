@@ -20,8 +20,9 @@ const Map = () => {
   const addMarkerHandler = (e) => {
     setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
-  const openNewPostModalHandler = () => {
+  const openNewPostModalHandler = (e) => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
+    console.log(e)
   };
  
   return (
