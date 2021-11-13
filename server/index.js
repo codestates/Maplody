@@ -31,7 +31,7 @@ app.use(
 );
 
 app.use(cookieParser());
-app.post('/', controllers.test.post);
+app.post('/user-login', controllers.Users);
 
 let server;
 // if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
@@ -40,7 +40,7 @@ let server;
 //   const credentials = { key: privateKey, cert: certificate };
 
 //   server = https.createServer(credentials, app);
-//   server.listen(HTTPS_PORT, () => console.log('server runnning at 4000'));
+//   server.listen(HTTPS_PORT, () => console.log('server running at 4000'));
 // } else {
 console.log(`server running at ${HTTPS_PORT}`);
 server = app.listen(HTTPS_PORT);
