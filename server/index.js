@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./db/connection');
 
 const app = express();
 app.use(express.json());
@@ -19,7 +18,6 @@ app.get('/', (req, res) => {
     if (err) {
       return res.status(200).send('database connection failed!');
     }
-    // res.status(201).send('Hello World');
     return res.status(200).send('database connection succeed!');
   });
 });
