@@ -55,8 +55,12 @@ const ModalBackdrop = styled.div`
 
 const SidebarContainer = styled.div`
   display: flex;
+<<<<<<< HEAD
+  justify-content: center;
+=======
   flex-direction: column;
   align-items: center;
+>>>>>>> 8df027883b9a3af47e187664460c93c146fd44b1
   border-radius: 20px 0 0 20px;
   height: 100%;
   width: 385px;
@@ -74,7 +78,11 @@ const UserInfo = styled.div`
   margin: 15px;
   padding: 10px;
   border-radius: 15px;
+<<<<<<< HEAD
+  box-shadow: 4px 4px 4px gray;
+=======
   box-shadow: 4px 4px 4px 4px gray;
+>>>>>>> 8df027883b9a3af47e187664460c93c146fd44b1
 `;
 
 const AboutUser = styled.div`
