@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
+
 import SignupModal from './SignupModal';
 
 const LoginModalContainer = styled.div`
@@ -18,124 +19,186 @@ const LoginModalBackdrop = styled.div`
   place-items: center;
 `;
 const LoginModalWindow = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   border-radius: 15px;
   background-color: white;
   width: 388px;
   height: 500px;
 `;
+
 const CloseBtn = styled.a`
-  border-radius: 50px;
-  border: none;
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 15px;
   font-size: 28px;
   cursor: pointer;
-  color: black;
-`
-export const IdPasswordContainer = styled.div`
-  margin-left: 10px;
+  margin: 10px;
 `;
+
 const Title = styled.div`
   font-size: 40px;
   color: black;
   width: 365px;
   text-align: center;
-  margin: 0 0 15px 0;
+  margin: 0 0 5px 0;
 `;
 const IdText = styled.div`
   font-size: 25px;
-  color: black;
-  padding: 10px 0 2px;
+  padding: 15px 20px 0 35px;
 `;
-export const IdInput = styled.input.attrs({ type: 'text' })`
-  font-size: 17px;
-  width: 250px;
-  height: 2.1em;
-  outline: none;
-  cursor: pointer;
-  border: solid 1px black;
-  margin-left: 42px;
 
-  &:focus {
-    outline: 1px solid #FF0066;
-    border: hidden;
-  }
-`;
-export const PwText = styled.div`
-  font-size: 25px;
-  color: black;
-  padding: 10px 0 2px;
-`;
-export const PwInput = styled.input.attrs({ type: 'password' })`
-  font-size: 17px;
-  width: 250px;
-  height: 2.2em;
-  outline: none;
-  border: solid 1px black;
-  cursor: pointer;
-  margin-left: 20px;
+const IdPasswordContainer = styled.div``;
 
-  &:focus {
-    outline: 1px solid #FF0066;
-    border: hidden;
-  }
-`;
-const LoginBtn = styled.div`
-  font-size: 20px;
-  border: 1px solid black;
+const IdInput = styled.input`
+  margin: 15px;
+  font-size: 23px;
   padding: 5px;
-  width: 300px;
-  color: black;
+`;
+
+const PwText = styled.div`
+  font-size: 25px;
+  padding: 0 15px 15px 15px;
+`;
+
+const LoginBtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PwInput = styled.input.attrs({ type: 'password' })`
+  margin: 15px;
+  font-size: 23px;
+  padding: 5px;
+`;
+
+const LoginBtn = styled.div`
+  height: 45px;
+  width: 350px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
   cursor: pointer;
-  margin-top: 70px;
-  margin-left: 25px;
-  text-align: center;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  margin-bottom: 15px;
+  padding-top: 3px;
+
   &:hover {
-    box-shadow: gray 3px 3px 3px;
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 `;
 
 const GoogleBtn = styled.div`
-  font-size: 20px;
-  border: 1px solid black;
-  padding: 5px;
-  width: 300px;
-  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 350px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
   cursor: pointer;
-  margin-top: 25px;
-  margin-left: 25px;
-  text-align: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  margin-bottom: 15px;
+
   &:hover {
-    box-shadow: gray 3px 3px 3px;
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 `;
+
+const GoogleIcon = styled.img`
+  width: 30px;
+  margin-right: 10px;
+`;
+
 const SignupBtn = styled.div`
-  font-size: 20px;
-  border: 1px solid black;
-  padding: 5px;
-  width: 300px;
-  color: black;
+  height: 45px;
+  width: 350px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
   cursor: pointer;
-  margin-top: 25px;
-  margin-left: 25px;
-  text-align: center;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  padding-top: 3px;
+
   &:hover {
-    box-shadow: gray 3px 3px 3px;
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 `;
 
-
-const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
-  const [signupOpen, setSignupOpen] = useState(false)
+const LoginModal = ({ loginOpen, setLoginOpen, openModalHandler }) => {
+  const [signupOpen, setSignupOpen] = useState(false);
   const openSignupHandler = () => {
-    setSignupOpen(!signupOpen)
-  }
+    setSignupOpen(!signupOpen);
+  };
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
-  
   const handleChange = (e) => {
     if (e.target.type === 'text') {
       setUserId(e.target.value);
@@ -144,31 +207,35 @@ const LoginModal = ({loginOpen, setLoginOpen, openModalHandler}) => {
       setPassword(e.target.value);
     }
   };
-  
 
   return (
-    
     <LoginModalContainer>
-     <LoginModalBackdrop onClick={openModalHandler}>
-      <LoginModalWindow onClick={(e) => e.stopPropagation()}>
-        <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
-        <IdPasswordContainer>
-              <Title>Login</Title>
-              <IdText>아이디
-                <IdInput onChange={handleChange} />
-              </IdText>
-              <PwText>비밀번호
-                <PwInput onChange={handleChange} />
-              </PwText>
+      <LoginModalBackdrop onClick={openModalHandler}>
+        <LoginModalWindow onClick={(e) => e.stopPropagation()}>
+          <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
+          <IdPasswordContainer>
+            <Title>Login</Title>
+            <IdText>
+              아이디
+              <IdInput onChange={handleChange} />
+            </IdText>
+            <PwText>
+              비밀번호
+              <PwInput onChange={handleChange} />
+            </PwText>
+            <LoginBtnContainer>
               <LoginBtn>로그인</LoginBtn>
-              <GoogleBtn>Google로 로그인</GoogleBtn>
+              <GoogleBtn>
+                <GoogleIcon src={require('../img/google login logo.png').default} />
+                Google로 로그인
+              </GoogleBtn>
               <SignupBtn onClick={openSignupHandler}> 회원가입</SignupBtn>
               {signupOpen ? <SignupModal openSignupHandler={openSignupHandler} /> : null}
-            </IdPasswordContainer>
-      </LoginModalWindow>
-     </LoginModalBackdrop>
+            </LoginBtnContainer>
+          </IdPasswordContainer>
+        </LoginModalWindow>
+      </LoginModalBackdrop>
     </LoginModalContainer>
-
   );
 };
 
