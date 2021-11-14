@@ -149,6 +149,7 @@ const NewPostModal = ({ getAddress }) => {
     axios
       .get(
         `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_KEY}&part=snippet&q=${paramsVideo.q}&maxResults=1&type=video&regionCode=KR&videoDuration=short`,
+        { withCredentials: false },
       )
       .then((res) => {
         setGetVideo(res);

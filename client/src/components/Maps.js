@@ -26,6 +26,7 @@ const Map = () => {
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
+        { withCredentials: false },
       )
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
