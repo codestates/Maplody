@@ -243,7 +243,7 @@ const SignupModal = ({ openSignupHandler }) => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
@@ -285,140 +285,113 @@ const SignupModal = ({ openSignupHandler }) => {
   };
 
   return (
-  <SignupModalContainer>
-  <SignupModalBackdrop onClick={openSignupHandler}>
-   <SignupModalWindow onClick={(e) => e.stopPropagation()}>
-     <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
-     <IdPasswordContainer>
-           <Title>회원가입</Title>
-           <ProfileContainer>
-            <ProfilePicture />
-            <ProfileText>프로필 사진</ProfileText>
-           </ProfileContainer>
-          <SignupInputContainer>
-           <NicknameText>닉네임
-             <NicknameInput 
-             placeholder={'Nickname'} 
-             onChange={handleChange} 
-             {...register('nickname', {
-              minLength: 2
-            })}
-            />
-           </NicknameText>
-           {errors.nickname ? (
-              <Validation_Check>
-              닉네임은 2글자 이상이어야 합니다.
-            </Validation_Check>
+    <SignupModalContainer>
+      <SignupModalBackdrop onClick={openSignupHandler}>
+        <SignupModalWindow onClick={(e) => e.stopPropagation()}>
+          <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
+          <IdPasswordContainer>
+            <Title>회원가입</Title>
+            <ProfileContainer>
+              <ProfilePicture />
+              <ProfileText>프로필 사진</ProfileText>
+            </ProfileContainer>
+            <SignupInputContainer>
+              <NicknameText>
+                닉네임
+                <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
+              </NicknameText>
+              <EmailText>
+                이메일
+                <EmailInput
+                  name="email"
+                  placeholder={'E-Mail'}
+                  onChange={handleChange}
+                  {...register('email', {
+                    pattern: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
+                    minlength: 10,
+                    required: true,
+                  })}
+                />
+              </EmailText>
+              {errors.email ? (
+                <Validation_Check>올바른 이메일 형식이 아닙니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                사용가능한 닉네임 입니다.
-                </Validation_Check_Green>
+                <Validation_Check_Green>사용가능한 이메일 입니다.</Validation_Check_Green>
               )}
-           <EmailText>이메일
-              <EmailInput 
-              name='email'
-              placeholder={'E-Mail'} 
-              onChange={handleChange}
-              {...register('email', {
-                pattern: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
-                minlength: 10,
-                required: true
-              })} />           
-            </EmailText>
-            {errors.email ? (
-                <Validation_Check>
-                  올바른 이메일 형식이 아닙니다.
-                </Validation_Check>
+              <IdText>
+                아이디
+                <IdInput
+                  name="userId"
+                  placeholder={'ID'}
+                  onChange={handleChange}
+                  {...register('userId', {
+                    pattern: /^[a-z0-9_-]{4,20}$/,
+                    maxLength: 20,
+                    minLength: 4,
+                    required: true,
+                  })}
+                />
+              </IdText>
+              {errors.userId ? (
+                <Validation_Check>아이디는 소문자, 숫자 4~20 글자여야 합니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                  사용가능한 이메일 입니다.
-                </Validation_Check_Green>
+                <Validation_Check_Green>사용가능한 아이디 입니다.</Validation_Check_Green>
               )}
-           <IdText>아이디
-             <IdInput 
-             name="userId"
-             placeholder={'ID'}
-             onChange={handleChange}
-             {...register('userId', {
-              pattern: /^[a-z0-9_-]{4,20}$/,
-              maxLength: 20,
-              minLength: 4,
-              required: true
-            })} 
-            />
-            </IdText>
-           {errors.userId ? (
-                <Validation_Check>
-                  아이디는 소문자, 숫자 4~20 글자여야 합니다.
-                </Validation_Check>
+              <PwText>
+                비밀번호
+                <PwInput
+                  onChange={handleChange}
+                  name="password"
+                  placeholder={'Password'}
+                  {...register('password', {
+                    pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
+                    required: true,
+                    minLength: 8,
+                  })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwText>
+              {errors.password ? (
+                <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                  사용가능한 아이디 입니다.
-                </Validation_Check_Green>
+                <Validation_Check_Green>사용가능한 비밀번호 입니다.</Validation_Check_Green>
               )}
-           <PwText>비밀번호
-             <PwInput 
-             onChange={handleChange} 
-             name="password" 
-             placeholder={'Password'}
-             {...register('password', {
-              pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
-              required: true,
-              minLength: 8
-            })}
-            onInvalid={(e) => {
-              e.target.setCustomValidity(
-                '비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.'
-              );
-            }}
-            onInput={(e) => {
-              e.target.setCustomValidity('');
-            }}
-            />
-           </PwText>
-           {errors.password ? (
-                <Validation_Check>
-                  비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.
-                </Validation_Check>
+              <PwCheckText>
+                비밀번호 확인
+                <PwCheckInput
+                  name="verifyPassword"
+                  placeholder={'Verify Password'}
+                  onChange={handleChange}
+                  {...register('verifyPassword', { required: true })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwCheckText>
+              {!passwordCheck ? (
+                <Validation_Check>비밀번호가 일치하지 않습니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                  사용가능한 비밀번호 입니다.
-                </Validation_Check_Green>
+                <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-           <PwCheckText>비밀번호 확인
-             <PwCheckInput 
-             name="verifyPassword"
-             placeholder={'Verify Password'}
-             onChange={handleChange} 
-             {...register('verifyPassword', { required: true })}
-             onInvalid={(e) => {
-              e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
-            }}
-            onInput={(e) => {
-              e.target.setCustomValidity('');
-            }}
-            />
-           </PwCheckText>
-           {!passwordCheck ? (
-                <Validation_Check>
-                  비밀번호가 일치하지 않습니다.
-                </Validation_Check>
-              ) : (
-                <Validation_Check_Green>
-                  비밀번호가 일치합니다.
-                </Validation_Check_Green>
-              )}
-          <SignupSubmitBtn 
-            disabled={!nickname || !email || !userId || !password || !passwordCheck} 
-            onClick={SignupBtnHandler}>
-            회원가입
-          </SignupSubmitBtn>
-          </SignupInputContainer>
+              <SignupSubmitBtn
+                disabled={!nickname || !email || !userId || !password || !passwordCheck}
+                onClick={SignupBtnHandler}>
+                회원가입
+              </SignupSubmitBtn>
+            </SignupInputContainer>
           </IdPasswordContainer>
-   </SignupModalWindow>
-  </SignupModalBackdrop>
- </SignupModalContainer>
- )
+        </SignupModalWindow>
+      </SignupModalBackdrop>
+    </SignupModalContainer>
+  );
 };
 
 export default SignupModal;

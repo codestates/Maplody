@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import Post from './Post';
-import Button from './Button';
-import MyInfoFixModal from './MyInfoFixModal'
+import MyInfoFixModal from './MyInfoFixModal';
 
 const slideIn = keyframes`
     from {
@@ -161,16 +162,31 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = () => {
+const MypageSidebar = ({ accessToken, setAccessToken }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [userinfoOpen, setUserinfoOpen ] = useState(false)
+  const [userinfoOpen, setUserinfoOpen] = useState(false);
+
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
   const userinfoModalHandler = () => {
-    setUserinfoOpen(!userinfoOpen)
-  }
+    setUserinfoOpen(!userinfoOpen);
+  };
 
+  const navigate = useNavigate();
+
+  const LogoutBtnHandler = () => {
+    axios
+      .get()
+      .then((res) => {
+        setAccessToken('');
+        alert('로그아웃 되었습니다.');
+        navigate({ pathname: '/' });
+      })
+      .catch((err) => {
+        alert('잘못된 요청입니다.');
+      });
+  };
 
   return (
     <MenuContainer>
@@ -194,7 +210,7 @@ const MypageSidebar = () => {
               <Post />
             </CreatedPostContainer>
             <UserInfoButtonContainer>
-              <UserInfoButton>로그아웃</UserInfoButton>
+              <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
               <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
               {userinfoOpen ? <MyInfoFixModal userinfoModalHandler={userinfoModalHandler} /> : null}
             </UserInfoButtonContainer>

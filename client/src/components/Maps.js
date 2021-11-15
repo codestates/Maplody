@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
@@ -13,7 +13,7 @@ const MapContainer = styled.div`
 `;
 
 const Map = () => {
-  const [target, setTarget] = useState({ lat: null, lng: null });
+  const [target, setTarget] = useState({ lat: '', lng: '' });
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
@@ -23,11 +23,11 @@ const Map = () => {
   };
 
   const markerAddressHandler = () => {
-    if(paramsAddress.latlng === ',') return;
+    if (paramsAddress.latlng === ',') return;
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
-        {withCredentials: false},
+        { withCredentials: false },
       )
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
@@ -40,9 +40,9 @@ const Map = () => {
     markerAddressHandler();
   };
 
-  // const openNewPostModalHandler = () => {
-  //   setIsOpenNewPostModal(!isOpenNewPostModal);
-  // };
+  const openNewPostModalHandler = () => {
+   setIsOpenNewPostModal(!isOpenNewPostModal);
+   };
 
   return (
     <GoogleMap
@@ -50,7 +50,7 @@ const Map = () => {
       defaultCenter={{ lat: 37.51249519205713, lng: 126.99480974427608 }}
       options={{ disableDefaultUI: true }}
       onClick={addMarkerHandler}>
-      <Marker onClick={() => {setIsOpenNewPostModal(!isOpenNewPostModal)}} animation={2} position={target}>
+      <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
             <NewPostModal getAddress={getAddress} />
