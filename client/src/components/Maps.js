@@ -32,6 +32,7 @@ const Map = () => {
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
       });
+    return;
   };
 
   const addMarkerHandler = (e) => {

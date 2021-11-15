@@ -4,7 +4,9 @@ const cors = require('cors');
 const fs = require('fs');
 const https = require('https');
 const cookieParser = require('cookie-parser');
-const controllers = require('./controllers');
+const userRouter = require('./router/userRouter');
+const postRouter = require('./router/postRouter');
+
 const { sequelize } = require('./models');
 
 const app = express();
@@ -16,14 +18,23 @@ sequelize.sync();
 
 app.use(
   cors({
-    origin: true,
+    origin: [
+      'https://localhost:3000',
+      'http://localhost:3000',
+      'http://maplody.site',
+      'http://www.maplody.site',
+      'https://www.maplody.site',
+      'https://maplody.site',
+      `${process.env.S3_ENDPOINT}`,
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   }),
 );
 
 app.use(cookieParser());
-app.post('/user-login', controllers.Users);
+app.use('/', userRouter);
+app.use('/post', postRouter);
 
 let server;
 // if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {

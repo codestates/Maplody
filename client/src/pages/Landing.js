@@ -58,14 +58,6 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
     setLoginOpen(!loginOpen);
   };
 
-  axios
-    .post(`${process.env.REACT_APP_API_URL}`, { userId: 'myid' }, { headers: { 'Content-Type': 'application/json' } })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
   return (
     <LandingContainer>
       <AboutContainer>

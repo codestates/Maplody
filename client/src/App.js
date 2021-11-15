@@ -5,7 +5,6 @@ import './App.css';
 import Main from './pages/Main';
 import Loading from './pages/Loading';
 import Landing from './pages/Landing';
-import WithdrawalModal from './components/WithdrawalModal';
 
 function App() {
   const [accessToken, setAccessToken] = useState('');
@@ -18,7 +17,6 @@ function App() {
           <Route exact path="/" element={<Landing setAccessToken={setAccessToken} />} />
           <Route path="/loading" element={<Loading setIsLogin={setIsLogin} />} />
           <Route path="/main" element={<Main accessToken={accessToken} setAccessToken={setAccessToken} />} />
-          <Route path="/withdrawal" element={<WithdrawalModal />} />
         </Routes>
       </BrowserRouter>
     </div>

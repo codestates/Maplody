@@ -1,4 +1,5 @@
 module.exports = {
-  test: require('./test'),
-  Users: require('./Users/login'),
+  login: require('./Users/login'),
+  signup: require('./Users/signup'),
+  logout: require('./Users/logout'),
 };
