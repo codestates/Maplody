@@ -273,6 +273,9 @@ const SignupModal = ({ openSignupHandler }) => {
       .post(
         `${process.env.REACT_APP_API_URL}/user-signup`,
         { nickname: nickname, email: email, userId: userId, password: password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
         { withCredentials: true },
       )
       .then((res) => {
