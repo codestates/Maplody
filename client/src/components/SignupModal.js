@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 const SignupModalContainer = styled.div`
@@ -137,6 +138,20 @@ const PwText = styled.div`
   padding: 10px 0 2px;
 `;
 
+const Validation_Check = styled.div`
+  color: red;
+  font-size: 17px;
+  width: fit-content;
+  margin: 10px 0 15px 0;
+`;
+
+const Validation_Check_Green = styled.div`
+color: green;
+font-size: 17px;
+width: fit-content;
+margin: 10px 0 15px 0;
+`;
+
 const PwInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
   width: 250px;
@@ -220,6 +235,14 @@ const SignupModal = ({ openSignupHandler }) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch
+  } = useForm({ mode: 'onChange' });
 
   const handleChange = (e) => {
     if (e.target.placeholder === 'Nickname') {
@@ -239,45 +262,103 @@ const SignupModal = ({ openSignupHandler }) => {
     }
   };
   return (
-    <SignupModalContainer>
-      <SignupModalBackdrop onClick={openSignupHandler}>
-        <SignupModalWindow onClick={(e) => e.stopPropagation()}>
-          <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
-          <IdPasswordContainer>
-            <Title>회원가입</Title>
-            <ProfileContainer>
-              <ProfilePicture />
-              <ProfileText>프로필 사진</ProfileText>
-            </ProfileContainer>
-            <SignupInputContainer>
-              <NicknameText>
-                닉네임
-                <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
-              </NicknameText>
-              <EmailText>
-                이메일
-                <EmailInput placeholder={'E-Mail'} onChange={handleChange} />
-              </EmailText>
-              <IdText>
-                아이디
-                <IdInput placeholder={'ID'} onChange={handleChange} />
-              </IdText>
-              <PwText>
-                비밀번호
-                <PwInput placeholder={'Password'} nChange={handleChange} />
-              </PwText>
-              <PwCheckText>
-                비밀번호 확인
-                <PwCheckInput placeholder={'Verify Password'} onChange={handleChange} />
-              </PwCheckText>
-            </SignupInputContainer>
-            <SignupSubmitBtn>회원가입</SignupSubmitBtn>
-            {/* 버튼 눌렀을때 회원가입 성공하면 알려주고, 창 닫겨서 바로 로그인 할 수 있게 만든다. */}
-          </IdPasswordContainer>
-        </SignupModalWindow>
-      </SignupModalBackdrop>
-    </SignupModalContainer>
-  );
+  <SignupModalContainer>
+  <SignupModalBackdrop onClick={openSignupHandler}>
+   <SignupModalWindow onClick={(e) => e.stopPropagation()}>
+     <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
+     <IdPasswordContainer>
+           <Title>회원가입</Title>
+           <ProfileContainer>
+            <ProfilePicture />
+            <ProfileText>프로필 사진</ProfileText>
+           </ProfileContainer>
+          <SignupInputContainer>
+           <NicknameText>닉네임
+             <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
+           </NicknameText>
+           <EmailText>이메일
+              <EmailInput placeholder={'E-Mail'} onChange={handleChange} />           
+            </EmailText>
+           <IdText>아이디
+             <IdInput 
+             name="userId"
+             placeholder={'ID'}
+             onChange={handleChange}
+             {...register('userId', {
+              pattern: /^[a-z0-9_-]{4,20}$/,
+              maxLength: 20,
+              minLength: 4,
+              required: true
+            })} 
+            />
+            </IdText>
+           {errors.userId ? (
+                <Validation_Check>
+                  아이디는 소문자, 숫자 4~20 글자여야 합니다.
+                </Validation_Check>
+              ) : (
+                <Validation_Check_Green>
+                  사용가능한 아이디 입니다.
+                </Validation_Check_Green>
+              )}
+           <PwText>비밀번호
+             <PwInput 
+             onChange={handleChange} 
+             name="password" 
+             placeholder={'Password'}
+             {...register('password', {
+              pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
+              required: true,
+              minLength: 8
+            })}
+            onInvalid={(e) => {
+              e.target.setCustomValidity(
+                '비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.'
+              );
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity('');
+            }}
+            />
+           </PwText>
+           {errors.password ? (
+                <Validation_Check>
+                  비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.
+                </Validation_Check>
+              ) : (
+                <Validation_Check_Green>
+                  사용가능한 비밀번호 입니다.
+                </Validation_Check_Green>
+              )}
+           <PwCheckText>비밀번호 확인
+             <PwCheckInput 
+             name="verifyPassword"
+             placeholder={'Verify Password'}
+             onChange={handleChange} 
+             {...register('verifyPassword', { required: true })}
+             onInvalid={(e) => {
+              e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity('');
+            }}
+            />
+           </PwCheckText>
+           {!isVerified ? (
+                <Validation_Check>
+                  비밀번호가 일치하지 않습니다.
+                </Validation_Check>
+              ) : (
+                <Validation_Check_Green>
+                  비밀번호가 일치합니다.
+                </Validation_Check_Green>
+              )}
+          <SignupSubmitBtn> 회원가입</SignupSubmitBtn>
+         </IdPasswordContainer>
+   </SignupModalWindow>
+  </SignupModalBackdrop>
+ </SignupModalContainer>
+ )
 };
 
 export default SignupModal;
