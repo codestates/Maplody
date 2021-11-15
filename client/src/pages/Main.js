@@ -23,11 +23,11 @@ const MapContainer = styled.div`
   height: 100vh;
 `;
 
-const Main = () => {
+const Main = ({ accessToken, setAccessToken }) => {
   return (
     <MainContainer>
       <SearchInput />
-      <MypageSidebar />
+      <MypageSidebar accessToken={accessToken} setAccessToken={setAccessToken} />
       <Logo src={require('../img/Maplody_Logo.png').default} />
       <MapContainer>
         <Maps />

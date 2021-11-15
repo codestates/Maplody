@@ -253,7 +253,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
@@ -291,117 +291,102 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
       })
       .catch((err) => {
         alert('입력된 정보를 다시 확인해 주세요');
-      });
-  }
+      });       
+  };
 
   return (
-  <MyInfoFixModalContainer>
-    <MyInfoFixModalBackdrop onClick={userinfoModalHandler}>
-      <MyInfoFixModalWindow onClick={(e) => e.stopPropagation()}>
-        <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
+    <MyInfoFixModalContainer>
+      <MyInfoFixModalBackdrop onClick={userinfoModalHandler}>
+        <MyInfoFixModalWindow onClick={(e) => e.stopPropagation()}>
+          <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
           <IdPasswordContainer>
-           <Title>회원정보 수정</Title>
-           <ProfileContainer>
-            <ProfilePicture />
-            <ProfileText>프로필 사진</ProfileText>
-           </ProfileContainer>
-          <MyinfoInputContainer>
-           <NicknameText>
-             닉네임
-            <NicknameInput 
-             placeholder={'Nickname'} 
-             onChange={handleChange} 
-             {...register('nickname', {
-               minLength: 2
-             })}
-             />
-           </NicknameText>
-           {errors.nickname ? (
-              <Validation_Check>
-              닉네임은 2글자 이상이어야 합니다.
-            </Validation_Check>
+            <Title>회원정보 수정</Title>
+            <ProfileContainer>
+              <ProfilePicture />
+              <ProfileText>프로필 사진</ProfileText>
+            </ProfileContainer>
+            <MyinfoInputContainer>
+              <NicknameText>
+                닉네임
+                <NicknameInput
+                  placeholder={'Nickname'}
+                  onChange={handleChange}
+                  {...register('nickname', {
+                    required: true,
+                    minLength: 2,
+                  })}
+                />
+              </NicknameText>
+              {errors.nickname ? (
+                <Validation_Check>닉네임은 2글자 이상이어야 합니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                사용가능한 닉네임 입니다.
-                </Validation_Check_Green>
+                <Validation_Check />
               )}
               <Nicknameinform>! 닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
-            <EmailContainer>
-              <EmailText>이메일</EmailText>
-              <EmailUser>admin@gmail.com</EmailUser>  
-            </EmailContainer>       
-            <IdContainer>
-              <IdText>아이디</IdText>
-              <IdUser>admin</IdUser>
-            </IdContainer> 
-            <PwText>비밀번호
-             <PwInput 
-             onChange={handleChange} 
-             name="password" 
-             placeholder={'Password'}
-             {...register('password', {
-              pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
-              required: true,
-              minLength: 8
-            })}
-            onInvalid={(e) => {
-              e.target.setCustomValidity(
-                '비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.'
-              );
-            }}
-            onInput={(e) => {
-              e.target.setCustomValidity('');
-            }}
-            />
-           </PwText>
-           <Pwinform>! 비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
-           {errors.password ? (
-                <Validation_Check>
-                  비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.
-                </Validation_Check>
+              <EmailContainer>
+                <EmailText>이메일</EmailText>
+                <EmailUser>admin@gmail.com</EmailUser>
+              </EmailContainer>
+              <IdContainer>
+                <IdText>아이디</IdText>
+                <IdUser>admin</IdUser>
+              </IdContainer>
+              <PwText>
+                비밀번호
+                <PwInput
+                  onChange={handleChange}
+                  name="password"
+                  placeholder={'Password'}
+                  {...register('password', {
+                    pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
+                    required: true,
+                    minLength: 8,
+                  })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwText>
+              <Pwinform>! 비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
+              {errors.password ? (
+                <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                  사용가능한 비밀번호 입니다.
-                </Validation_Check_Green>
+                <Validation_Check />
               )}
-           <PwCheckText>
-             비밀번호 확인
-             <PwCheckInput 
-             name="verifyPassword"
-             placeholder={'Verify Password'}
-             onChange={handleChange} 
-             {...register('verifyPassword', { required: true })}
-             onInvalid={(e) => {
-              e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
-            }}
-            onInput={(e) => {
-              e.target.setCustomValidity('');
-            }}
-            />
-           </PwCheckText>
-           {!passwordCheck ? (
-                <Validation_Check>
-                  비밀번호가 일치하지 않습니다.
-                </Validation_Check>
+              <PwCheckText>
+                비밀번호 확인
+                <PwCheckInput
+                  name="verifyPassword"
+                  placeholder={'Verify Password'}
+                  onChange={handleChange}
+                  {...register('verifyPassword', { required: true })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwCheckText>
+              {!passwordCheck ? (
+                <Validation_Check>비밀번호가 일치하지 않습니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>
-                  비밀번호가 일치합니다.
-                </Validation_Check_Green>
+                <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-          {!nickname || !password ? 
-          <MyInfoFixSubmitBtn 
-            disabled
-            onClick={MyinfoFixHandler}>
-            수정</MyInfoFixSubmitBtn> 
-          : <MyInfoFixSubmitBtn 
-          onClick={MyinfoFixHandler}>
-            수정</MyInfoFixSubmitBtn>}
-      </MyinfoInputContainer>
-    </IdPasswordContainer>
-   </MyInfoFixModalWindow>
-  </MyInfoFixModalBackdrop>
- </MyInfoFixModalContainer>
- )
+              <MyInfoFixSubmitBtn
+                disabled={errors.nickname || errors.password || !passwordCheck}
+                onClick={MyinfoFixHandler}>
+                수정
+              </MyInfoFixSubmitBtn>
+            </MyinfoInputContainer>
+          </IdPasswordContainer>
+        </MyInfoFixModalWindow>
+      </MyInfoFixModalBackdrop>
+    </MyInfoFixModalContainer>
+  );
 };
 
 export default MyInfoFixModal;
