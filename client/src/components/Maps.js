@@ -32,6 +32,7 @@ const Map = () => {
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
       });
+      return
   };
 
   const addMarkerHandler = (e) => {
@@ -40,8 +41,8 @@ const Map = () => {
   };
 
   const openNewPostModalHandler = () => {
-    setIsOpenNewPostModal(!isOpenNewPostModal);
-  };
+   setIsOpenNewPostModal(!isOpenNewPostModal);
+   };
 
   return (
     <GoogleMap

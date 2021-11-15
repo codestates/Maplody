@@ -251,7 +251,7 @@ const SignupModal = ({ openSignupHandler }) => {
   }, [watch('verifyPassword'), watch('password')]);
 
   const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname') {
+    if (e.target.placeholder === 'Nickname' || e.target.value) {
       setNickname(e.target.value);
     }
     if (e.target.placeholder === 'E-Mail') {
@@ -260,7 +260,7 @@ const SignupModal = ({ openSignupHandler }) => {
     if (e.target.placeholder === 'ID') {
       setUserId(e.target.value);
     }
-    if (e.target.placeholder === 'Password') {
+    if (e.target.placeholder === 'Password' || e.target.value.length !== 0) {
       setPassword(e.target.value);
     }
     if (e.target.placeholder === 'Verify Password') {
