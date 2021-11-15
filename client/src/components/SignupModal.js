@@ -230,7 +230,6 @@ const SignupModal = ({ openSignupHandler }) => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
     watch,
     getValues,
@@ -239,7 +238,7 @@ const SignupModal = ({ openSignupHandler }) => {
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
   }, [watch('verifyPassword'), watch('password')]);
-  
+
   const SignupBtnHandler = () => {
     axios
       .post(

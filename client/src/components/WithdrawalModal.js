@@ -192,7 +192,7 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler }) => {
       })
       .then((res) => {
         alert('탈퇴되었습니다. 그동안 감사했습니다. 더 좋은 서비스로 다시 찾아 뵙겠습니다.');
-        navigate.push({ pathname: '/' });
+        navigate('/');
       })
       .catch((err) => {
         alert('잘못된 요청입니다');
