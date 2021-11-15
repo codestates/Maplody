@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import WithdrawalModal from './WithdrawalModal';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import WithdrawalModal from './WithdrawalModal'
@@ -108,8 +109,8 @@ const NicknameInput = styled.input.attrs({ type: 'text' })`
 `;
 const Nicknameinform = styled.div`
   font-size: 15.5px;
-  margin: 10px 5px 10px -30px;
   color: #ff0066;
+  margin: -10px 0 15px -25px;
 `;
 const EmailContainer = styled.div`
   display: flex;
@@ -180,7 +181,7 @@ const PwInput = styled.input.attrs({ type: 'password' })`
 
 const Pwinform = styled.div`
   font-size: 15.5px;
-  margin: 10px 5px 10px -30px;
+  margin: 10px 5px 10px -20px;
   color: #ff0066;
 `;
 
@@ -280,7 +281,45 @@ height: 45px;
   }
 `;
 
-const MyInfoFixModal = ({ userinfoModalHandler }) => {
+const WithdrawalBtn = styled.button`
+  height: 45px;
+  margin: 30px 30px 15px 30px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  padding-top: 2px;
+  font-size: 25px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+    color: #ff0066;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
+
+const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [userId, setUserId] = useState('');
@@ -291,36 +330,13 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
   }, [watch('verifyPassword'), watch('password')]);
-
-  const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname') {
-      setNickname(e.target.value);
-    }
-    if (e.target.placeholder === 'E-Mail') {
-      setEmail(e.target.value);
-    }
-    if (e.target.placeholder === 'ID') {
-      setUserId(e.target.value);
-    }
-    if (e.target.placeholder === 'Password') {
-      setPassword(e.target.value);
-    }
-    if (e.target.placeholder === 'Verify Password') {
-      setPasswordCheck(e.target.value);
-    }
-  };
-
-  const withdrawalModalHandler = () => {
-    setWithdrawalOpen(!withdrawalOpen);
-    console.log(withdrawalOpen)
-  }
 
   const MyinfoFixHandler = () => {
     axios
@@ -338,6 +354,10 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
       });       
   };
 
+  const withdrawalModalHandler = () => {
+    setWithdrawalOpen(!withdrawalOpen);
+  };
+
   return (
     <MyInfoFixModalContainer>
       <MyInfoFixModalBackdrop>
@@ -353,12 +373,18 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               <NicknameText>
                 닉네임
                 <NicknameInput
+                  name="nickname"
                   placeholder={'Nickname'}
-                  onChange={handleChange}
                   {...register('nickname', {
                     required: true,
                     minLength: 2,
                   })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('닉네임은 2글자 이상이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
                 />
               </NicknameText>
               {errors.nickname ? (
@@ -366,7 +392,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               ) : (
                 <Validation_Check />
               )}
-              <Nicknameinform>! 닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
+              <Nicknameinform>닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
               <EmailContainer>
                 <EmailText>이메일</EmailText>
                 <EmailUser>admin@gmail.com</EmailUser>
@@ -378,7 +404,6 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               <PwText>
                 비밀번호
                 <PwInput
-                  onChange={handleChange}
                   name="password"
                   placeholder={'Password'}
                   {...register('password', {
@@ -394,7 +419,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
                   }}
                 />
               </PwText>
-              <Pwinform>! 비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
+              <Pwinform>비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
               {errors.password ? (
                 <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
               ) : (
@@ -405,7 +430,6 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
                 <PwCheckInput
                   name="verifyPassword"
                   placeholder={'Verify Password'}
-                  onChange={handleChange}
                   {...register('verifyPassword', { required: true })}
                   onInvalid={(e) => {
                     e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
@@ -420,13 +444,19 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               ) : (
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-              <MyInfoFixSubmitBtn
-                disabled={errors.nickname || errors.password || !passwordCheck}
-                onClick={MyinfoFixHandler}>
-                수정
-              </MyInfoFixSubmitBtn>
+              {!isValid || !passwordCheck ? (
+                <MyInfoFixSubmitBtn disabled={true} onClick={MyinfoFixHandler}>
+                  수정
+                </MyInfoFixSubmitBtn>
+              ) : (
+                <MyInfoFixSubmitBtn disabled={false} onClick={MyinfoFixHandler}>
+                  수정
+                </MyInfoFixSubmitBtn>
+              )}
               <WithdrawalBtn onClick={withdrawalModalHandler}>회원탈퇴</WithdrawalBtn>
-              {withdrawalOpen ? <WithdrawalModal withdrawalModalHandler={withdrawalModalHandler}/> : null}
+              {withdrawalOpen ? (
+                <WithdrawalModal accessToken={accessToken} withdrawalModalHandler={withdrawalModalHandler} />
+              ) : null}
             </MyinfoInputContainer>
           </IdPasswordContainer>
         </MyInfoFixModalWindow>

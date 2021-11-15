@@ -51,7 +51,7 @@ const LandingMap = styled.img`
   opacity: 80%;
 `;
 
-const Landing = ({ accessToken, setAccessToken }) => {
+const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
   const [loginOpen, setLoginOpen] = useState(false);
 
   const openModalHandler = () => {
@@ -85,7 +85,12 @@ const Landing = ({ accessToken, setAccessToken }) => {
         </About>
         <Button text="시작하기" onClick={openModalHandler} />
         {loginOpen ? (
-          <LoginModal accessToken={accessToken} setAccessToken={setAccessToken} openModalHandler={openModalHandler} />
+          <LoginModal
+            accessToken={accessToken}
+            setAccessToken={setAccessToken}
+            openModalHandler={openModalHandler}
+            setIsLogin={setIsLogin}
+          />
         ) : null}
       </AboutContainer>
       <MapContainer>
