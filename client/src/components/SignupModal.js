@@ -239,7 +239,7 @@ const SignupModal = ({ openSignupHandler }) => {
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
   }, [watch('verifyPassword'), watch('password')]);
-
+  
   const SignupBtnHandler = () => {
     axios
       .post(
