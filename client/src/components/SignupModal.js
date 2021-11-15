@@ -301,8 +301,26 @@ const SignupModal = ({ openSignupHandler }) => {
             <SignupInputContainer>
               <NicknameText>
                 닉네임
-                <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
+                <NicknameInput
+                  name="nickname"
+                  placeholder={'Nickname'}
+                  {...register('nickname', {
+                    required: true,
+                    minLength: 2,
+                  })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('닉네임은 2글자 이상이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
               </NicknameText>
+              {errors.nickname ? (
+                <Validation_Check>닉네임은 2글자 이상이어야 합니다.</Validation_Check>
+              ) : (
+                <Validation_Check />
+              )}
               <EmailText>
                 이메일
                 <EmailInput
