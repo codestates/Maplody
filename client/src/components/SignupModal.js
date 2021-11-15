@@ -1,11 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 const SignupModalContainer = styled.div`
   height: 13.5rem;
 `;
+
 const SignupModalBackdrop = styled.div`
   position: fixed;
   z-index: 999;
@@ -17,182 +17,221 @@ const SignupModalBackdrop = styled.div`
   display: grid;
   place-items: center;
 `;
+
 const SignupModalWindow = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   border-radius: 15px;
   background-color: white;
   width: 450px;
   height: 650px;
 `;
-export const IdPasswordContainer = styled.div`
-  margin-left: 10px;
+
+const CloseBtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  margin: 10px;
 `;
+
+const IdPasswordContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
+
 const Title = styled.div`
   font-size: 40px;
-  color: black;
-  width: 365px;
   text-align: center;
-  margin: 0 0 15px 0;
 `;
 const ProfileContainer = styled.div`
-display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 35px;
 `;
 const ProfilePicture = styled.div`
-border: solid 3px black;
-width: 90px;
-height: 90px;
+  border: solid 3px red;
+  width: 90px;
+  height: 90px;
 `;
+
 const ProfileText = styled.div`
   font-size: 25px;
-  color: black;
-  padding: 10px 0 2px 30px;
+  font-weight: bolder;
+  border-bottom: solid 3px #ff0066;
 `;
+
+const SignupInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0 25px 35px;
+`;
+
 const NicknameText = styled.div`
   font-size: 25px;
-  color: black;
-  padding: 10px 0 2px;
 `;
-export const NicknameInput = styled.input.attrs({ type: 'text' })`
+
+const NicknameInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
-  height: 2.1em;
-  outline: none;
+  height: 40px;
   cursor: pointer;
-  border: solid 1px black;
+  border: solid 3px;
+  border-radius: 5px;
   margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
 
   &:focus {
-    outline: 1px solid #FF0066;
+    outline: 3px solid #ff0066;
     border: hidden;
   }
 `;
+
 const EmailText = styled.div`
   font-size: 25px;
-  color: black;
   padding: 10px 0 2px;
 `;
-export const EmailInput = styled.input.attrs({ type: 'text' })`
+
+const EmailInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
-  height: 2.1em;
-  outline: none;
+  height: 40px;
   cursor: pointer;
-  border: solid 1px black;
+  border: solid 3px;
+  border-radius: 5px;
   margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
 
   &:focus {
-    outline: 1px solid #FF0066;
+    outline: 3px solid #ff0066;
     border: hidden;
   }
 `;
+
 const IdText = styled.div`
   font-size: 25px;
-  color: black;
   padding: 10px 0 2px;
 `;
-export const IdInput = styled.input.attrs({ type: 'text' })`
+
+const IdInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
-  height: 2.1em;
-  outline: none;
+  height: 40px;
   cursor: pointer;
-  border: solid 1px black;
+  border: solid 3px;
+  border-radius: 5px;
   margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
 
   &:focus {
-    outline: 1px solid #FF0066;
+    outline: 3px solid #ff0066;
     border: hidden;
   }
 `;
-export const Validation_Check = styled.div`
+
+const PwText = styled.div`
+  font-size: 25px;
+  padding: 10px 0 2px;
+`;
+
+const Validation_Check = styled.div`
   color: red;
   font-size: 17px;
   width: fit-content;
   margin: 10px 0 15px 0;
 `;
-export const Validation_Check_Green = styled.div`
+
+const Validation_Check_Green = styled.div`
 color: green;
 font-size: 17px;
 width: fit-content;
 margin: 10px 0 15px 0;
 `;
-export const PwText = styled.div`
-  font-size: 25px;
-  color: black;
-  padding: 10px 0 2px;
-`;
-export const PwInput = styled.input.attrs({ type: 'password' })`
+
+const PwInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
   width: 250px;
-  height: 2.2em;
-  outline: none;
-  border: solid 1px black;
+  height: 40px;
   cursor: pointer;
-  margin-left: 20px;
+  border: solid 3px;
+  border-radius: 5px;
+  margin-left: 24px;
+  padding: 10px;
+  transition: 100ms ease all;
 
   &:focus {
-    outline: 1px solid #FF0066;
+    outline: 3px solid #ff0066;
     border: hidden;
   }
 `;
-export const PwCheckText = styled.div`
+
+const PwCheckText = styled.div`
   font-size: 25px;
-  color: black;
   padding: 10px 0 2px;
 `;
-export const PwCheckInput = styled.input.attrs({ type: 'password' })`
+
+const PwCheckInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
-  width: 250px;
-  height: 2.2em;
-  outline: none;
-  border: solid 1px black;
+  width: 188px;
+  height: 40px;
   cursor: pointer;
-  margin-left: 20px;
+  border: solid 3px;
+  border-radius: 5px;
+  margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
 
   &:focus {
-    outline: 1px solid #FF0066;
+    outline: 3px solid #ff0066;
     border: hidden;
   }
 `;
-const BottomContainer = styled.div`
-display: flex;
-margin-top: 40px;
-`;
-const HomeBtn = styled.div`
-  font-size: 20px;
-  border: 1px solid black;
-  padding: 5px;
-  width: 150px;
-  color: black;
-  cursor: pointer;
-  margin-top: 25px;
-  margin-left: 25px;
-  text-align: center;
-  &:hover {
-    box-shadow: gray 3px 3px 3px;
-  }
-`;
+
 const SignupSubmitBtn = styled.div`
-  font-size: 20px;
-  border: 1px solid black;
-  padding: 5px;
-  width: 150px;
-  color: black;
+  height: 45px;
+  margin: 5px 30px 15px 30px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
   cursor: pointer;
-  margin-top: 25px;
-  margin-left: 25px;
-  text-align: center;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  padding-top: 2px;
+  font-size: 25px;
+
   &:hover {
-    box-shadow: gray 3px 3px 3px;
+    box-shadow: gray 4px 4px 4px;
+    color: #ff0066;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 `;
 
-const SignupModal = ({openSignupHandler}) => {
-  const [nickname, setNickname] = useState('')
-  const [email, setemail] = useState('')
+const SignupModal = ({ openSignupHandler }) => {
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -206,32 +245,44 @@ const SignupModal = ({openSignupHandler}) => {
   } = useForm({ mode: 'onChange' });
 
   const handleChange = (e) => {
-    if (e.target.type === 'text') {
+    if (e.target.placeholder === 'Nickname') {
+      setNickname(e.target.value);
+    }
+    if (e.target.placeholder === 'E-Mail') {
+      setEmail(e.target.value);
+    }
+    if (e.target.placeholder === 'ID') {
       setUserId(e.target.value);
     }
-    if (e.target.type === 'password') {
+    if (e.target.placeholder === 'Password') {
       setPassword(e.target.value);
+    }
+    if (e.target.placeholder === 'Verify Password') {
+      setPasswordCheck(e.target.value);
     }
   };
   return (
   <SignupModalContainer>
   <SignupModalBackdrop onClick={openSignupHandler}>
    <SignupModalWindow onClick={(e) => e.stopPropagation()}>
+     <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
      <IdPasswordContainer>
            <Title>회원가입</Title>
            <ProfileContainer>
             <ProfilePicture />
             <ProfileText>프로필 사진</ProfileText>
            </ProfileContainer>
+          <SignupInputContainer>
            <NicknameText>닉네임
-             <NicknameInput onChange={handleChange} />
+             <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
            </NicknameText>
            <EmailText>이메일
-              <EmailInput onChange={handleChange} />           
+              <EmailInput placeholder={'E-Mail'} onChange={handleChange} />           
             </EmailText>
            <IdText>아이디
              <IdInput 
              name="userId"
+             placeholder={'ID'}
              onChange={handleChange}
              {...register('userId', {
               pattern: /^[a-z0-9_-]{4,20}$/,
@@ -254,6 +305,7 @@ const SignupModal = ({openSignupHandler}) => {
              <PwInput 
              onChange={handleChange} 
              name="password" 
+             placeholder={'Password'}
              {...register('password', {
               pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
               required: true,
@@ -281,6 +333,7 @@ const SignupModal = ({openSignupHandler}) => {
            <PwCheckText>비밀번호 확인
              <PwCheckInput 
              name="verifyPassword"
+             placeholder={'Verify Password'}
              onChange={handleChange} 
              {...register('verifyPassword', { required: true })}
              onInvalid={(e) => {
@@ -300,10 +353,7 @@ const SignupModal = ({openSignupHandler}) => {
                   비밀번호가 일치합니다.
                 </Validation_Check_Green>
               )}
-          <BottomContainer>
-           <HomeBtn>홈으로</HomeBtn>
           <SignupSubmitBtn> 회원가입</SignupSubmitBtn>
-          </BottomContainer>
          </IdPasswordContainer>
    </SignupModalWindow>
   </SignupModalBackdrop>
