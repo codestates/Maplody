@@ -224,7 +224,7 @@ const LoginModal = ({ accessToken, setAccessToken, loginOpen, setLoginOpen, open
         navigate.push({ pathname: '/main' });
       })
       .catch((err) => {
-        alert('ID와 Password를 확인해 주세요!');
+        console.log('ID와 Password를 확인해 주세요!');
       });
   };
 
