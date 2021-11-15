@@ -313,7 +313,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
       })
       .catch((err) => {
         alert('입력된 정보를 다시 확인해 주세요');
-      });
+      });       
   };
 
   const withdrawalModalHandler = () => {
