@@ -107,8 +107,8 @@ const NicknameInput = styled.input.attrs({ type: 'text' })`
 `;
 const Nicknameinform = styled.div`
   font-size: 15.5px;
-  margin: 10px 5px 10px -30px;
   color: #ff0066;
+  margin: -10px 0 15px -25px;
 `;
 const EmailContainer = styled.div`
   display: flex;
@@ -179,7 +179,7 @@ const PwInput = styled.input.attrs({ type: 'password' })`
 
 const Pwinform = styled.div`
   font-size: 15.5px;
-  margin: 10px 5px 10px -30px;
+  margin: 10px 5px 10px -20px;
   color: #ff0066;
 `;
 
@@ -252,31 +252,13 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
   }, [watch('verifyPassword'), watch('password')]);
-
-  const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname') {
-      setNickname(e.target.value);
-    }
-    if (e.target.placeholder === 'E-Mail') {
-      setEmail(e.target.value);
-    }
-    if (e.target.placeholder === 'ID') {
-      setUserId(e.target.value);
-    }
-    if (e.target.placeholder === 'Password') {
-      setPassword(e.target.value);
-    }
-    if (e.target.placeholder === 'Verify Password') {
-      setPasswordCheck(e.target.value);
-    }
-  };
 
   const MyinfoFixHandler = () => {
     axios
@@ -309,12 +291,18 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               <NicknameText>
                 닉네임
                 <NicknameInput
+                  name="nickname"
                   placeholder={'Nickname'}
-                  onChange={handleChange}
                   {...register('nickname', {
                     required: true,
                     minLength: 2,
                   })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('닉네임은 2글자 이상이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
                 />
               </NicknameText>
               {errors.nickname ? (
@@ -322,7 +310,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               ) : (
                 <Validation_Check />
               )}
-              <Nicknameinform>! 닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
+              <Nicknameinform>닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
               <EmailContainer>
                 <EmailText>이메일</EmailText>
                 <EmailUser>admin@gmail.com</EmailUser>
@@ -334,7 +322,6 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               <PwText>
                 비밀번호
                 <PwInput
-                  onChange={handleChange}
                   name="password"
                   placeholder={'Password'}
                   {...register('password', {
@@ -350,7 +337,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
                   }}
                 />
               </PwText>
-              <Pwinform>! 비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
+              <Pwinform>비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
               {errors.password ? (
                 <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
               ) : (
@@ -361,7 +348,6 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
                 <PwCheckInput
                   name="verifyPassword"
                   placeholder={'Verify Password'}
-                  onChange={handleChange}
                   {...register('verifyPassword', { required: true })}
                   onInvalid={(e) => {
                     e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
@@ -376,11 +362,15 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
               ) : (
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-              <MyInfoFixSubmitBtn
-                disabled={errors.nickname || errors.password || !passwordCheck}
-                onClick={MyinfoFixHandler}>
-                수정
-              </MyInfoFixSubmitBtn>
+              {!isValid || !passwordCheck ? (
+                <MyInfoFixSubmitBtn disabled={true} onClick={MyinfoFixHandler}>
+                  수정
+                </MyInfoFixSubmitBtn>
+              ) : (
+                <MyInfoFixSubmitBtn disabled={false} onClick={MyinfoFixHandler}>
+                  수정
+                </MyInfoFixSubmitBtn>
+              )}
             </MyinfoInputContainer>
           </IdPasswordContainer>
         </MyInfoFixModalWindow>
