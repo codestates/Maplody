@@ -244,6 +244,9 @@ const SignupModal = ({ openSignupHandler }) => {
       .post(
         `${process.env.REACT_APP_API_URL}/user-signup`,
         { nickname: watch().nickname, email: watch().email, userId: watch().userId, password: watch().password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
         { withCredentials: true },
       )
       .then((res) => {
