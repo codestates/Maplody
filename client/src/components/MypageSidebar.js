@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import Post from './Post';
+import MyPost from './MyPost';
 import MyInfoFixModal from './MyInfoFixModal';
 
 const slideIn = keyframes`
@@ -207,12 +207,14 @@ const MypageSidebar = ({ accessToken, setAccessToken }) => {
               </AboutUser>
             </UserInfo>
             <CreatedPostContainer>
-              <Post />
+              <MyPost />
             </CreatedPostContainer>
             <UserInfoButtonContainer>
               <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
               <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
-              {userinfoOpen ? <MyInfoFixModal userinfoModalHandler={userinfoModalHandler} /> : null}
+              {userinfoOpen ? (
+                <MyInfoFixModal accessToken={accessToken} userinfoModalHandler={userinfoModalHandler} />
+              ) : null}
             </UserInfoButtonContainer>
           </SidebarContainer>
         </ModalBackdrop>
