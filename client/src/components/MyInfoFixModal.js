@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
+import WithdrawalModal from './WithdrawalModal'
 
 const slideIn = keyframes`
     from {
@@ -241,6 +242,43 @@ const MyInfoFixSubmitBtn = styled.button`
     box-shadow: none;
   }
 `;
+const WithdrawalBtn = styled.button`
+height: 45px;
+  margin: 30px 30px 15px 30px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  padding-top: 2px;
+  font-size: 25px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+    color: #ff0066;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
 
 const MyInfoFixModal = ({ userinfoModalHandler }) => {
   const [nickname, setNickname] = useState('');
@@ -248,6 +286,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState(false);
+  const [withdrawalOpen, setWithdrawalOpen] = useState(false);
 
   const {
     register,
@@ -278,6 +317,11 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
     }
   };
 
+  const withdrawalModalHandler = () => {
+    setWithdrawalOpen(!withdrawalOpen);
+    console.log(withdrawalOpen)
+  }
+
   const MyinfoFixHandler = () => {
     axios
       .post(
@@ -296,7 +340,7 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
 
   return (
     <MyInfoFixModalContainer>
-      <MyInfoFixModalBackdrop onClick={userinfoModalHandler}>
+      <MyInfoFixModalBackdrop>
         <MyInfoFixModalWindow onClick={(e) => e.stopPropagation()}>
           <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
           <IdPasswordContainer>
@@ -381,6 +425,8 @@ const MyInfoFixModal = ({ userinfoModalHandler }) => {
                 onClick={MyinfoFixHandler}>
                 수정
               </MyInfoFixSubmitBtn>
+              <WithdrawalBtn onClick={withdrawalModalHandler}>회원탈퇴</WithdrawalBtn>
+              {withdrawalOpen ? <WithdrawalModal withdrawalModalHandler={withdrawalModalHandler}/> : null}
             </MyinfoInputContainer>
           </IdPasswordContainer>
         </MyInfoFixModalWindow>
