@@ -71,7 +71,7 @@ const MarkerAddress = styled.div`
   width: fit-content;
 `;
 
-const MusicVideo = styled.iframe`
+const MusicVideo = styled.div`
   z-index: 998;
   width: 100px;
   height: 100px;
@@ -137,7 +137,6 @@ const NewPostModal = ({ getAddress }) => {
   const [singerName, setSingerName] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
-  // 나중에 악시오스 데이터 보낼때 써야하는 storyBoard 값
 
   const [getVideo, setGetVideo] = useState({});
 
@@ -155,6 +154,8 @@ const NewPostModal = ({ getAddress }) => {
         setGetVideo(res);
       });
   };
+
+  const postHandler = () => {};
 
   const handleChange = (e) => {
     if (e.target.placeholder === '가수 이름') {
@@ -176,10 +177,10 @@ const NewPostModal = ({ getAddress }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-        <MusicVideo>동영상</MusicVideo>
+        <MusicVideo onClick={videoSearchHandler}>노래 제목과 가수 이름을 입력하시고 눌러주세요!</MusicVideo>
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
-      <RegisterButton onClick={videoSearchHandler}>등록하기</RegisterButton>
+      <RegisterButton>등록하기</RegisterButton>
     </NewPostModalContainer>
   );
 };

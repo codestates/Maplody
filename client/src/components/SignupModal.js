@@ -187,13 +187,6 @@ const PwCheckInput = styled.input.attrs({ type: 'password' })`
   }
 `;
 
-const SignupSubmitBtnContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 30px 15px 0;
-`;
-
 const SignupSubmitBtn = styled.button`
   align-items: center;
   height: 45px;
@@ -233,10 +226,6 @@ const SignupSubmitBtn = styled.button`
 `;
 
 const SignupModal = ({ openSignupHandler }) => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState(false);
 
   const {
@@ -244,38 +233,22 @@ const SignupModal = ({ openSignupHandler }) => {
     handleSubmit,
     formState: { errors },
     watch,
+    getValues,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
   }, [watch('verifyPassword'), watch('password')]);
 
-  const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname') {
-      setNickname(e.target.value);
-    }
-    if (e.target.placeholder === 'E-Mail') {
-      setEmail(e.target.value);
-    }
-    if (e.target.placeholder === 'ID') {
-      setUserId(e.target.value);
-    }
-    if (e.target.placeholder === 'Password') {
-      setPassword(e.target.value);
-    }
-    if (e.target.placeholder === 'Verify Password') {
-      setPasswordCheck(e.target.value);
-    }
-  };
-
   const SignupBtnHandler = () => {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/user-signup`,
-        { nickname: nickname, email: email, userId: userId, password: password },
+        { nickname: watch().nickname, email: watch().email, userId: watch().userId, password: watch().password },
         { withCredentials: true },
       )
       .then((res) => {
+        console.log(res);
         alert('회원가입이 완료 되었습니다.');
         openSignupHandler();
       })
@@ -298,14 +271,31 @@ const SignupModal = ({ openSignupHandler }) => {
             <SignupInputContainer>
               <NicknameText>
                 닉네임
-                <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
+                <NicknameInput
+                  name="nickname"
+                  placeholder={'Nickname'}
+                  {...register('nickname', {
+                    required: true,
+                    minLength: 2,
+                  })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('닉네임은 2글자 이상이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
               </NicknameText>
+              {errors.nickname ? (
+                <Validation_Check>닉네임은 2글자 이상이어야 합니다.</Validation_Check>
+              ) : (
+                <Validation_Check />
+              )}
               <EmailText>
                 이메일
                 <EmailInput
                   name="email"
                   placeholder={'E-Mail'}
-                  onChange={handleChange}
                   {...register('email', {
                     pattern: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
                     minlength: 10,
@@ -323,7 +313,6 @@ const SignupModal = ({ openSignupHandler }) => {
                 <IdInput
                   name="userId"
                   placeholder={'ID'}
-                  onChange={handleChange}
                   {...register('userId', {
                     pattern: /^[a-z0-9_-]{4,20}$/,
                     maxLength: 20,
@@ -340,7 +329,6 @@ const SignupModal = ({ openSignupHandler }) => {
               <PwText>
                 비밀번호
                 <PwInput
-                  onChange={handleChange}
                   name="password"
                   placeholder={'Password'}
                   {...register('password', {
@@ -366,7 +354,6 @@ const SignupModal = ({ openSignupHandler }) => {
                 <PwCheckInput
                   name="verifyPassword"
                   placeholder={'Verify Password'}
-                  onChange={handleChange}
                   {...register('verifyPassword', { required: true })}
                   onInvalid={(e) => {
                     e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
@@ -381,11 +368,7 @@ const SignupModal = ({ openSignupHandler }) => {
               ) : (
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-              <SignupSubmitBtn
-                disabled={!nickname || !email || !userId || !password || !passwordCheck}
-                onClick={SignupBtnHandler}>
-                회원가입
-              </SignupSubmitBtn>
+              <SignupSubmitBtn onClick={SignupBtnHandler}>회원가입</SignupSubmitBtn>
             </SignupInputContainer>
           </IdPasswordContainer>
         </SignupModalWindow>
