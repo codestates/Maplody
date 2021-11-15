@@ -193,7 +193,7 @@ const SignupBtn = styled.div`
   }
 `;
 
-const LoginModal = ({ accessToken, setAccessToken, loginOpen, setLoginOpen, openModalHandler }) => {
+const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin }) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const openSignupHandler = () => {
     setSignupOpen(!signupOpen);
@@ -221,10 +221,11 @@ const LoginModal = ({ accessToken, setAccessToken, loginOpen, setLoginOpen, open
       )
       .then((res) => {
         setAccessToken(res.data.data);
-        navigate.push({ pathname: '/main' });
+        setIsLogin(true);
+        navigate('/main');
       })
       .catch((err) => {
-        alert('ID와 Password를 확인해 주세요!');
+        console.log('ID와 Password를 확인해 주세요!');
       });
   };
 
