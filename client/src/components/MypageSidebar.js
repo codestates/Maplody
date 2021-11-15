@@ -3,7 +3,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-
 import Post from './Post';
 import MyInfoFixModal from './MyInfoFixModal';
 
