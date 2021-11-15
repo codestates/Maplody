@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SignupModal from './SignupModal';
@@ -51,7 +53,7 @@ const IdPasswordContainer = styled.div``;
 const IdInput = styled.input`
   margin: 15px;
   font-size: 23px;
-  padding: 5px;
+  padding: 5px 0 5px 10px;
 `;
 
 const PwText = styled.div`
@@ -69,7 +71,7 @@ const LoginBtnContainer = styled.div`
 const PwInput = styled.input.attrs({ type: 'password' })`
   margin: 15px;
   font-size: 23px;
-  padding: 5px;
+  padding: 5px 0 5px 10px;
 `;
 
 const LoginBtn = styled.div`
@@ -191,13 +193,15 @@ const SignupBtn = styled.div`
   }
 `;
 
-const LoginModal = ({ loginOpen, setLoginOpen, openModalHandler }) => {
+const LoginModal = ({ accessToken, setAccessToken, loginOpen, setLoginOpen, openModalHandler }) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const openSignupHandler = () => {
     setSignupOpen(!signupOpen);
   };
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     if (e.target.type === 'text') {
@@ -208,11 +212,27 @@ const LoginModal = ({ loginOpen, setLoginOpen, openModalHandler }) => {
     }
   };
 
+  const loginBtnHandler = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/user-login`,
+        { userId: userId, password: password },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setAccessToken(res.data.data);
+        navigate.push({ pathname: '/main' });
+      })
+      .catch((err) => {
+        alert('ID와 Password를 확인해 주세요!');
+      });
+  };
+
   return (
     <LoginModalContainer>
       <LoginModalBackdrop onClick={openModalHandler}>
         <LoginModalWindow onClick={(e) => e.stopPropagation()}>
-          <CloseBtn className="fas fa-times" onClick={openModalHandler}></CloseBtn>
+          <CloseBtn className="fas fa-times" onClick={openModalHandler} />
           <IdPasswordContainer>
             <Title>Login</Title>
             <IdText>
@@ -224,7 +244,7 @@ const LoginModal = ({ loginOpen, setLoginOpen, openModalHandler }) => {
               <PwInput onChange={handleChange} />
             </PwText>
             <LoginBtnContainer>
-              <LoginBtn>로그인</LoginBtn>
+              <LoginBtn onClick={loginBtnHandler}>로그인</LoginBtn>
               <GoogleBtn>
                 <GoogleIcon src={require('../img/google login logo.png').default} />
                 Google로 로그인

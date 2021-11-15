@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -7,13 +8,15 @@ import Landing from './pages/Landing';
 import SignoutModal from './components/SignoutModal';
 
 function App() {
+  const [accessToken, setAccessToken] = useState('');
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Landing />} />
+          <Route exact path="/" element={<Landing setAccessToken={setAccessToken} />} />
           <Route path="/loading" element={<Loading />} />
-          <Route path="/main" element={<Main />} />
+          <Route path="/main" element={<Main accessToken={accessToken} setAccessToken={setAccessToken} />} />
           <Route path="/signout" element={<SignoutModal />} />
         </Routes>
       </BrowserRouter>
