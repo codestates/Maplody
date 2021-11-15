@@ -272,7 +272,7 @@ const SignupModal = ({ openSignupHandler }) => {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/user-signup`,
-        { nickname: nickname, email: email, userId: userId, password: password },
+        { nickname: watch().nickname, email: watch().email, userId: watch().userId, password: watch().password },
         {
           headers: { 'Content-Type': 'application/json' },
         },

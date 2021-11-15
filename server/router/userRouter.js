@@ -1,5 +1,5 @@
-const exress = require('express');
-const router = exress.Router();
+const express = require('express');
+const router = express.Router();
 const controllers = require('../controllers/Users');
 
 router.post('/user-login', controllers.login);
