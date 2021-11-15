@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -48,50 +48,50 @@ const WithdrawalContainer = styled.div`
   background-color: white;
 `;
 const WithdrawalTitleBox = styled.div`
-width: 100%;
-height: 100px;
-margin: 40px 20px 20px 80px;
-font-size: 30px;
+  width: 100%;
+  height: 100px;
+  margin: 40px 20px 20px 80px;
+  font-size: 30px;
 `;
-const WithdrawalTitle = styled.div`
-`;
+const WithdrawalTitle = styled.div``;
 const WithdrawalWarning = styled.div`
-font-size: 18px;
+  font-size: 18px;
 `;
 const CheckboxContainer = styled.div`
-width: 100%;
-height: 40px;
-margin-top: 60px;
-margin-bottom: 40px;
-display: flex;
-justify-content: center;
-align-items: center;
+  width: 100%;
+  height: 40px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' })``;
+
 const ConsentTitle = styled.div`
-font-size: 20px;
-margin-left: 10px;
-color: #ff0066;
-`;
-const Checkbox = styled.input.attrs({type: 'checkbox'})`
+  font-size: 20px;
+  margin-left: 10px;
+  color: #ff0066;
 `;
 const WithdrawalInputContainer = styled.div`
-margin: 30px;
+  margin: 30px;
 `;
 const WithdrawalComment = styled.div`
-font-size: 20px;
-margin-bottom: 15px;
+  font-size: 20px;
+  margin-bottom: 15px;
 `;
 const WithdrawalInput = styled.input.attrs({ type: 'text' })`
-font-size: 20px;
-width: 100%;
+  font-size: 20px;
+  width: 100%;
 `;
 const WithdrawalBtnContainer = styled.div`
-width: 100%;
-height: 100px;
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 20px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 `;
 const WithdrawalBtn = styled.button`
   height: 45px;
@@ -131,7 +131,7 @@ const WithdrawalBtn = styled.button`
   }
 `;
 const BackBtn = styled.button`
-   height: 45px;
+  height: 45px;
   margin: 30px 30px 15px 30px;
   border: solid 3px;
   border-radius: 15px;
@@ -168,65 +168,84 @@ const BackBtn = styled.button`
   }
 `;
 
-const WithdrawalModal = ({withdrawalModalHandler}) => {
+const WithdrawalModal = ({ accessToken, withdrawalModalHandler }) => {
+  const [check, setCheck] = useState(false);
+  const [inputCheck, setInputCheck] = useState('');
+
+  const checkHandler = () => {
+    setCheck(!check);
+  };
+
+  const inputCheckHandler = (e) => {
+    setInputCheck(e.target.value);
+  };
 
   const navigate = useNavigate();
+
   const withdrawalBtnHandler = () => {
     axios
-      .delete(
-        `${process.env.REACT_APP_API_URL}/user-withdrawal`,
-        // { accessToken: accessToken},
-        { withCredentials: true },
-      )
+      .delete(`${process.env.REACT_APP_API_URL}/user-withdrawal`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      })
       .then((res) => {
-        navigate.push({ pathname: '/' });
+        alert('탈퇴되었습니다. 그동안 감사했습니다. 더 좋은 서비스로 다시 찾아 뵙겠습니다.');
+        navigate('/');
       })
       .catch((err) => {
         alert('잘못된 요청입니다');
       });
   };
 
-  return( 
+  return (
     <WithdrawalModalContainer>
       <WithdrawalModalBackdrop>
-      <WithdrawalContainer>
-      <CloseBtn className="fas fa-times" onClick={withdrawalModalHandler} />
-        <WithdrawalTitleBox>
-          <WithdrawalTitle>탈퇴안내</WithdrawalTitle>
-        </WithdrawalTitleBox>
-        <WithdrawalWarning>
-        <p>회원탈퇴를 신청하기 전에 안내사항을 꼭 확인해주세요.</p>
-        <br />
-        <p>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</p>
-        <br />
-        <p>탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니</p>
-        <br />
-        <p>신중하게 선택하시기 바랍니다.</p>
-        <br />
-        <p>탈퇴 후에는 가입되어있으신 아이디로 다시 가입할 수 없으며</p>
-        <br />
-        <p>아이디와 데이터는 복구할 수 없습니다.</p>
-        <br />
-        <p>게시판형 서비스에 남아있는 게시글은 탈퇴 후 삭제할 수 없습니다.</p>
-    </WithdrawalWarning>
-    <CheckboxContainer>
-      <Checkbox />
-      <ConsentTitle>
-      안내 사항을 모두 확인하였으며, 이에 동의합니다.
-      </ConsentTitle>
-    </CheckboxContainer>
-    <WithdrawalInputContainer>
-      <WithdrawalComment>"탈퇴합니다"를 정확히 입력해주세요</WithdrawalComment>
-        <WithdrawalInput />
-    </WithdrawalInputContainer>
+        <WithdrawalContainer>
+          <CloseBtn className="fas fa-times" onClick={withdrawalModalHandler} />
+          <WithdrawalTitleBox>
+            <WithdrawalTitle>탈퇴안내</WithdrawalTitle>
+          </WithdrawalTitleBox>
+          <WithdrawalWarning>
+            <p>회원탈퇴를 신청하기 전에 안내사항을 꼭 확인해주세요.</p>
+            <br />
+            <p>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</p>
+            <br />
+            <p>탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니</p>
+            <br />
+            <p>신중하게 선택하시기 바랍니다.</p>
+            <br />
+            <p>탈퇴 후에는 가입되어있으신 아이디로 다시 가입할 수 없으며</p>
+            <br />
+            <p>아이디와 데이터는 복구할 수 없습니다.</p>
+            <br />
+            <p>게시판형 서비스에 남아있는 게시글은 탈퇴 후 삭제할 수 없습니다.</p>
+          </WithdrawalWarning>
+          <CheckboxContainer>
+            <Checkbox onClick={checkHandler} />
+            <ConsentTitle>안내 사항을 모두 확인하였으며, 이에 동의합니다.</ConsentTitle>
+          </CheckboxContainer>
+          <WithdrawalInputContainer>
+            <WithdrawalComment>"탈퇴합니다"를 정확히 입력해주세요</WithdrawalComment>
+            <WithdrawalInput onChange={inputCheckHandler} />
+          </WithdrawalInputContainer>
           <WithdrawalBtnContainer>
-          <WithdrawalBtn onClick={withdrawalBtnHandler}>탈퇴</WithdrawalBtn>
+            {check && inputCheck === '탈퇴합니다' ? (
+              <WithdrawalBtn disabled={false} onClick={withdrawalBtnHandler}>
+                탈퇴
+              </WithdrawalBtn>
+            ) : (
+              <WithdrawalBtn disabled={true} onClick={withdrawalBtnHandler}>
+                탈퇴
+              </WithdrawalBtn>
+            )}
             <BackBtn onClick={withdrawalModalHandler}>취소(뒤로가기)</BackBtn>
           </WithdrawalBtnContainer>
         </WithdrawalContainer>
       </WithdrawalModalBackdrop>
     </WithdrawalModalContainer>
-  )
+  );
 };
 
 export default WithdrawalModal;

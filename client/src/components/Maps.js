@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
@@ -32,7 +32,7 @@ const Map = () => {
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
       });
-      return
+    return;
   };
 
   const addMarkerHandler = (e) => {
@@ -41,8 +41,8 @@ const Map = () => {
   };
 
   const openNewPostModalHandler = () => {
-   setIsOpenNewPostModal(!isOpenNewPostModal);
-   };
+    setIsOpenNewPostModal(!isOpenNewPostModal);
+  };
 
   return (
     <GoogleMap
