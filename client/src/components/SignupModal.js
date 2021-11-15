@@ -381,11 +381,7 @@ const SignupModal = ({ openSignupHandler }) => {
               ) : (
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-              <SignupSubmitBtn
-                disabled={!nickname || !email || !userId || !password || !passwordCheck}
-                onClick={SignupBtnHandler}>
-                회원가입
-              </SignupSubmitBtn>
+              <SignupSubmitBtn onClick={SignupBtnHandler}>회원가입</SignupSubmitBtn>
             </SignupInputContainer>
           </IdPasswordContainer>
         </SignupModalWindow>
