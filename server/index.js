@@ -16,16 +16,16 @@ sequelize.sync();
 
 app.use(
   cors({
-    origin: true,
-    // [
-    //   'https://localhost:3000',
-    //   'http://localhost:3000',
-    //   'http://maplody.site',
-    //   'http://www.maplody.site',
-    //   'https://www.maplody.site',
-    //   'https://maplody.site',
-    //   `${process.env.S3_ENDPOINT}`,
-    // ],
+    origin:
+    [
+      'https://localhost:3000',
+      'http://localhost:3000',
+      'http://maplody.site',
+      'http://www.maplody.site',
+      'https://www.maplody.site',
+      'https://maplody.site',
+      `${process.env.S3_ENDPOINT}`,
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   }),
