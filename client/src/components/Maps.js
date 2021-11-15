@@ -23,13 +23,16 @@ const Map = () => {
   };
 
   const markerAddressHandler = () => {
+    if(paramsAddress.latlng === ',') return;
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
+        {withCredentials: false},
       )
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
       });
+      return
   };
 
   const addMarkerHandler = (e) => {
@@ -37,9 +40,9 @@ const Map = () => {
     markerAddressHandler();
   };
 
-  const openNewPostModalHandler = () => {
-    setIsOpenNewPostModal(!isOpenNewPostModal);
-  };
+  // const openNewPostModalHandler = () => {
+  //   setIsOpenNewPostModal(!isOpenNewPostModal);
+  // };
 
   return (
     <GoogleMap
@@ -47,9 +50,9 @@ const Map = () => {
       defaultCenter={{ lat: 37.51249519205713, lng: 126.99480974427608 }}
       options={{ disableDefaultUI: true }}
       onClick={addMarkerHandler}>
-      <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
+      <Marker onClick={() => {setIsOpenNewPostModal(!isOpenNewPostModal)}} animation={2} position={target}>
         {isOpenNewPostModal ? (
-          <InfoWindow>
+          <InfoWindow zIndex={998}>
             <NewPostModal getAddress={getAddress} />
           </InfoWindow>
         ) : null}
