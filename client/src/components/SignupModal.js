@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const SignupModalContainer = styled.div`
@@ -22,7 +23,7 @@ const SignupModalWindow = styled.div`
   border-radius: 15px;
   background-color: white;
   width: 450px;
-  height: 650px;
+  height: 800px;
 `;
 
 const CloseBtn = styled.div`
@@ -65,7 +66,7 @@ const ProfileText = styled.div`
 const SignupInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 0 25px 35px;
+  padding: 0 0 25px 35px;
 `;
 
 const NicknameText = styled.div`
@@ -76,7 +77,6 @@ const NicknameInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
   height: 40px;
-  cursor: pointer;
   border: solid 3px;
   border-radius: 5px;
   margin-left: 42px;
@@ -98,7 +98,6 @@ const EmailInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
   height: 40px;
-  cursor: pointer;
   border: solid 3px;
   border-radius: 5px;
   margin-left: 42px;
@@ -120,7 +119,6 @@ const IdInput = styled.input.attrs({ type: 'text' })`
   font-size: 17px;
   width: 250px;
   height: 40px;
-  cursor: pointer;
   border: solid 3px;
   border-radius: 5px;
   margin-left: 42px;
@@ -146,17 +144,16 @@ const Validation_Check = styled.div`
 `;
 
 const Validation_Check_Green = styled.div`
-color: green;
-font-size: 17px;
-width: fit-content;
-margin: 10px 0 15px 0;
+  color: green;
+  font-size: 17px;
+  width: fit-content;
+  margin: 10px 0 15px 0;
 `;
 
 const PwInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
   width: 250px;
   height: 40px;
-  cursor: pointer;
   border: solid 3px;
   border-radius: 5px;
   margin-left: 24px;
@@ -178,7 +175,6 @@ const PwCheckInput = styled.input.attrs({ type: 'password' })`
   font-size: 17px;
   width: 188px;
   height: 40px;
-  cursor: pointer;
   border: solid 3px;
   border-radius: 5px;
   margin-left: 42px;
@@ -191,9 +187,16 @@ const PwCheckInput = styled.input.attrs({ type: 'password' })`
   }
 `;
 
-const SignupSubmitBtn = styled.div`
+const SignupSubmitBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 30px 15px 0;
+`;
+
+const SignupSubmitBtn = styled.button`
+  align-items: center;
   height: 45px;
-  margin: 5px 30px 15px 30px;
   border: solid 3px;
   border-radius: 15px;
   background-color: white;
@@ -234,8 +237,7 @@ const SignupModal = ({ openSignupHandler }) => {
   const [email, setEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState(false);
 
   const {
     register,
@@ -244,8 +246,12 @@ const SignupModal = ({ openSignupHandler }) => {
     watch
   } = useForm({ mode: 'onChange' });
 
+  useEffect(() => {
+    setPasswordCheck(watch('verifyPassword') === watch('password'));
+  }, [watch('verifyPassword'), watch('password')]);
+
   const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname') {
+    if (e.target.placeholder === 'Nickname' || e.target.value) {
       setNickname(e.target.value);
     }
     if (e.target.placeholder === 'E-Mail') {
@@ -254,13 +260,30 @@ const SignupModal = ({ openSignupHandler }) => {
     if (e.target.placeholder === 'ID') {
       setUserId(e.target.value);
     }
-    if (e.target.placeholder === 'Password') {
+    if (e.target.placeholder === 'Password' || e.target.value.length !== 0) {
       setPassword(e.target.value);
     }
     if (e.target.placeholder === 'Verify Password') {
       setPasswordCheck(e.target.value);
     }
   };
+
+  const SignupBtnHandler = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/user-signup`,
+        { nickname: nickname, email: email, userId: userId, password: password },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        alert('회원가입이 완료 되었습니다.');
+        openSignupHandler();
+      })
+      .catch((err) => {
+        alert('입력된 정보를 다시 확인해 주세요');
+      });
+  };
+
   return (
   <SignupModalContainer>
   <SignupModalBackdrop onClick={openSignupHandler}>
@@ -274,11 +297,43 @@ const SignupModal = ({ openSignupHandler }) => {
            </ProfileContainer>
           <SignupInputContainer>
            <NicknameText>닉네임
-             <NicknameInput placeholder={'Nickname'} onChange={handleChange} />
+             <NicknameInput 
+             placeholder={'Nickname'} 
+             onChange={handleChange} 
+             {...register('nickname', {
+              minLength: 2
+            })}
+            />
            </NicknameText>
+           {errors.nickname ? (
+              <Validation_Check>
+              닉네임은 2글자 이상이어야 합니다.
+            </Validation_Check>
+              ) : (
+                <Validation_Check_Green>
+                사용가능한 닉네임 입니다.
+                </Validation_Check_Green>
+              )}
            <EmailText>이메일
-              <EmailInput placeholder={'E-Mail'} onChange={handleChange} />           
+              <EmailInput 
+              name='email'
+              placeholder={'E-Mail'} 
+              onChange={handleChange}
+              {...register('email', {
+                pattern: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
+                minlength: 10,
+                required: true
+              })} />           
             </EmailText>
+            {errors.email ? (
+                <Validation_Check>
+                  올바른 이메일 형식이 아닙니다.
+                </Validation_Check>
+              ) : (
+                <Validation_Check_Green>
+                  사용가능한 이메일 입니다.
+                </Validation_Check_Green>
+              )}
            <IdText>아이디
              <IdInput 
              name="userId"
@@ -344,7 +399,7 @@ const SignupModal = ({ openSignupHandler }) => {
             }}
             />
            </PwCheckText>
-           {!isVerified ? (
+           {!passwordCheck ? (
                 <Validation_Check>
                   비밀번호가 일치하지 않습니다.
                 </Validation_Check>
@@ -353,8 +408,13 @@ const SignupModal = ({ openSignupHandler }) => {
                   비밀번호가 일치합니다.
                 </Validation_Check_Green>
               )}
-          <SignupSubmitBtn> 회원가입</SignupSubmitBtn>
-         </IdPasswordContainer>
+          <SignupSubmitBtn 
+            disabled={!nickname || !email || !userId || !password || !passwordCheck} 
+            onClick={SignupBtnHandler}>
+            회원가입
+          </SignupSubmitBtn>
+          </SignupInputContainer>
+          </IdPasswordContainer>
    </SignupModalWindow>
   </SignupModalBackdrop>
  </SignupModalContainer>

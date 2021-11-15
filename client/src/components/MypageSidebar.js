@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-
 import Post from './Post';
 import Button from './Button';
+import MyInfoFixModal from './MyInfoFixModal'
 
 const slideIn = keyframes`
     from {
@@ -163,10 +163,14 @@ const UserInfoButton = styled.button`
 
 const MypageSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [userinfoOpen, setUserinfoOpen ] = useState(false)
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
+  const userinfoModalHandler = () => {
+    setUserinfoOpen(!userinfoOpen)
+  }
+
 
   return (
     <MenuContainer>
@@ -191,7 +195,8 @@ const MypageSidebar = () => {
             </CreatedPostContainer>
             <UserInfoButtonContainer>
               <UserInfoButton>로그아웃</UserInfoButton>
-              <UserInfoButton>회원정보 수정</UserInfoButton>
+              <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
+              {userinfoOpen ? <MyInfoFixModal userinfoModalHandler={userinfoModalHandler} /> : null}
             </UserInfoButtonContainer>
           </SidebarContainer>
         </ModalBackdrop>
