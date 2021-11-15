@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import WithdrawalModal from './WithdrawalModal';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
+import WithdrawalModal from './WithdrawalModal'
 
 const slideIn = keyframes`
     from {
@@ -242,6 +243,43 @@ const MyInfoFixSubmitBtn = styled.button`
     box-shadow: none;
   }
 `;
+const WithdrawalBtn = styled.button`
+height: 45px;
+  margin: 30px 30px 15px 30px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 200px;
+  transition: 300ms ease all;
+  padding-top: 2px;
+  font-size: 25px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+    color: #ff0066;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
 
 const WithdrawalBtn = styled.button`
   height: 45px;
@@ -313,7 +351,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
       })
       .catch((err) => {
         alert('입력된 정보를 다시 확인해 주세요');
-      });
+      });       
   };
 
   const withdrawalModalHandler = () => {
