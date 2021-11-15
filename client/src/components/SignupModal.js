@@ -241,7 +241,6 @@ const SignupModal = ({ openSignupHandler }) => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
     watch,
   } = useForm({ mode: 'onChange' });
@@ -251,11 +250,12 @@ const SignupModal = ({ openSignupHandler }) => {
   }, [watch('verifyPassword'), watch('password')]);
 
   const handleChange = (e) => {
-    if (e.target.placeholder === 'Nickname' || e.target.value) {
+    if (e.target.placeholder === 'Nickname') {
       setNickname(e.target.value);
     }
     if (e.target.placeholder === 'E-Mail') {
       setEmail(e.target.value);
+      console.log(email)
     }
     if (e.target.placeholder === 'ID') {
       setUserId(e.target.value);
@@ -382,7 +382,6 @@ const SignupModal = ({ openSignupHandler }) => {
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
               <SignupSubmitBtn
-                disabled={!nickname || !email || !userId || !password || !passwordCheck}
                 onClick={SignupBtnHandler}>
                 회원가입
               </SignupSubmitBtn>
