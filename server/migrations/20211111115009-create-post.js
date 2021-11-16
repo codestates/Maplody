@@ -8,23 +8,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      song_artist: {
+      musicArtist: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      song_title: {
+      musicTitle: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      song_image: {
+      url: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      song_location: {
+      place: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      content: {
+      storyboard: {
         allowNull: false,
         type: Sequelize.STRING,
       },

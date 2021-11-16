@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Landing setAccessToken={setAccessToken} />} />
-          <Route path="/loading" element={<Loading setIsLogin={setIsLogin} />} />
+          <Route exact path="/" element={<Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} />} />
+          <Route path="/loading" element={<Loading />} />
           <Route path="/main" element={<Main accessToken={accessToken} setAccessToken={setAccessToken} />} />
         </Routes>
       </BrowserRouter>
