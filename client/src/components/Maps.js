@@ -77,7 +77,6 @@ const Map = () => {
               onCloseClick={() => {
                 setSelected(null);
               }}>
-
               <Post 
               key={el.id}
               place={el.place}

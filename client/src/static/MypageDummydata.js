@@ -1,19 +1,19 @@
 const MypageDummydata = [
-    {
+  {
     id: 1,
-    place: "남산 공원",
+    place: '남산 공원',
     lat: 37.550976488284654,
     lng: 126.99095582962613,
     musicTitle: "It's you",
-    musicArtist: "헨리",
+    musicArtist: '헨리',
     createdAt: '2020-08-13T16:17:27.000Z',
     updatedAt: '2020-08-13T16:17:27.000Z',
     url: '',
     storyboard: '남산공원하면 사랑의 자물쇠.....ㅎ 근데 자물쇠 사고나서 바로 키 잊어버려서 결국 못채우고 돌아왔던 날',
-    },
-    {
+  },
+  {
     id: 2,
-    place: "양화대교",
+    place: '양화대교',
     lat: 37.543709,
     lng: 126.904409,
     musicTitle: "양화대교",
@@ -25,7 +25,7 @@ const MypageDummydata = [
     },
     {
     id: 3,
-    place: "홍대 대학로",
+    place: '홍대 대학로',
     lat: 37.576148,
     lng: 127.001742,
     musicTitle: "어제 너는 나를 버렸어",
@@ -37,7 +37,7 @@ const MypageDummydata = [
     },
     {
     id: 4,
-    place: "경복궁",
+    place: '경복궁',
     lat: 37.577698,
     lng: 126.976881,
     musicTitle: "A Dancing Teddy",
@@ -49,7 +49,7 @@ const MypageDummydata = [
     },
     {
     id: 5,
-    place: "코드스테이츠",
+    place: '코드스테이츠',
     lat: 37.496511,
     lng: 127.024830,
     musicTitle: "Work",
@@ -61,7 +61,7 @@ const MypageDummydata = [
     },
     {
     id: 6,
-    place: "보라매 공원",
+    place: '보라매 공원',
     lat: 37.493539,
     lng: 126.919390,
     musicTitle: "벚꽃엔딩",
@@ -73,7 +73,7 @@ const MypageDummydata = [
     },
     {
     id: 7,
-    place: "서울역",
+    place: '서울역',
     lat: 37.555388,
     lng: 126.970782,
     musicTitle: "서울",
@@ -85,8 +85,8 @@ const MypageDummydata = [
     },
     {
     id: 8,
-    place: "대치동",
-    lat: 37.498930,
+    place: '대치동',
+    lat: 37.49893,
     lng: 127.061403,
     musicTitle: "satisfaction",
     musicArtist: "The Rolling Stones",
@@ -97,8 +97,8 @@ const MypageDummydata = [
     },
     {
     id: 9,
-    place: "노량진",
-    lat: 37.515720,
+    place: '노량진',
+    lat: 37.51572,
     lng: 126.949141,
     musicTitle: "바다처럼",
     musicArtist: "다섯",
@@ -119,6 +119,6 @@ const MypageDummydata = [
     url: '',
     storyboard: '지원시기부터 몇차의 면접을 거쳐 합격했을 때, 그리고 해외에서 비행을 할 때에도 계속 나와 함께 해왔던 노래. 긴장됨, 설렘, 두근거림, 외로움, 무서움, 모든 감정들이 다 이 곡에 묻어있어서 이 노래를 들으면 그 때 감정, 그 때 생각이 나서 뭉클하고 그립다. 짧았지만 후회없고 누구보다 행복했던 그 때의 나:) 미련은 있지만 보내줄게 안녕!!',
     },
-]   
+]
 
 export default MypageDummydata;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
 
 const NewPostModalContainer = styled.div`
   z-index: 998;
@@ -17,7 +17,7 @@ const MusicInfoContainer = styled.div`
 
 const SingerName = styled.input`
   z-index: 998;
-  width: 100px;
+  width: 150px;
   margin-right: 25px;
   padding: 3px;
   text-align: left;
@@ -36,7 +36,7 @@ const SingerName = styled.input`
 
 const MusicTitle = styled.input`
   z-index: 998;
-  width: 60%;
+  width: 350px;
   padding: 3px;
   margin-right: 10px;
   padding: 3px;
@@ -114,7 +114,7 @@ const MusicSearchButton = styled.button`
 
 const StoryBoard = styled.textarea`
   z-index: 998;
-  width: 60%;
+  width: 400px;
   padding: 10px;
   margin-left: 15px;
   resize: none;
@@ -169,15 +169,15 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
-  const [buttonClick, setButtonClick] = useState(false)
+  const [buttonClick, setButtonClick] = useState(false);
 
   const paramsVideo = {
     q: `${singerName} ${musicTitle}`,
   };
 
   const buttonClickHandler = () => {
-    setButtonClick(!buttonClick) 
-  }
+    setButtonClick(!buttonClick);
+  };
 
   const videoSearchHandler = () => {
     axios
@@ -186,29 +186,30 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
         { withCredentials: false },
       )
       .then((res) => {
-        setVideoUrl(res.data.items[0].id.videoId)
-        buttonClickHandler()
+        setVideoUrl(res.data.items[0].id.videoId);
+        buttonClickHandler();
       });
   };
 
   const postHandler = () => {
     axios
-    .post(
-      `${process.env.REACT_APP_API_URL}/post`,
-      { singerName: singerName, musicTitle: musicTitle, videoUrl: videoUrl, storyBoard: storyBoard },
-      { withCredentials: true },
-    )
-    .then((res) => {
-      setSingerName('')
-      setMusicTitle('')
-      setVideoUrl('')
-      buttonClickHandler()
-      openNewPostModalHandler()
-    })
-    .catch((err) => {
-      alert('잘못된 등록 요청입니다');
-      openNewPostModalHandler()});
-      //나중에 지우기
+      .post(
+        `${process.env.REACT_APP_API_URL}/post`,
+        { singerName: singerName, musicTitle: musicTitle, videoUrl: videoUrl, storyBoard: storyBoard },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setSingerName('');
+        setMusicTitle('');
+        setVideoUrl('');
+        buttonClickHandler();
+        openNewPostModalHandler();
+      })
+      .catch((err) => {
+        alert('잘못된 등록 요청입니다');
+        openNewPostModalHandler();
+      });
+    //나중에 지우기
   };
 
   const handleChange = (e) => {
@@ -231,7 +232,14 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-      <ReactPlayer url={`https://www.youtube.com/watch?v=${videoUrl}`} playing loop controls width={'180px'} height={'100px'} />
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${videoUrl}`}
+          playing={true}
+          loop={true}
+          controls={true}
+          width={'250px'}
+          height={'125px'}
+        />
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
       <NewPostButContainer>

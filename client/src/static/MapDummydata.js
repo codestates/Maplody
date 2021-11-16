@@ -1,74 +1,84 @@
 const MapDummydata = [
-    {
+  {
     id: 1,
-    place: "남산 공원",
+    place: '남산 공원',
     lat: 37.550976488284654,
     lng: 126.99095582962613,
-    music: "헨리 - It's you",
-    },
-    {
+    musicName: "It's you",
+    singerName: '헨리',
+  },
+  {
     id: 2,
-    place: "양화대교",
+    place: '양화대교',
     lat: 37.543709,
     lng: 126.904409,
-    music: "Zion.T - 양화대교",
-    },
-    {
+    musicName: '양화대교',
+    singerName: 'Zion.T',
+  },
+  {
     id: 3,
-    place: "홍대 대학로",
+    place: '홍대 대학로',
     lat: 37.576148,
     lng: 127.001742,
-    music: "10cm - 어제 너는 나를 버렸어",
-    },
-    {
+    musicName: '어제 너는 나를 버렸어',
+    singerName: '10cm',
+  },
+  {
     id: 4,
-    place: "경복궁",
+    place: '경복궁',
     lat: 37.577698,
     lng: 126.976881,
-    music: "두번째달 - A Dancing Teddy",
-    },
-    {
+    musicName: 'A Dancing Teddy',
+    singerName: '두번째달',
+  },
+  {
     id: 5,
-    place: "코드스테이츠",
+    place: '코드스테이츠',
     lat: 37.496511,
-    lng: 127.024830,
-    music: "Rihanna - Work",
-    },
-    {
+    lng: 127.02483,
+    musicName: 'Work',
+    singerName: 'Rihanna',
+  },
+  {
     id: 6,
-    place: "보라매 공원",
+    place: '보라매 공원',
     lat: 37.493539,
-    lng: 126.919390,
-    music: "버스커버스커 - 벚꽃엔딩",
-    },
-    {
+    lng: 126.91939,
+    musicName: '벚꽃엔딩',
+    singerName: '버스커버스커',
+  },
+  {
     id: 7,
-    place: "서울역",
+    place: '서울역',
     lat: 37.555388,
     lng: 126.970782,
-    music: "쏜애플 - 서울",
-    },
-    {
+    musicName: '서울',
+    singerName: '쏜애플',
+  },
+  {
     id: 8,
-    place: "대치동",
-    lat: 37.498930,
+    place: '대치동',
+    lat: 37.49893,
     lng: 127.061403,
-    music: "The Rolling Stones - satisfaction",
-    },
-    {
+    musicName: 'satisfaction',
+    singerName: 'The Rolling Stones',
+  },
+  {
     id: 9,
-    place: "노량진",
-    lat: 37.515720,
+    place: '노량진',
+    lat: 37.51572,
     lng: 126.949141,
-    music: "다섯 - 바다처럼",
-    },
-    {
+    musicName: '바다처럼',
+    singerName: '다섯',
+  },
+  {
     id: 10,
-    place: "남산 공원",
+    place: '남산 공원',
     lat: 37.494832,
     lng: 127.012686,
-    music: "방탄소년단 - 소우주(Mikrokosmos)",
-    },
-]   
+    musicName: '소우주(Mikrokosmos)',
+    singerName: '방탄소년단',
+  },
+];
 
 export default MapDummydata;
