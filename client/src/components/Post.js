@@ -71,7 +71,7 @@ const PostStoryboard = styled.div`
   margin-left: 15px;
 `;
 
-const Post = ({key, place, musicTitle, musicArtist, createdAt, url, storyboard}) => {
+const Post = ({ key, place, musicTitle, musicArtist, createdAt, url, storyboard }) => {
   return (
     <PostContainer>
       <MusicInfoContainer>
