@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import ReactPlayer from 'react-player'
 
 const NewPostModalContainer = styled.div`
   z-index: 998;
@@ -64,44 +65,22 @@ const MarkerAddress = styled.div`
   text-align: left;
   font-size: 20px;
   border-bottom: 1px solid;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 5px;
-  padding-top: 0;
-  padding-bottom: 0;
   width: fit-content;
 `;
 
-const MusicVideo = styled.div`
-  z-index: 998;
-  width: 100px;
-  height: 100px;
-  border: solid 3px red;
-  margin-right: 15px;
-  padding: 3px;
-  box-shadow: gray 4px 4px 4px;
+const NewPostButContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
 `;
 
-const StoryBoard = styled.textarea`
+const MusicSearchButton = styled.button`
   z-index: 998;
-  width: 60%;
-  padding: 3px;
-  resize: none;
-  border-radius: 15px;
-  transition: 100ms ease all;
-
-  &:focus {
-    outline: none;
-    border: 2px solid #dd4a68;
-    box-shadow: 2px 2px 2px gray;
-  }
-`;
-
-const RegisterButton = styled.button`
-  z-index: 998;
-  width: 120px;
+  width: 130px;
   height: 30px;
   margin-top: 10px;
-  margin-left: 58%;
   border: solid 3px;
   border-radius: 15px;
   background-color: white;
@@ -133,16 +112,72 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress }) => {
+const StoryBoard = styled.textarea`
+  z-index: 998;
+  width: 60%;
+  padding: 10px;
+  margin-left: 15px;
+  resize: none;
+  border-radius: 15px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: none;
+    border: 2px solid #dd4a68;
+    box-shadow: 2px 2px 2px gray;
+  }
+`;
+
+const RegisterButton = styled.button`
+  z-index: 998;
+  width: 130px;
+  height: 30px;
+  margin-top: 10px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  transition: 300ms ease all;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
+
+const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
   const [singerName, setSingerName] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
-
-  const [getVideo, setGetVideo] = useState({});
+  const [videoUrl, setVideoUrl] = useState('');
+  const [buttonClick, setButtonClick] = useState(false)
 
   const paramsVideo = {
     q: `${singerName} ${musicTitle}`,
   };
+
+  const buttonClickHandler = () => {
+    setButtonClick(!buttonClick) 
+  }
 
   const videoSearchHandler = () => {
     axios
@@ -151,11 +186,30 @@ const NewPostModal = ({ getAddress }) => {
         { withCredentials: false },
       )
       .then((res) => {
-        setGetVideo(res);
+        setVideoUrl(res.data.items[0].id.videoId)
+        buttonClickHandler()
       });
   };
 
-  const postHandler = () => {};
+  const postHandler = () => {
+    axios
+    .post(
+      `${process.env.REACT_APP_API_URL}/post`,
+      { singerName: singerName, musicTitle: musicTitle, videoUrl: videoUrl, storyBoard: storyBoard },
+      { withCredentials: true },
+    )
+    .then((res) => {
+      setSingerName('')
+      setMusicTitle('')
+      setVideoUrl('')
+      buttonClickHandler()
+      openNewPostModalHandler()
+    })
+    .catch((err) => {
+      alert('잘못된 등록 요청입니다');
+      openNewPostModalHandler()});
+      //나중에 지우기
+  };
 
   const handleChange = (e) => {
     if (e.target.placeholder === '가수 이름') {
@@ -177,10 +231,13 @@ const NewPostModal = ({ getAddress }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-        <MusicVideo onClick={videoSearchHandler}>노래 제목과 가수 이름을 입력하시고 눌러주세요!</MusicVideo>
+      {/* <ReactPlayer url={`https://www.youtube.com/watch?v=${videoUrl}`} playing loop controls width={'180px'} height={'100px'} /> */}
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
-      <RegisterButton>등록하기</RegisterButton>
+      <NewPostButContainer>
+        <MusicSearchButton onClick={videoSearchHandler}>음악 검색</MusicSearchButton>
+        <RegisterButton>등록하기</RegisterButton>
+      </NewPostButContainer>
     </NewPostModalContainer>
   );
 };

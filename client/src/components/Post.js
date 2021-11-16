@@ -1,70 +1,96 @@
 import React from 'react';
 import styled from 'styled-components';
-import ReactPlayer from 'react-player/youtube'
 
-const CreatedPost = styled.div`
-  width: 300px;
-  height: 130px;
+const PostContainer = styled.div`
   margin-bottom: 5px;
-  border-bottom: 5px dashed;
 `;
 
 const MusicInfoContainer = styled.div`
+  width: fit-content;
+  font-size: 23px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 5px;
+  border-bottom: 3px #dd4a68 solid;
 `;
 
-const MusicTitle = styled.div``;
+const MicIcon = styled.i`
+  margin-right: 15px;
+  color: #dd4a68;
+`;
+
+const MusicTitle = styled.div`
+  margin-left: 15px;
+`;
 
 const MusicSinger = styled.div``;
 
-const CreatedInfoContainer = styled.div`
+const PostInfo = styled.div`
+  font-size: 18px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-top: 15px;
+  padding: 0 0 0 15px;
 `;
 
-const MusicAlbumJacket = styled.div`
+const PostPlaceIcon = styled.i`
+  margin-right: 15px;
+  color: #dd4a68;
+`;
+
+const PostCreatedPlace = styled.div``;
+
+const PostCreatedAtIcon = styled.i`
+  margin-right: 15px;
+  color: #dd4a68;
+  margin-left: 40px;
+  padding-top: 2px;
+`;
+
+const PostCreatedAt = styled.div``;
+
+const PostContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin-top: 10px;
+`;
+
+const Video = styled.div`
   border: 3px red solid;
-  width: 73px;
-  height: 73px;
-  margin-top: 3px;
+  width: 180px;
+  height: 100px;
+  margin-top: 15px;
 `;
 
-const CreatedInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 3px;
+const PostStoryboard = styled.div`
+  font-size: 16px;
+  word-wrap: break-word;
+  width: 300px;
+  padding: 10px;
+  margin-left: 15px;
 `;
 
-const PostCreatedPlace = styled.div`
-  width: 170px;
-  padding: 2px;
-`;
-
-const PostCreatedAt = styled.div`
-  width: 170px;
-  padding: 2px;
-`;
-
-const Post = () => {
- 
-  
-  return(
-    <CreatedPost>
-    <MusicInfoContainer>
-      <MusicTitle>노래 제목</MusicTitle>
-      <MusicSinger>가수이름</MusicSinger>
-    </MusicInfoContainer>
-    <CreatedInfoContainer>
-      <MusicAlbumJacket>앨범 자켓</MusicAlbumJacket>
-      <CreatedInfo>
-        <PostCreatedPlace>숭실대 입구 3번 출구</PostCreatedPlace>
-        <PostCreatedAt>2021.11.11</PostCreatedAt>
-      </CreatedInfo>
-    </CreatedInfoContainer>
-  </CreatedPost>
-  )
+const Post = ({key, place, musicTitle, musicArtist, createdAt, url, storyboard}) => {
+  return (
+    <PostContainer>
+      <MusicInfoContainer>
+        <MicIcon className="fas fa-microphone-alt" />
+        <MusicSinger>{musicArtist}</MusicSinger>
+        <MusicTitle>{musicTitle}</MusicTitle>
+      </MusicInfoContainer>
+      <PostInfo>
+        <PostPlaceIcon className="fas fa-map-marked-alt" />
+        <PostCreatedPlace>{place}</PostCreatedPlace>
+        <PostCreatedAtIcon className="fas fa-calendar-day" />
+        <PostCreatedAt>{createdAt}</PostCreatedAt>
+      </PostInfo>
+      <PostContentContainer>
+        <Video>{url}</Video>
+        <PostStoryboard>{storyboard}</PostStoryboard>
+      </PostContentContainer>
+    </PostContainer>
+  );
 };
 
 export default Post;

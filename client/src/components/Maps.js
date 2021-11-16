@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import MapDummydata from '../static/MapDummydata';
+import Post from './Post';
+import MypageDummydata from '../static/MypageDummydata';
 import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
@@ -58,7 +59,7 @@ const Map = () => {
         ) : null}
       </Marker>
 
-      {MapDummydata.map((el) => (
+      {MypageDummydata.map((el) => (
         <Marker
           key={el.id}
           position={{
@@ -76,10 +77,15 @@ const Map = () => {
               onCloseClick={() => {
                 setSelected(null);
               }}>
-              <div>
-                <h2>{selected.music}</h2>
-                <p>{selected.place}</p>
-              </div>
+
+              <Post 
+              key={el.id}
+              place={el.place}
+              musicTitle={el.musicTitle}
+              musicArtist={el.musicArtist}
+              createdAt={el.createdAt}
+              url={el.url}
+              story={el.storyboard}/>
             </InfoWindow>
           )}
         </Marker>
