@@ -231,12 +231,12 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-      {/* <ReactPlayer url={`https://www.youtube.com/watch?v=${videoUrl}`} playing loop controls width={'180px'} height={'100px'} /> */}
+      <ReactPlayer url={`https://www.youtube.com/watch?v=${videoUrl}`} playing loop controls width={'180px'} height={'100px'} />
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
       <NewPostButContainer>
         <MusicSearchButton onClick={videoSearchHandler}>음악 검색</MusicSearchButton>
-        <RegisterButton>등록하기</RegisterButton>
+        <RegisterButton onClick={postHandler}>등록하기</RegisterButton>
       </NewPostButContainer>
     </NewPostModalContainer>
   );
