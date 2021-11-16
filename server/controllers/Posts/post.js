@@ -1,22 +1,25 @@
 const { Post } = require('../../models');
-const { generateAccessToken, generateRefreshToken, sendRefreshToken } = require('../tokenFunctions');
+const auth = require('../Users/auth');
 
 module.exports = (req, res) => {
-  const 
-  const { content, song_artist, song_title, song_image, song_location } = req.body;
-    // 토큰 부분 검증후 이상이 없으면 포스트를 전달하고 생성해야한다.
-    // 우리 토큰은 req.headers.["authorization"] 의 [1]에 담겨져있다. 0번째는 bearer임
-    if (!token) {
-      return res.status(401).json({ message: '로그인이 필요합니다' });
-    }
-    const createPost = await posts.create({
-      song_artist,
-      song_title,
-      song_image,
-      song_location,
-      content,
-    });
+  const userInfo = auth(req);
+  if (!userInfo) {
+    return res.status(401).json({ message: '로그인이 필요합니다' });
+  } else {
+    const { musicArtist, musicTitle, url, place, storyboard } = req.body;
 
-    if (!createPost) return res.status(400).json('잘못된 요청입니다.');
-    res.status(201).json({ data: createPost, message: '게시물 등록이 완료되었습니다.' });
+    Post.create({
+      musicArtist,
+      musicTitle,
+      url,
+      place,
+      storyboard,
+    })
+      .then((post) => {
+        res.status(201).json({ message: '게시물 등록이 완료되었습니다' });
+      })
+      .catch((err) => {
+        return res.status(400).json({ message: '잘못된 요청입니다' });
+      });
+  }
 };
