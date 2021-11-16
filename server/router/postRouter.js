@@ -21,3 +21,9 @@ module.exports = router;
 //       if (PostList.length === 0) return;
 //       return Post.destroy({ where: { userId: {$in: PostList.userId }});
 //     })
+
+// Mode.destroy({
+//   where: {
+//      id: contentIds
+//   }
+// })

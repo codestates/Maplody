@@ -1,17 +1,21 @@
-const { user } = require('../../models');
-const { isAuthorized } = require('../tokenFunctions');
+const { User } = require('../../models');
+const { isAuthorized, checkRefreshToken } = require('../tokenFunctions');
 
 module.exports = (req, res) => {
   const accessTokenData = isAuthorized(req);
+  const refreshToken = req.cookies.refreshToken;
   if (!accessTokenData) {
-    res.status(401).send({ data: null, message: '인증되지 않은 사용자입니다.' });
-  } else {
-    user
-      .findOne({ where: { email: accessTokenData.email } })
-      .then((data) => {
-        delete data.dataValues.password;
-        res.status(200).json({ data: { userInfo: data.dataValues } });
-      })
-      .catch((err) => console.log(err));
+    const userInfo = checkRefreshToken(refreshToken);
+    if (!userInfo) {
+      return null;
+    } else {
+      User.findOne({ where: { userId: accessTokenData.dataValues.userId } })
+        .then((data) => {
+          delete data.dataValues.password;
+          return data.dataValues;
+        })
+        .catch((err) => console.log(err));
+    }
   }
+  return accessTokenData.dataValues;
 };
