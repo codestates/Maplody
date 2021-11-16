@@ -224,9 +224,7 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin }) => {
         setIsLogin(true);
         navigate('/main');
       })
-      .catch((err) => {
-        console.log('ID와 Password를 확인해 주세요!');
-      });
+      .catch((err) => alert('아이디와 비밀번호를 확인해주세요'));
   };
 
   return (
