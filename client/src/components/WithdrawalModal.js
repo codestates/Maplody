@@ -84,6 +84,7 @@ const WithdrawalComment = styled.div`
 const WithdrawalInput = styled.input.attrs({ type: 'text' })`
   font-size: 20px;
   width: 100%;
+  padding: 10px;
 `;
 const WithdrawalBtnContainer = styled.div`
   width: 100%;
