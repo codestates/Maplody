@@ -177,11 +177,11 @@ const MypageSidebar = ({ accessToken, setAccessToken }) => {
 
   const LogoutBtnHandler = () => {
     axios
-      .get()
+      .get(`${process.env.REACT_APP_API_URL}/user-logout`)
       .then((res) => {
         setAccessToken('');
         alert('로그아웃 되었습니다.');
-        navigate({ pathname: '/' });
+        navigate('/');
       })
       .catch((err) => {
         alert('잘못된 요청입니다.');
