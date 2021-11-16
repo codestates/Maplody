@@ -15,9 +15,9 @@ const MusicInfoContainer = styled.div`
   margin-bottom: 15px;
 `;
 
-const SingerName = styled.input`
+const MusicArtist = styled.input`
   z-index: 998;
-  width: 150px;
+  width: 100px;
   margin-right: 25px;
   padding: 3px;
   text-align: left;
@@ -36,7 +36,7 @@ const SingerName = styled.input`
 
 const MusicTitle = styled.input`
   z-index: 998;
-  width: 350px;
+  width: 60%;
   padding: 3px;
   margin-right: 10px;
   padding: 3px;
@@ -114,7 +114,7 @@ const MusicSearchButton = styled.button`
 
 const StoryBoard = styled.textarea`
   z-index: 998;
-  width: 400px;
+  width: 60%;
   padding: 10px;
   margin-left: 15px;
   resize: none;
@@ -164,15 +164,15 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
-  const [singerName, setSingerName] = useState('');
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
+  const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
+  const [url, setUrl] = useState('');
   const [buttonClick, setButtonClick] = useState(false);
 
   const paramsVideo = {
-    q: `${singerName} ${musicTitle}`,
+    q: `${musicArtist} ${musicTitle}`,
   };
 
   const buttonClickHandler = () => {
@@ -183,10 +183,11 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
     axios
       .get(
         `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_KEY}&part=snippet&q=${paramsVideo.q}&maxResults=1&type=video&regionCode=KR&videoDuration=short`,
+        { headers: { 'Content-Type': 'application/json' } },
         { withCredentials: false },
       )
       .then((res) => {
-        setVideoUrl(res.data.items[0].id.videoId);
+        setUrl(res.data.items[0].id.videoId);
         buttonClickHandler();
       });
   };
@@ -195,26 +196,31 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/post`,
-        { singerName: singerName, musicTitle: musicTitle, videoUrl: videoUrl, storyBoard: storyBoard },
+        {
+          musicArtist: musicArtist,
+          musicTitle: musicTitle,
+          getAddress: getAddress,
+          url: url,
+          storyBoard: storyBoard,
+          lat: target.lat,
+          lng: target.lng,
+        },
         { withCredentials: true },
       )
       .then((res) => {
-        setSingerName('');
-        setMusicTitle('');
-        setVideoUrl('');
+        console.log(res);
         buttonClickHandler();
         openNewPostModalHandler();
       })
       .catch((err) => {
+        console.log(err);
         alert('잘못된 등록 요청입니다');
-        openNewPostModalHandler();
       });
-    //나중에 지우기
   };
 
   const handleChange = (e) => {
     if (e.target.placeholder === '가수 이름') {
-      setSingerName(e.target.value);
+      setMusicArtist(e.target.value);
     }
     if (e.target.placeholder === '노래 제목') {
       setMusicTitle(e.target.value);
@@ -227,18 +233,18 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
   return (
     <NewPostModalContainer>
       <MusicInfoContainer>
-        <SingerName placeholder="가수 이름" onChange={handleChange} />
+        <MusicArtist placeholder="가수 이름" onChange={handleChange} />
         <MusicTitle placeholder="노래 제목" onChange={handleChange} />
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
         <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${videoUrl}`}
-          playing={true}
-          loop={true}
-          controls={true}
-          width={'250px'}
-          height={'125px'}
+          url={`https://www.youtube.com/watch?v=${url}`}
+          playing
+          loop
+          controls
+          width={'180px'}
+          height={'100px'}
         />
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
