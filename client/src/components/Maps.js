@@ -77,15 +77,14 @@ const Map = () => {
               onCloseClick={() => {
                 setSelected(null);
               }}>
-              <Post
-                key={el.id}
-                place={el.place}
-                musicTitle={el.musicTitle}
-                musicArtist={el.musicArtist}
-                createdAt={el.createdAt}
-                url={el.url}
-                story={el.storyboard}
-              />
+              <Post 
+              key={el.id}
+              place={el.place}
+              musicTitle={el.musicTitle}
+              musicArtist={el.musicArtist}
+              createdAt={el.createdAt}
+              url={el.url}
+              storyboard={el.storyboard}/>
             </InfoWindow>
           )}
         </Marker>

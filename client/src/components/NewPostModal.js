@@ -244,7 +244,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
       </PostInfoContainer>
       <NewPostButContainer>
         <MusicSearchButton onClick={videoSearchHandler}>음악 검색</MusicSearchButton>
-        <RegisterButton>등록하기</RegisterButton>
+        <RegisterButton onClick={postHandler}>등록하기</RegisterButton>
       </NewPostButContainer>
     </NewPostModalContainer>
   );
