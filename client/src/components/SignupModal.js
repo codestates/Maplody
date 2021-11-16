@@ -250,7 +250,6 @@ const SignupModal = ({ openSignupHandler }) => {
         { withCredentials: true },
       )
       .then((res) => {
-        console.log(res);
         alert('회원가입이 완료 되었습니다.');
         openSignupHandler();
       })
