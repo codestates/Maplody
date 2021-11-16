@@ -85,7 +85,7 @@ const Map = () => {
               musicArtist={el.musicArtist}
               createdAt={el.createdAt}
               url={el.url}
-              story={el.storyboard}/>
+              storyboard={el.storyboard}/>
             </InfoWindow>
           )}
         </Marker>
