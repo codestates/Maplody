@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
@@ -18,6 +18,7 @@ const Map = () => {
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
+  const [post, setPost] = useState([]);
 
   const paramsAddress = {
     latlng: `${target.lat},${target.lng}`,
@@ -44,6 +45,12 @@ const Map = () => {
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
+  useEffect(() => {
+    //header에 accessToken 추가해주세요~
+    axios.get(`${process.env.REACT_APP_API_URL}/post`, { withCredentials: true }).then((res) => {
+      setPost(res.data.data);
+    });
+  }, []);
 
   return (
     <GoogleMap
@@ -54,17 +61,17 @@ const Map = () => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal getAddress={getAddress} />
+            <NewPostModal target={target} getAddress={getAddress} />
           </InfoWindow>
         ) : null}
       </Marker>
 
-      {MypageDummydata.map((el) => (
+      {post.map((el) => (
         <Marker
           key={el.id}
           position={{
-            lat: el.lat,
-            lng: el.lng,
+            lat: Number(el.lat),
+            lng: Number(el.lng),
           }}
           place={el.place}
           music={el.music}
@@ -77,14 +84,15 @@ const Map = () => {
               onCloseClick={() => {
                 setSelected(null);
               }}>
-              <Post 
-              key={el.id}
-              place={el.place}
-              musicTitle={el.musicTitle}
-              musicArtist={el.musicArtist}
-              createdAt={el.createdAt}
-              url={el.url}
-              storyboard={el.storyboard}/>
+              <Post
+                key={el.id}
+                getAddress={el.getAddress}
+                musicTitle={el.musicTitle}
+                musicArtist={el.musicArtist}
+                createdAt={el.createdAt}
+                url={el.url}
+                storyBoard={el.storyBoard}
+              />
             </InfoWindow>
           )}
         </Marker>

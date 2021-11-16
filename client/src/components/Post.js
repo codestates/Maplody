@@ -71,7 +71,7 @@ const PostStoryboard = styled.div`
   margin-left: 15px;
 `;
 
-const Post = ({ key, place, musicTitle, musicArtist, createdAt, url, storyboard }) => {
+const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
   return (
     <PostContainer>
       <MusicInfoContainer>
@@ -81,13 +81,13 @@ const Post = ({ key, place, musicTitle, musicArtist, createdAt, url, storyboard 
       </MusicInfoContainer>
       <PostInfo>
         <PostPlaceIcon className="fas fa-map-marked-alt" />
-        <PostCreatedPlace>{place}</PostCreatedPlace>
+        <PostCreatedPlace>{getAddress}</PostCreatedPlace>
         <PostCreatedAtIcon className="fas fa-calendar-day" />
         <PostCreatedAt>{createdAt}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
         <Video>{url}</Video>
-        <PostStoryboard>{storyboard}</PostStoryboard>
+        <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
     </PostContainer>
   );

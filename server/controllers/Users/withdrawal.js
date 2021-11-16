@@ -1,5 +1,6 @@
 const { User, Post } = require('../../models');
 const { isAuthorized, checkRefreshToken } = require('../tokenFunctions');
+
 module.exports = (req, res) => {
   const userAccessToken = isAuthorized(req);
   //엑세스 토큰을 받아서 검증 후에  회원탈퇴가 이루어진다.

@@ -15,8 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       musicArtist: DataTypes.STRING,
       musicTitle: DataTypes.STRING,
-      place: DataTypes.STRING,
-      storyboard: DataTypes.STRING,
+      getAddress: DataTypes.STRING,
+      storyBoard: DataTypes.STRING,
+      url: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+      lat: DataTypes.STRING,
+      lng: DataTypes.STRING,
     },
     {
       sequelize,
