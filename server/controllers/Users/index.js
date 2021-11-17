@@ -4,4 +4,5 @@ module.exports = {
   signup: require('./signup'),
   auth: require('./auth'),
   withdrawal: require('./withdrawal'),
+  userinfo: require('./userinfo'),
 };
