@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
 const PostContainer = styled.div`
@@ -56,13 +57,6 @@ const PostContentContainer = styled.div`
   margin-top: 10px;
 `;
 
-const Video = styled.div`
-  border: 3px red solid;
-  width: 180px;
-  height: 100px;
-  margin-top: 15px;
-`;
-
 const PostStoryboard = styled.div`
   font-size: 16px;
   word-wrap: break-word;
@@ -86,7 +80,14 @@ const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyB
         <PostCreatedAt>{createdAt}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
-        <Video>{url}</Video>
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${url}`}
+          playing
+          loop
+          controls
+          width={'180px'}
+          height={'100px'}
+        />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
     </PostContainer>

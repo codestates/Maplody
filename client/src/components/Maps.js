@@ -13,7 +13,7 @@ const MapContainer = styled.div`
 `;
 
 const Map = () => {
-  const [target, setTarget] = useState({ lat: '', lng: '' });
+  const [target, setTarget] = useState({ lat: null, lng: null });
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
@@ -44,6 +44,7 @@ const Map = () => {
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
+
   useEffect(() => {
     //header에 accessToken 추가해주세요~
     axios.get(`${process.env.REACT_APP_API_URL}/post`, { withCredentials: true }).then((res) => {
@@ -60,7 +61,7 @@ const Map = () => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal target={target} getAddress={getAddress} />
+            <NewPostModal target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
           </InfoWindow>
         ) : null}
       </Marker>

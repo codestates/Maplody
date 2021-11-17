@@ -22,7 +22,7 @@ module.exports = (req, res) => {
           const accessToken = generateAccessToken(data.dataValues);
           const refreshToken = generateRefreshToken(data.dataValues);
           sendRefreshToken(res, refreshToken);
-          return res.status(200).json({ data: accessToken, message: '로그인 되었습니다.' });
+          return res.status(200).json({ accessToken: accessToken, userInfo: data, message: '로그인 되었습니다.' });
         }
       });
     }
