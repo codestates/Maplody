@@ -33,8 +33,8 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use('/', userRouter);
 app.use('/post', postRouter);
+app.use('/', userRouter);
 
 let server;
 // if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {

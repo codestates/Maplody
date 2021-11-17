@@ -45,8 +45,9 @@ const Map = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/post/:postid`, { withCredentials: true }).then((res) => {
-      setPost(res.data.result);
+    //header에 accessToken 추가해주세요~
+    axios.get(`${process.env.REACT_APP_API_URL}/post`, { withCredentials: true }).then((res) => {
+      setPost(res.data.data);
     });
   }, []);
 
@@ -59,7 +60,7 @@ const Map = () => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal getAddress={getAddress} />
+            <NewPostModal target={target} getAddress={getAddress} />
           </InfoWindow>
         ) : null}
       </Marker>
@@ -68,8 +69,8 @@ const Map = () => {
         <Marker
           key={el.id}
           position={{
-            lat: el.lat,
-            lng: el.lng,
+            lat: Number(el.lat),
+            lng: Number(el.lng),
           }}
           place={el.place}
           music={el.music}
@@ -84,12 +85,12 @@ const Map = () => {
               }}>
               <Post
                 key={el.id}
-                place={el.place}
+                getAddress={el.getAddress}
                 musicTitle={el.musicTitle}
                 musicArtist={el.musicArtist}
                 createdAt={el.createdAt}
                 url={el.url}
-                storyboard={el.storyboard}
+                storyBoard={el.storyBoard}
               />
             </InfoWindow>
           )}
