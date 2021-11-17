@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import Post from './Post';
-import MypageDummydata from '../static/MypageDummydata';
 import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
