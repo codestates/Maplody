@@ -162,11 +162,12 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = ({ accessToken, setAccessToken, userInfo }) => {
+const MypageSidebar = ({ accessToken, setAccessToken, userInfo, setIsLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
 
-  const { nickName, userId, createdAt, postList } = userInfo;
+  const { nickname, userId, createdAt } = userInfo.userInfo;
+  const postList = userInfo.postList;
 
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -184,6 +185,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, userInfo }) => {
         setAccessToken('');
         alert('로그아웃 되었습니다.');
         navigate('/');
+        setIsLogin(false);
       })
       .catch((err) => {
         alert('잘못된 요청입니다.');
@@ -199,7 +201,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, userInfo }) => {
             <UserInfo>
               <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
               <AboutUser>
-                <UserNickName>{nickName}</UserNickName>
+                <UserNickName>{nickname}</UserNickName>
                 <UserId>{userId}</UserId>
                 <UserPostCountContainer>
                   <UserPostCountIcon className="fas fa-map-marked-alt" />
@@ -209,7 +211,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, userInfo }) => {
               </AboutUser>
             </UserInfo>
             <CreatedPostContainer>
-              <MyPost postList={postList} />
+              {!postList ? <div>작성한 포스트가 없습니다!</div> : <MyPost postList={postList} />}
             </CreatedPostContainer>
             <UserInfoButtonContainer>
               <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>

@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Posts', [
       {
-        id: 0,
+        id: 1,
         userId: 2,
         musicArtist: 'Dean',
         musicTitle: 'Dayfly',
@@ -17,7 +17,7 @@ module.exports = {
         lng: 127.061403,
       },
       {
-        id: 1,
+        id: 2,
         userId: 2,
         musicArtist: '헨리',
         musicTitle: `It's you`,
@@ -30,7 +30,7 @@ module.exports = {
         lng: 126.99095582962613,
       },
       {
-        id: 2,
+        id: 3,
         userId: 2,
         musicArtist: 'Zion.T',
         musicTitle: '양화대교',
@@ -43,7 +43,7 @@ module.exports = {
         lng: 126.904409,
       },
       {
-        id: 3,
+        id: 4,
         userId: 2,
         musicArtist: '10cm',
         musicTitle: '어제 너는 나를 버렸어',
@@ -56,7 +56,7 @@ module.exports = {
         lng: 127.001742,
       },
       {
-        id: 4,
+        id: 5,
         userId: 2,
         musicArtist: '버스커버스커',
         musicTitle: '벚꽃엔딩',
