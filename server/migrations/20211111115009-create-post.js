@@ -20,11 +20,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      place: {
+      getAddress: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      storyboard: {
+      storyBoard: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -35,6 +35,14 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      lat: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      lng: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
     });
   },

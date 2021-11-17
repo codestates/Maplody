@@ -1,3 +1,6 @@
 module.exports = {
-  Posts: require('./Posts'),
+  post: require('./post'),
+  put: require('./put'),
+  get: require('./get'),
+  delete: require('./delete'),
 };
