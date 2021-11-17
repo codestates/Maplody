@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import Post from './Post';
-import MypageDummydata from '../static/MypageDummydata';
 import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
@@ -18,6 +17,7 @@ const Map = () => {
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
+  const [post, setPost] = useState([]);
 
   const paramsAddress = {
     latlng: `${target.lat},${target.lng}`,
@@ -44,6 +44,11 @@ const Map = () => {
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/post/:postid`, { withCredentials: true }).then((res) => {
+      setPost(res.data.result);
+    });
+  }, []);
 
   return (
     <GoogleMap
@@ -59,7 +64,7 @@ const Map = () => {
         ) : null}
       </Marker>
 
-      {MypageDummydata.map((el) => (
+      {post.map((el) => (
         <Marker
           key={el.id}
           position={{
@@ -77,14 +82,15 @@ const Map = () => {
               onCloseClick={() => {
                 setSelected(null);
               }}>
-              <Post 
-              key={el.id}
-              place={el.place}
-              musicTitle={el.musicTitle}
-              musicArtist={el.musicArtist}
-              createdAt={el.createdAt}
-              url={el.url}
-              storyboard={el.storyboard}/>
+              <Post
+                key={el.id}
+                place={el.place}
+                musicTitle={el.musicTitle}
+                musicArtist={el.musicArtist}
+                createdAt={el.createdAt}
+                url={el.url}
+                storyboard={el.storyboard}
+              />
             </InfoWindow>
           )}
         </Marker>

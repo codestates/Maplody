@@ -195,8 +195,14 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/post`,
-        { singerName: singerName, musicTitle: musicTitle, videoUrl: videoUrl, storyBoard: storyBoard },
-        { withCredentials: true },
+        {
+          singerName: singerName,
+          musicTitle: musicTitle,
+          getAddress: getAddress,
+          videoUrl: videoUrl,
+          storyBoard: storyBoard,
+        },
+        { withCredentials: false },
       )
       .then((res) => {
         setSingerName('');
@@ -207,7 +213,6 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler }) => {
       })
       .catch((err) => {
         alert('잘못된 등록 요청입니다');
-        openNewPostModalHandler();
       });
     //나중에 지우기
   };
