@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
+import { Navigate } from 'react-router-dom';
 
 const NewPostModalContainer = styled.div`
   z-index: 998;
@@ -211,6 +212,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
         buttonClickHandler();
         alert('등록되었습니다!');
         openNewPostModalHandler();
+        <Navigate to="/main" />;
       })
       .catch((err) => {
         alert('잘못된 등록 요청입니다');

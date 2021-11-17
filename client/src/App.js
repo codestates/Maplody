@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
@@ -12,15 +12,27 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
 
-  const issueTokens = () => {
+  const userInfoHandler = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth`, {
+      .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
         headers: { authorization: `Bearer ${accessToken}` },
         withCredentials: true,
       })
       .then((res) => {
-        setUserInfo(res.data.userInfo);
+        setUserInfo(res.data.userinfo);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const issueTokens = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/tokenAuth`, {
+        headers: { authorization: `Bearer ${accessToken}` },
+        withCredentials: true,
+      })
+      .then((res) => {
         setIsLogin(true);
+        userInfoHandler();
       })
       .catch((err) => console.log(err));
   };
@@ -29,33 +41,32 @@ function App() {
     issueTokens();
   }, []);
 
-  const loginHandler = () => {
-    issueTokens();
-  };
-
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {isLogin ? (
-            <Route
-              path="/main"
-              element={<Main accessToken={accessToken} setAccessToken={setAccessToken} userInfo={userInfo} />}
-            />
-          ) : (
-            <Route
-              exact
-              path="/"
-              element={
-                <Landing
-                  loginHandler={loginHandler}
-                  setAccessToken={setAccessToken}
-                  setIsLogin={setIsLogin}
-                  setUserInfo={setUserInfo}
-                />
-              }
-            />
-          )}
+          <Route
+            exact
+            path="/"
+            element={
+              !isLogin ? (
+                <Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
+              ) : (
+                <Navigate to="/main" />
+              )
+            }
+          />
+          <Route
+            path="/main"
+            element={
+              <Main
+                accessToken={accessToken}
+                setIsLogin={setIsLogin}
+                setAccessToken={setAccessToken}
+                userInfo={userInfo}
+              />
+            }
+          />
           <Route path="/loading" element={<Loading />} />
         </Routes>
       </BrowserRouter>

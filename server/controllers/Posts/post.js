@@ -1,5 +1,5 @@
 const { Post } = require('../../models');
-const { auth } = require('../Users/auth');
+const auth = require('../Users/auth');
 
 module.exports = async (req, res) => {
   const userInfo = await auth(req);

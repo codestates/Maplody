@@ -43,28 +43,34 @@ const PostCreatedAt = styled.div`
 const MyPost = ({ postList }) => {
   return (
     <>
-      {postList.map((el) => {
-        <CreatedPost>
-          <MusicInfoContainer>
-            <MusicTitle>{el.musicTitle}</MusicTitle>
-            <MusicSinger>{el.musicArtist}</MusicSinger>
-          </MusicInfoContainer>
-          <CreatedInfoContainer>
-            <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${el.url}`}
-              playing
-              loop
-              controls
-              width={'73px'}
-              height={'73px'}
-            />
-            <CreatedInfo>
-              <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-              <PostCreatedAt>{el.createdAt}</PostCreatedAt>
-            </CreatedInfo>
-          </CreatedInfoContainer>
-        </CreatedPost>;
-      })}
+      {!postList ? (
+        <div>작성한 포스트가 없습니다!</div>
+      ) : (
+        <>
+          {postList.map((el) => {
+            <CreatedPost>
+              <MusicInfoContainer>
+                <MusicTitle>{el.musicTitle}</MusicTitle>
+                <MusicSinger>{el.musicArtist}</MusicSinger>
+              </MusicInfoContainer>
+              <CreatedInfoContainer>
+                <ReactPlayer
+                  url={`https://www.youtube.com/watch?v=${el.url}`}
+                  playing
+                  loop
+                  controls
+                  width={'73px'}
+                  height={'73px'}
+                />
+                <CreatedInfo>
+                  <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
+                  <PostCreatedAt>{el.createdAt}</PostCreatedAt>
+                </CreatedInfo>
+              </CreatedInfoContainer>
+            </CreatedPost>;
+          })}
+        </>
+      )}
     </>
   );
 };
