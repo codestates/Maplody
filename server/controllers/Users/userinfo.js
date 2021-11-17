@@ -1,20 +1,29 @@
 const { User } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
-module.exports = (req, res) => {
-  const userInfo = isAuthorized(req);
-  if (userInfo) {
-    const { userId } = userInfo;
-    Post.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['id',''],
-        },
-      ],
-      where: { userId: User.id },
-    });
-  }
+module.exports = {
+  get: (req, res) => {},
+  put: async (req, res) => {
+    const userInfo = await auth(req);
+    if (!userInfo) {
+      return res.status(401).json({ message: '로그인이 필요합니다' });
+    } else {
+      const { nickname, password } = req.body;
+      const hashPassword = crypto
+        .createHash('sha512')
+        .update(password + userInfo.salt)
+        .digest('hex');
+      if (!nickname || !password) {
+        return res.status(400).json({ message: '잘못된 요청 입니다.' });
+      } else {
+        await User.update({
+          nickname: nickname,
+          password: hashPassword,
+        });
+        res.status(200).json({ message: '정보가 수정 되었습니다.' });
+      }
+    }
+  },
 };
 // 클라이언트에서 필요로 하는 정보는
 // 닉네임,유저아이디,포스트카운트, 계정생성날짜
