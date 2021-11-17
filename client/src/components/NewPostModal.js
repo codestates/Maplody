@@ -183,8 +183,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
     axios
       .get(
         `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_KEY}&part=snippet&q=${paramsVideo.q}&maxResults=1&type=video&regionCode=KR&videoDuration=short`,
-        { headers: { 'Content-Type': 'application/json' } },
-        { withCredentials: false },
+        { headers: { 'Content-Type': 'application/json' }, withCredentials: false },
       )
       .then((res) => {
         setUrl(res.data.items[0].id.videoId);
