@@ -12,7 +12,7 @@ const MapContainer = styled.div`
   z-index: -100;
 `;
 
-const Map = () => {
+const Map = ({ accessToken }) => {
   const [target, setTarget] = useState({ lat: null, lng: null });
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
@@ -46,10 +46,15 @@ const Map = () => {
   };
 
   useEffect(() => {
-    //header에 accessToken 추가해주세요~
-    axios.get(`${process.env.REACT_APP_API_URL}/post`, { withCredentials: true }).then((res) => {
-      setPost(res.data.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/post`, {
+        headers: { authorization: `Bearer ${accessToken}` },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setPost(res.data.data);
+      });
   }, []);
 
   return (
@@ -87,8 +92,8 @@ const Map = () => {
               <Post
                 key={el.id}
                 getAddress={el.getAddress}
-                musicTitle={el.musicTitle}
                 musicArtist={el.musicArtist}
+                musicTitle={el.musicTitle}
                 createdAt={el.createdAt}
                 url={el.url}
                 storyBoard={el.storyBoard}

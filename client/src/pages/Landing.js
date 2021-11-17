@@ -41,7 +41,7 @@ const About = styled.div`
   margin-bottom: 45px;
 `;
 
-const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
+const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
   const [loginOpen, setLoginOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -83,6 +83,7 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
                 setAccessToken={setAccessToken}
                 openModalHandler={openModalHandler}
                 setIsLogin={setIsLogin}
+                setUserInfo={setUserInfo}
               />
             ) : null}
           </AboutContainer>

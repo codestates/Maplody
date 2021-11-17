@@ -1,8 +1,9 @@
 const { Post } = require('../../models');
 const auth = require('../Users/auth');
 
-module.exports = (req, res) => {
-  const userInfo = auth(req);
+module.exports = async (req, res) => {
+  const userInfo = await auth(req);
+
   if (!userInfo) {
     return res.status(401).json({ message: '로그인이 필요합니다' });
   } else {

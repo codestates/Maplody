@@ -22,13 +22,18 @@ const MapContainer = styled.div`
   height: 100vh;
 `;
 
-const Main = ({ accessToken, setAccessToken, userInfo }) => {
+const Main = ({ accessToken, setAccessToken, userInfo, setIsLogin }) => {
   return (
     <MainContainer>
-      <MypageSidebar accessToken={accessToken} setAccessToken={setAccessToken} userInfo={userInfo} />
+      <MypageSidebar
+        accessToken={accessToken}
+        setAccessToken={setAccessToken}
+        userInfo={userInfo}
+        setIsLogin={setIsLogin}
+      />
       <Logo src={require('../img/Maplody_Logo.png').default} />
       <MapContainer>
-        <Maps />
+        <Maps accessToken={accessToken} />
       </MapContainer>
     </MainContainer>
   );

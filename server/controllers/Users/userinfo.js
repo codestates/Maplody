@@ -1,8 +1,16 @@
-const { User } = require('../../models');
-const { isAuthorized } = require('../tokenFunctions');
+const { Post } = require('../../models');
+const auth = require('./auth');
 
 module.exports = {
-  get: (req, res) => {},
+  get: async (req, res) => {
+    const userInfo = await auth(req);
+    const postList = await Post.findAll({ where: { userId: userInfo.id } });
+    if (!userInfo) {
+      return res.status(401).json({ message: '로그인이 필요합니다' });
+    } else {
+      res.status(200).json({ userinfo: { userInfo, postList }, message: '요청한 유저 정보입니다' });
+    }
+  },
   put: async (req, res) => {
     const userInfo = await auth(req);
     if (!userInfo) {
