@@ -11,7 +11,6 @@ module.exports = {
         return null;
       } else {
         const resp = await User.findOne({ where: { userId: userInfo.userId } });
-        console.log(resp);
         delete resp.dataValues.password;
         return resp.dataValues;
       }
