@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SearchInput from '../components/SearchInput';
 import Maps from '../components/Maps';
 import MypageSidebar from '../components/MypageSidebar';
 
@@ -23,11 +22,10 @@ const MapContainer = styled.div`
   height: 100vh;
 `;
 
-const Main = ({ accessToken, setAccessToken }) => {
+const Main = ({ accessToken, setAccessToken, userInfo }) => {
   return (
     <MainContainer>
-      <SearchInput />
-      <MypageSidebar accessToken={accessToken} setAccessToken={setAccessToken} />
+      <MypageSidebar accessToken={accessToken} setAccessToken={setAccessToken} userInfo={userInfo} />
       <Logo src={require('../img/Maplody_Logo.png').default} />
       <MapContainer>
         <Maps />

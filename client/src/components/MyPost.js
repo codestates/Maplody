@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
 const CreatedPost = styled.div`
@@ -23,13 +24,6 @@ const CreatedInfoContainer = styled.div`
   justify-content: space-around;
 `;
 
-const MusicAlbumJacket = styled.div`
-  border: 3px red solid;
-  width: 73px;
-  height: 73px;
-  margin-top: 3px;
-`;
-
 const CreatedInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,21 +40,32 @@ const PostCreatedAt = styled.div`
   padding: 2px;
 `;
 
-const MyPost = () => {
+const MyPost = ({ postList }) => {
   return (
-    <CreatedPost>
-      <MusicInfoContainer>
-        <MusicTitle>노래 제목</MusicTitle>
-        <MusicSinger>가수이름</MusicSinger>
-      </MusicInfoContainer>
-      <CreatedInfoContainer>
-        <MusicAlbumJacket>앨범 자켓</MusicAlbumJacket>
-        <CreatedInfo>
-          <PostCreatedPlace>숭실대 입구 3번 출구</PostCreatedPlace>
-          <PostCreatedAt>2021.11.11</PostCreatedAt>
-        </CreatedInfo>
-      </CreatedInfoContainer>
-    </CreatedPost>
+    <>
+      {postList.map((el) => {
+        <CreatedPost>
+          <MusicInfoContainer>
+            <MusicTitle>{el.musicTitle}</MusicTitle>
+            <MusicSinger>{el.musicArtist}</MusicSinger>
+          </MusicInfoContainer>
+          <CreatedInfoContainer>
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${el.url}`}
+              playing
+              loop
+              controls
+              width={'73px'}
+              height={'73px'}
+            />
+            <CreatedInfo>
+              <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
+              <PostCreatedAt>{el.createdAt}</PostCreatedAt>
+            </CreatedInfo>
+          </CreatedInfoContainer>
+        </CreatedPost>;
+      })}
+    </>
   );
 };
 
