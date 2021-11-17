@@ -77,12 +77,11 @@ const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyB
         <PostPlaceIcon className="fas fa-map-marked-alt" />
         <PostCreatedPlace>{getAddress}</PostCreatedPlace>
         <PostCreatedAtIcon className="fas fa-calendar-day" />
-        <PostCreatedAt>{createdAt}</PostCreatedAt>
+        <PostCreatedAt>{createdAt.slice(0, 10)}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${url}`}
-          playing
           loop
           controls
           width={'180px'}

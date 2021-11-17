@@ -63,23 +63,6 @@ const Title = styled.div`
   font-size: 40px;
   text-align: center;
 `;
-const ProfileContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 35px;
-`;
-const ProfilePicture = styled.div`
-  border: solid 3px red;
-  width: 90px;
-  height: 90px;
-`;
-
-const ProfileText = styled.div`
-  font-size: 25px;
-  font-weight: bolder;
-  border-bottom: solid 3px #ff0066;
-`;
 
 const MyinfoInputContainer = styled.div`
   display: flex;
@@ -281,17 +264,12 @@ const WithdrawalBtn = styled.button`
   }
 `;
 
-const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo}) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
 
   const {
     register,
-    handleSubmit,
     formState: { errors, isValid },
     watch,
   } = useForm({ mode: 'onChange' });
@@ -302,14 +280,18 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
 
   const MyinfoFixHandler = () => {
     axios
-      .post(
+      .put(
         `${process.env.REACT_APP_API_URL}/userinfo`,
-        { nickname: nickname, password: password },
-        { withCredentials: true },
+        { nickname: watch().nickname, password: watch().password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
       )
       .then((res) => {
-        alert('회원정보 수정이 완료 되었습니다.');
         userinfoModalHandler();
+        // setUserInfo({ userInfo: { nickname: watch().nickname }})
+        alert('회원정보 수정이 완료 되었습니다.');
       })
       .catch((err) => {
         alert('입력된 정보를 다시 확인해 주세요');
@@ -319,7 +301,6 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
   const withdrawalModalHandler = () => {
     setWithdrawalOpen(!withdrawalOpen);
   };
-
   return (
     <MyInfoFixModalContainer>
       <MyInfoFixModalBackdrop>
@@ -327,10 +308,6 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
           <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
           <IdPasswordContainer>
             <Title>회원정보 수정</Title>
-            <ProfileContainer>
-              <ProfilePicture />
-              <ProfileText>프로필 사진</ProfileText>
-            </ProfileContainer>
             <MyinfoInputContainer>
               <NicknameText>
                 닉네임
@@ -357,11 +334,11 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
               <Nicknameinform>닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
               <EmailContainer>
                 <EmailText>이메일</EmailText>
-                <EmailUser>admin@gmail.com</EmailUser>
+                <EmailUser>{userInfo.userInfo.email}</EmailUser>
               </EmailContainer>
               <IdContainer>
                 <IdText>아이디</IdText>
-                <IdUser>admin</IdUser>
+                <IdUser>{userInfo.userInfo.userId}</IdUser>
               </IdContainer>
               <PwText>
                 비밀번호
