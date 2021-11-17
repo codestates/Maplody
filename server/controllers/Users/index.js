@@ -5,4 +5,5 @@ module.exports = {
   auth: require('./auth'),
   withdrawal: require('./withdrawal'),
   userinfo: require('./userinfo'),
+  tokenAuth: require('./tokenAuth'),
 };

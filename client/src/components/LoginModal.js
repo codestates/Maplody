@@ -170,7 +170,7 @@ const SignupBtn = styled.div`
   }
 `;
 
-const LoginModal = ({ loginHandler, setAccessToken, openModalHandler, setIsLogin, setUserInfo }) => {
+const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo }) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
@@ -194,10 +194,10 @@ const LoginModal = ({ loginHandler, setAccessToken, openModalHandler, setIsLogin
         { withCredentials: true },
       )
       .then((res) => {
+        console.log(res.data);
         setAccessToken(res.data.accessToken);
         setUserInfo(res.data.userInfo);
         setIsLogin(true);
-        loginHandler();
         alert('로그인되었습니다. 환영합니다!');
         navigate('/main');
       })

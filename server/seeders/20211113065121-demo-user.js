@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
-        id: 3,
+        id: 2,
         nickname: 'NICK1',
         userId: 'User1',
         password:
