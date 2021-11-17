@@ -1,21 +1,19 @@
-const { User } = require('../../models');
 const { isAuthorized, checkRefreshToken } = require('../tokenFunctions');
 
-module.exports = {
-  auth: async (req, res) => {
-    const accessTokenData = isAuthorized(req);
-    const refreshToken = req.cookies.refreshToken;
-    if (!accessTokenData) {
-      const userInfo = checkRefreshToken(refreshToken);
-      if (!userInfo) {
-        return null;
-      } else {
-        const resp = await User.findOne({ where: { userId: userInfo.userId } });
-        delete resp.dataValues.password;
-        return resp.dataValues;
-      }
+module.exports = async (req, res) => {
+  const accessTokenData = isAuthorized(req);
+  const refreshToken = req.cookies.refreshToken;
+  if (!accessTokenData) {
+    const userInfo = checkRefreshToken(refreshToken);
+    if (!userInfo) {
+      return null;
     } else {
-      return accessTokenData;
+      delete userInfo.dataValues.password;
+      res.status(200).json({ userInfo: userInfo.dataValues });
+      return userInfo.dataValues;
     }
-  },
+  } else {
+    res.status(200).json({ userInfo: accessTokenData });
+    return accessTokenData;
+  }
 };

@@ -7,14 +7,19 @@ import Button from '../components/Button';
 import LoginModal from '../components/LoginModal';
 import Footer from '../components/Footer';
 import Loading from './Loading';
+
+import img from '../img/daniel-schludi.jpg';
+
 require('dotenv').config();
 
 axios.defaults.withCredentials = true;
 
 const LandingContainer = styled.div`
-  margin: 40px;
   width: 100vw;
   height: 100vh;
+  min-width: fit-content;
+  min-height: fit-content;
+  background: url(${img}) 25%;
 `;
 
 const AboutContainer = styled.div`
@@ -25,34 +30,15 @@ const AboutContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 430px;
+  height: 450px;
+  width: fit-content;
+  margin-left: 30px;
 `;
 
 const About = styled.div`
-  margin: 15px;
-  padding: 20px;
+  padding: 20px 0 0 35px;
   border: none;
-  border-radius: 15px;
-  box-shadow: 2px 2px 4px 4px gray;
   margin-bottom: 45px;
-  background-color: white;
-`;
-
-const MapContainer = styled.div`
-  width: fit-content;
-  height: fit-content;
-`;
-
-const LandingMap = styled.img`
-  position: absolute;
-  z-index: -1;
-  top: 25%;
-  left: 50%;
-  bottom: 0;
-  right: 0;
-  display: grid;
-  place-items: center;
-  opacity: 80%;
 `;
 
 const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
@@ -86,7 +72,8 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
               <p>언젠가 그때 그 노래가 들려오면...</p>
               <p>다시 그곳에 방문하면...</p>
               <br />
-              당신을 다시 그곳으로 돌려 놓을
+              <p>당신을 다시 그곳으로 돌려 놓을</p>
+              <br />
               <p>"Maplody 하세요"</p>
             </About>
             <Button text="시작하기" onClick={openModalHandler} />
@@ -99,9 +86,6 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin }) => {
               />
             ) : null}
           </AboutContainer>
-          <MapContainer>
-            <LandingMap src={require('../img/서울.jpeg').default} />
-          </MapContainer>
           <Footer />
         </LandingContainer>
       )}

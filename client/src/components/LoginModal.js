@@ -20,11 +20,12 @@ const LoginModalBackdrop = styled.div`
   display: grid;
   place-items: center;
 `;
+
 const LoginModalWindow = styled.div`
   border-radius: 15px;
   background-color: white;
   width: 388px;
-  height: 500px;
+  height: 440px;
 `;
 
 const CloseBtn = styled.a`
@@ -51,9 +52,19 @@ const IdText = styled.div`
 const IdPasswordContainer = styled.div``;
 
 const IdInput = styled.input`
+  width: 230px;
+  height: 50px;
   margin: 15px;
   font-size: 23px;
   padding: 5px 0 5px 10px;
+  border: solid 3px;
+  border-radius: 5px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: 3px solid #ff0066;
+    border: hidden;
+  }
 `;
 
 const PwText = styled.div`
@@ -69,9 +80,19 @@ const LoginBtnContainer = styled.div`
 `;
 
 const PwInput = styled.input.attrs({ type: 'password' })`
+  width: 230px;
+  height: 50px;
   margin: 15px;
   font-size: 23px;
   padding: 5px 0 5px 10px;
+  border: solid 3px;
+  border-radius: 5px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: 3px solid #ff0066;
+    border: hidden;
+  }
 `;
 
 const LoginBtn = styled.div`
@@ -86,7 +107,7 @@ const LoginBtn = styled.div`
   min-width: 200px;
   transition: 300ms ease all;
   font-size: 25px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   padding-top: 3px;
 
   &:hover {
@@ -110,50 +131,6 @@ const LoginBtn = styled.div`
   &:active {
     box-shadow: none;
   }
-`;
-
-const GoogleBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  width: 350px;
-  border: solid 3px;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: gray 4px 4px 4px;
-  cursor: pointer;
-  min-width: 200px;
-  transition: 300ms ease all;
-  font-size: 25px;
-  margin-bottom: 15px;
-
-  &:hover {
-    box-shadow: gray 4px 4px 4px;
-  }
-
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    transition: ease all;
-  }
-
-  &:hover:before,
-  &:hover:after {
-    width: 100%;
-    transition: ease all;
-  }
-
-  &:active {
-    box-shadow: none;
-  }
-`;
-
-const GoogleIcon = styled.img`
-  width: 30px;
-  margin-right: 10px;
 `;
 
 const SignupBtn = styled.div`
@@ -193,11 +170,8 @@ const SignupBtn = styled.div`
   }
 `;
 
-const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin }) => {
+const LoginModal = ({ loginHandler, setAccessToken, openModalHandler, setIsLogin, setUserInfo }) => {
   const [signupOpen, setSignupOpen] = useState(false);
-  const openSignupHandler = () => {
-    setSignupOpen(!signupOpen);
-  };
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -220,11 +194,18 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin }) => {
         { withCredentials: true },
       )
       .then((res) => {
-        setAccessToken(res.data.data);
+        setAccessToken(res.data.accessToken);
+        setUserInfo(res.data.userInfo);
         setIsLogin(true);
+        loginHandler();
+        alert('로그인되었습니다. 환영합니다!');
         navigate('/main');
       })
       .catch((err) => alert('아이디와 비밀번호를 확인해주세요'));
+  };
+
+  const openSignupHandler = () => {
+    setSignupOpen(!signupOpen);
   };
 
   return (
@@ -244,10 +225,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin }) => {
             </PwText>
             <LoginBtnContainer>
               <LoginBtn onClick={loginBtnHandler}>로그인</LoginBtn>
-              <GoogleBtn>
-                <GoogleIcon src={require('../img/google login logo.png').default} />
-                Google로 로그인
-              </GoogleBtn>
               <SignupBtn onClick={openSignupHandler}> 회원가입</SignupBtn>
               {signupOpen ? <SignupModal openSignupHandler={openSignupHandler} /> : null}
             </LoginBtnContainer>
