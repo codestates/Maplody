@@ -45,27 +45,11 @@ const Title = styled.div`
   font-size: 40px;
   text-align: center;
 `;
-const ProfileContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 35px;
-`;
-const ProfilePicture = styled.div`
-  border: solid 3px red;
-  width: 90px;
-  height: 90px;
-`;
-
-const ProfileText = styled.div`
-  font-size: 25px;
-  font-weight: bolder;
-  border-bottom: solid 3px #ff0066;
-`;
 
 const SignupInputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 70px;
   padding: 0 0 25px 35px;
 `;
 
@@ -198,6 +182,8 @@ const SignupSubmitBtn = styled.button`
   text-align-last: center;
   min-width: 200px;
   transition: 300ms ease all;
+  margin-top: 50px;
+  margin-right: 35px;
   padding-top: 2px;
   font-size: 25px;
 
@@ -246,8 +232,8 @@ const SignupModal = ({ openSignupHandler }) => {
         { nickname: watch().nickname, email: watch().email, userId: watch().userId, password: watch().password },
         {
           headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         },
-        { withCredentials: true },
       )
       .then((res) => {
         alert('회원가입이 완료 되었습니다.');
@@ -265,10 +251,6 @@ const SignupModal = ({ openSignupHandler }) => {
           <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
           <IdPasswordContainer>
             <Title>회원가입</Title>
-            <ProfileContainer>
-              <ProfilePicture />
-              <ProfileText>프로필 사진</ProfileText>
-            </ProfileContainer>
             <SignupInputContainer>
               <NicknameText>
                 닉네임
