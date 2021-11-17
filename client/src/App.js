@@ -10,19 +10,6 @@ import Landing from './pages/Landing';
 function App() {
   const [accessToken, setAccessToken] = useState('');
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
-
-  const userInfoHandler = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
-        headers: { authorization: `Bearer ${accessToken}` },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUserInfo(res.data.userinfo);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const issueTokens = () => {
     axios
@@ -32,7 +19,6 @@ function App() {
       })
       .then((res) => {
         setIsLogin(true);
-        userInfoHandler();
       })
       .catch((err) => console.log(err));
   };
@@ -49,23 +35,12 @@ function App() {
             exact
             path="/"
             element={
-              !isLogin ? (
-                <Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
-              ) : (
-                <Navigate to="/main" />
-              )
+              !isLogin ? <Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} /> : <Navigate to="/main" />
             }
           />
           <Route
             path="/main"
-            element={
-              <Main
-                accessToken={accessToken}
-                setIsLogin={setIsLogin}
-                setAccessToken={setAccessToken}
-                userInfo={userInfo}
-              />
-            }
+            element={<Main accessToken={accessToken} setIsLogin={setIsLogin} setAccessToken={setAccessToken} />}
           />
           <Route path="/loading" element={<Loading />} />
         </Routes>

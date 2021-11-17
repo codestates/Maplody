@@ -196,7 +196,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
       .then((res) => {
         console.log(res.data);
         setAccessToken(res.data.accessToken);
-        setUserInfo(res.data.userInfo);
         setIsLogin(true);
         alert('로그인되었습니다. 환영합니다!');
         navigate('/main');

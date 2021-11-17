@@ -169,7 +169,7 @@ const BackBtn = styled.button`
   }
 `;
 
-const WithdrawalModal = ({ accessToken, withdrawalModalHandler }) => {
+const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) => {
   const [check, setCheck] = useState(false);
   const [inputCheck, setInputCheck] = useState('');
 
@@ -193,6 +193,7 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler }) => {
       })
       .then((res) => {
         alert('탈퇴되었습니다. 그동안 감사했습니다. 더 좋은 서비스로 다시 찾아 뵙겠습니다.');
+        setIsLogin(false);
         navigate('/');
       })
       .catch((err) => {

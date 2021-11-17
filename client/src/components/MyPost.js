@@ -13,15 +13,22 @@ const MusicInfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 5px;
+  width: 30px;
+  height: 40px;
+  border: 3px solid green;
+  z-index: 999;
 `;
 
-const MusicTitle = styled.div``;
+const MusicTitle = styled.div`
+  width: 10px;
+`;
 
 const MusicSinger = styled.div``;
 
 const CreatedInfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  width: 50;
 `;
 
 const CreatedInfo = styled.div`
@@ -41,36 +48,31 @@ const PostCreatedAt = styled.div`
 `;
 
 const MyPost = ({ postList }) => {
+  console.log(postList[0].id);
   return (
     <>
-      {!postList ? (
-        <div>작성한 포스트가 없습니다!</div>
-      ) : (
-        <>
-          {postList.map((el) => {
-            <CreatedPost>
-              <MusicInfoContainer>
-                <MusicTitle>{el.musicTitle}</MusicTitle>
-                <MusicSinger>{el.musicArtist}</MusicSinger>
-              </MusicInfoContainer>
-              <CreatedInfoContainer>
-                <ReactPlayer
-                  url={`https://www.youtube.com/watch?v=${el.url}`}
-                  playing
-                  loop
-                  controls
-                  width={'73px'}
-                  height={'73px'}
-                />
-                <CreatedInfo>
-                  <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-                  <PostCreatedAt>{el.createdAt}</PostCreatedAt>
-                </CreatedInfo>
-              </CreatedInfoContainer>
-            </CreatedPost>;
-          })}
-        </>
-      )}
+      {postList.map((el) => (
+        <CreatedPost>
+          <MusicInfoContainer>
+            <MusicTitle>{el.musicTitle}</MusicTitle>
+            <MusicSinger>{el.musicArtist}</MusicSinger>
+          </MusicInfoContainer>
+          <CreatedInfoContainer>
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${el.url}`}
+              playing
+              loop
+              controls
+              width={'73px'}
+              height={'73px'}
+            />
+            <CreatedInfo>
+              <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
+              <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+            </CreatedInfo>
+          </CreatedInfoContainer>
+        </CreatedPost>
+      ))}
     </>
   );
 };
