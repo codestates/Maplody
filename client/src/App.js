@@ -12,18 +12,6 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
 
-  const userInfoHandler = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
-        headers: { authorization: `Bearer ${accessToken}` },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUserInfo(res.data.userinfo);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const issueTokens = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/tokenAuth`, {
@@ -32,7 +20,6 @@ function App() {
       })
       .then((res) => {
         setIsLogin(true);
-        userInfoHandler();
       })
       .catch((err) => console.log(err));
   };

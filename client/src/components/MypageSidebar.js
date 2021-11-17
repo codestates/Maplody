@@ -1,9 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import MyPost from './MyPost';
+import ReactPlayer from 'react-player';
 import MyInfoFixModal from './MyInfoFixModal';
 
 const slideIn = keyframes`
@@ -73,34 +73,37 @@ const UserInfo = styled.div`
   width: 90%;
   height: fit-content;
   margin: 15px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 15px;
   box-shadow: 4px 4px 4px 4px gray;
+  font-size: 25px;
 `;
 
 const AboutUser = styled.div`
-  text-align: end;
-  font-size: 23px;
-  padding-left: 25px;
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+  border-bottom: 3px dashed;
 `;
 
 const UserNickName = styled.div`
-  font-weight: bolder;
-  margin-bottom: 10px;
+  border-bottom: #ff0066 3px dashed;
+  margin-right: 40px;
+  margin-left: 30px;
 `;
 
 const UserId = styled.div`
-  opacity: 60%;
-  margin-bottom: 3px;
+  margin-right: 40px;
 `;
 
 const UserPostCountContainer = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 3px;
+  justify-content: center;
+  margin-right: 40px;
 `;
 
 const UserPostCountIcon = styled.div`
+  margin-right: 50px;
   color: red;
 `;
 
@@ -118,6 +121,47 @@ const CreatedPostContainer = styled.div`
   padding: 15px;
   box-shadow: 4px 4px 4px 4px gray;
   border-radius: 15px;
+`;
+
+const CreatedPost = styled.div`
+  width: 300px;
+  height: 140px;
+  margin: 5px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px 2px gray;
+  border-radius: 15px;
+`;
+
+const MusicInfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px;
+`;
+
+const MusicTitle = styled.div`
+  margin-right: 15px;
+`;
+
+const MusicSinger = styled.div``;
+
+const CreatedInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const CreatedInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostCreatedPlace = styled.textarea`
+  border: none;
+  resize: none;
+`;
+
+const PostCreatedAt = styled.textarea`
+  border: none;
+  resize: none;
 `;
 
 const UserInfoButtonContainer = styled.div`
@@ -162,12 +206,29 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = ({ accessToken, setAccessToken, userInfo, setIsLogin }) => {
+const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
 
-  const { nickname, userId, createdAt } = userInfo.userInfo;
-  const postList = userInfo.postList;
+  const userInfoHandler = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
+        headers: { authorization: `Bearer ${accessToken}` },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserInfo(res.data.userinfo);
+        setisLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    setisLoading(true);
+    userInfoHandler();
+  }, []);
 
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -183,47 +244,71 @@ const MypageSidebar = ({ accessToken, setAccessToken, userInfo, setIsLogin }) =>
       .get(`${process.env.REACT_APP_API_URL}/user-logout`)
       .then((res) => {
         setAccessToken('');
+        setIsLogin(false);
         alert('로그아웃 되었습니다.');
         navigate('/');
-        setIsLogin(false);
       })
       .catch((err) => {
         alert('잘못된 요청입니다.');
       });
   };
-
   return (
-    <MenuContainer>
-      <MyProfile onClick={openModalHandler} src={require('../img/user.png').default}></MyProfile>
-      {isOpen ? (
-        <ModalBackdrop onClick={openModalHandler}>
-          <SidebarContainer onClick={(e) => e.stopPropagation()}>
-            <UserInfo>
-              <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
-              <AboutUser>
-                <UserNickName>{nickname}</UserNickName>
-                <UserId>{userId}</UserId>
-                <UserPostCountContainer>
-                  <UserPostCountIcon className="fas fa-map-marked-alt" />
-                  <UserPostCount>{postList.length}</UserPostCount>
-                </UserPostCountContainer>
-                <UserCreatedAt>{createdAt}</UserCreatedAt>
-              </AboutUser>
-            </UserInfo>
-            <CreatedPostContainer>
-              {!postList ? <div>작성한 포스트가 없습니다!</div> : <MyPost postList={postList} />}
-            </CreatedPostContainer>
-            <UserInfoButtonContainer>
-              <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
-              <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
-              {userinfoOpen ? (
-                <MyInfoFixModal accessToken={accessToken} userinfoModalHandler={userinfoModalHandler} />
-              ) : null}
-            </UserInfoButtonContainer>
-          </SidebarContainer>
-        </ModalBackdrop>
-      ) : null}
-    </MenuContainer>
+    <>
+      {isLoading ? (
+        'loading...'
+      ) : (
+        <MenuContainer>
+          <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+          {isOpen ? (
+            <ModalBackdrop onClick={openModalHandler}>
+              <SidebarContainer onClick={(e) => e.stopPropagation()}>
+                <UserInfo>
+                  <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+                  <AboutUser>
+                    <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
+                    <UserId>  {userInfo.userInfo.userId} 님</UserId>
+                    <UserPostCountContainer>
+                      <UserPostCountIcon className="fas fa-map-marked-alt" />
+                      <UserPostCount>{userInfo.postList.length}</UserPostCount>
+                    </UserPostCountContainer>
+                    <UserCreatedAt>{userInfo.userInfo.createdAt.slice(0, 10)}</UserCreatedAt>
+                  </AboutUser>
+                </UserInfo>
+                <CreatedPostContainer>
+                  {userInfo.postList.map((el) => (
+                    <CreatedPost>
+                      <MusicInfoContainer>
+                        <MusicTitle>{el.musicTitle}</MusicTitle>
+                        <MusicSinger>{el.musicArtist}</MusicSinger>
+                      </MusicInfoContainer>
+                      <CreatedInfoContainer>
+                        <ReactPlayer
+                          url={`https://www.youtube.com/watch?v=${el.url}`}
+                          loop
+                          width={'80px'}
+                          height={'80px'}
+                        />
+                        <CreatedInfo>
+                          <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
+                          <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                        </CreatedInfo>
+                      </CreatedInfoContainer>
+                    </CreatedPost>
+                  ))}
+                </CreatedPostContainer>
+                <UserInfoButtonContainer>
+                  <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
+                  <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
+                  {userinfoOpen ? (
+                    <MyInfoFixModal accessToken={accessToken} userinfoModalHandler={userinfoModalHandler} userInfo={userInfo}/>
+                  ) : null}
+                </UserInfoButtonContainer>
+              </SidebarContainer>
+            </ModalBackdrop>
+          ) : null}
+        </MenuContainer>
+      )}
+    </>
   );
 };
 
