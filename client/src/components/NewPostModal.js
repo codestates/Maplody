@@ -188,7 +188,8 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
       .then((res) => {
         setUrl(res.data.items[0].id.videoId);
         buttonClickHandler();
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const postHandler = () => {
@@ -207,12 +208,11 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
         { withCredentials: true },
       )
       .then((res) => {
-        console.log(res);
         buttonClickHandler();
+        alert('등록되었습니다!');
         openNewPostModalHandler();
       })
       .catch((err) => {
-        console.log(err);
         alert('잘못된 등록 요청입니다');
       });
   };
@@ -237,14 +237,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${url}`}
-          playing
-          loop
-          controls
-          width={'180px'}
-          height={'100px'}
-        />
+        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} playing={false} width={'180px'} height={'100px'} />
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
       <NewPostButContainer>
