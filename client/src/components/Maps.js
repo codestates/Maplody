@@ -52,7 +52,6 @@ const Map = ({ accessToken }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
         setPost(res.data.data);
       });
   }, []);
