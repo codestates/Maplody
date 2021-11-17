@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import Post from './Post';
-import MypageDummydata from '../static/MypageDummydata';
 import NewPostModal from './NewPostModal';
 
 const MapContainer = styled.div`
@@ -45,6 +44,7 @@ const Map = () => {
   const openNewPostModalHandler = () => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
+
   useEffect(() => {
     //header에 accessToken 추가해주세요~
     axios.get(`${process.env.REACT_APP_API_URL}/post`, { withCredentials: true }).then((res) => {
@@ -61,7 +61,7 @@ const Map = () => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal target={target} openNewPostModalHandler={openNewPostModalHandler} getAddress={getAddress} />
+            <NewPostModal target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
           </InfoWindow>
         ) : null}
       </Marker>

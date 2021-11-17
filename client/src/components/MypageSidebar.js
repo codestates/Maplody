@@ -162,9 +162,11 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = ({ accessToken, setAccessToken }) => {
+const MypageSidebar = ({ accessToken, setAccessToken, userInfo }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
+
+  const { nickName, userId, createdAt, postList } = userInfo;
 
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -190,24 +192,24 @@ const MypageSidebar = ({ accessToken, setAccessToken }) => {
 
   return (
     <MenuContainer>
-      <MyProfile onClick={openModalHandler} src={require('../img/빡빡이아죠시.jpg').default}></MyProfile>
+      <MyProfile onClick={openModalHandler} src={require('../img/user.png').default}></MyProfile>
       {isOpen ? (
         <ModalBackdrop onClick={openModalHandler}>
           <SidebarContainer onClick={(e) => e.stopPropagation()}>
             <UserInfo>
-              <MyProfile onClick={openModalHandler} src={require('../img/빡빡이아죠시.jpg').default} />
+              <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
               <AboutUser>
-                <UserNickName>갬성폭팔님</UserNickName>
-                <UserId>hhhghg100</UserId>
+                <UserNickName>{nickName}</UserNickName>
+                <UserId>{userId}</UserId>
                 <UserPostCountContainer>
                   <UserPostCountIcon className="fas fa-map-marked-alt" />
-                  <UserPostCount>4</UserPostCount>
+                  <UserPostCount>{postList.length}</UserPostCount>
                 </UserPostCountContainer>
-                <UserCreatedAt>2021.11.08</UserCreatedAt>
+                <UserCreatedAt>{createdAt}</UserCreatedAt>
               </AboutUser>
             </UserInfo>
             <CreatedPostContainer>
-              <MyPost />
+              <MyPost postList={postList} />
             </CreatedPostContainer>
             <UserInfoButtonContainer>
               <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>

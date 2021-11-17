@@ -3,7 +3,6 @@ const auth = require('../Users/auth');
 
 module.exports = async (req, res) => {
   const userInfo = await auth(req);
-
   if (!userInfo) {
     return res.status(401).json({ message: '로그인이 필요합니다' });
   } else {
