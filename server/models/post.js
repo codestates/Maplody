@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       storyBoard: DataTypes.STRING,
       url: DataTypes.STRING,
       userId: DataTypes.INTEGER,
-      lat: DataTypes.STRING,
-      lng: DataTypes.STRING,
+      lat: DataTypes.INTEGER,
+      lng: DataTypes.INTEGER,
     },
     {
       sequelize,

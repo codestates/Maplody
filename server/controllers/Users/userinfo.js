@@ -1,19 +1,20 @@
 const { User } = require('../../models');
-const { isAuthorized } = require('../tokenFunctions');
+const { Post } = require('../../models/post')
+const auth  = require('./auth');
 
-module.exports = (req, res) => {
-  const userInfo = isAuthorized(req);
-  if (userInfo) {
-    const { userId } = userInfo;
-    Post.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['id',''],
-        },
-      ],
-      where: { userId: User.id },
-    });
+module.exports = {
+  get: async (req, res) => {
+    const userInfo = await auth(req);
+    const postList = await Post.findAll({ where: { userId: userInfo.userId }});
+    if (!userInfo) {
+      return res.status(401).json({ message: '로그인이 필요합니다' });
+    } else {
+      delete userInfo.dataValues.password;
+      res.status(200).json({data: userInfo, postList: postList, message: '요청한 유저 정보입니다' });
+    }
+  },
+  put: (req, res) => {
+    const 
   }
 };
 // 클라이언트에서 필요로 하는 정보는

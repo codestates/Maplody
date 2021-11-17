@@ -1,6 +1,5 @@
 const { User } = require('../../models');
 const crypto = require('crypto');
-const { generateAccessToken } = require('../tokenFunctions');
 
 module.exports = (req, res) => {
   const { userId, nickname, email, password, image } = req.body;

@@ -1,17 +1,14 @@
 const { Post } = require('../../models');
-const { auth } = require('../Users/auth');
+const auth = require('../Users/auth');
 
 module.exports = async (req, res) => {
   const userInfo = await auth(req);
 
-  console.log('9', userInfo);
   if (!userInfo) {
     return res.status(401).json({ message: '로그인이 필요합니다' });
   } else {
     const userId = userInfo.id;
-    console.log(userId);
     const { musicArtist, musicTitle, url, getAddress, storyBoard, lat, lng } = req.body;
-    console.log(url, '!!!!!!!!!!!!!!!!!!!!!!!!');
     const newPost = await Post.create({
       musicArtist: musicArtist,
       musicTitle: musicTitle,
