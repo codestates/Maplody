@@ -191,47 +191,6 @@ const PostCreatedAt = styled.text`
   resize: none;
 `;
 
-const CreatedPost = styled.div`
-  width: 300px;
-  height: 140px;
-  margin: 5px;
-  padding: 5px;
-  box-shadow: 2px 2px 2px 2px gray;
-  border-radius: 15px;
-`;
-
-const MusicInfoContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  margin: 5px;
-`;
-
-const MusicTitle = styled.div`
-  margin-right: 15px;
-`;
-
-const MusicSinger = styled.div``;
-
-const CreatedInfoContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const CreatedInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const PostCreatedPlace = styled.textarea`
-  border: none;
-  resize: none;
-`;
-
-const PostCreatedAt = styled.textarea`
-  border: none;
-  resize: none;
-`;
-
 const UserInfoButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -296,7 +255,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   useEffect(() => {
     userInfoHandler();
   }, [isOpen]);
-  
+
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -336,69 +295,69 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       });
   };
   return (
-        <MenuContainer>
-          <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
-          {isOpen ? (
-            <ModalBackdrop onClick={openModalHandler}>
-              <SidebarContainer onClick={(e) => e.stopPropagation()}>
-                <UserInfo>
-                  <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
-                  <AboutUser>
-                    <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
-                    <UserId>{userInfo.userInfo.userId}</UserId>
-                    <UserPostCountContainer>
-                      <UserPostCountIcon className="fas fa-map-marked-alt" />
-                      <UserPostCount>{userInfo.postList.length}</UserPostCount>
-                    </UserPostCountContainer>
-                    <UserCreatedAt>{userInfo.userInfo.createdAt.slice(0, 10)}</UserCreatedAt>
-                  </AboutUser>
-                </UserInfo>
-                <CreatedPostContainer>
-                  {userInfo.postList.map((el) => (
-                    <CreatedPost>
-                      <MusicInfoContainer>
-                        <MicIcon className="fas fa-microphone-alt" />
-                        <MusicTitle>{el.musicTitle}</MusicTitle>
-                        <MusicSinger>{el.musicArtist}</MusicSinger>
-                      </MusicInfoContainer>
-                      <CreatedInfoContainer>
-                        <ReactPlayer
-                          url={`https://www.youtube.com/watch?v=${el.url}`}
-                          loop
-                          width={'120px'}
-                          height={'90px'}
-                        />
-                        <CreatedInfo>
-                          <PostPlaceContainer>
-                            <PostPlaceIcon className="fas fa-map-marked-alt" />
-                            <PostCreatedPlace>{el.getAddress.slice(5)}</PostCreatedPlace>
-                          </PostPlaceContainer>
-                          <PostCreatedAtContainer>
-                            <PostCreatedAtIcon className="fas fa-calendar-day" />
-                            <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
-                          </PostCreatedAtContainer>
-                        </CreatedInfo>
-                      </CreatedInfoContainer>
-                    </CreatedPost>
-                  ))}
-                </CreatedPostContainer>
-                <UserInfoButtonContainer>
-                  <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
-                  <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
-                  {userinfoOpen ? (
-                    <MyInfoFixModal
-                      accessToken={accessToken}
-                      userinfoModalHandler={userinfoModalHandler}
-                      userInfo={userInfo}
-                      setAccessToken={setAccessToken}
-                      setIsLogin={setIsLogin}
+    <MenuContainer>
+      <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+      {isOpen ? (
+        <ModalBackdrop onClick={openModalHandler}>
+          <SidebarContainer onClick={(e) => e.stopPropagation()}>
+            <UserInfo>
+              <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+              <AboutUser>
+                <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
+                <UserId>{userInfo.userInfo.userId}</UserId>
+                <UserPostCountContainer>
+                  <UserPostCountIcon className="fas fa-map-marked-alt" />
+                  <UserPostCount>{userInfo.postList.length}</UserPostCount>
+                </UserPostCountContainer>
+                <UserCreatedAt>{userInfo.userInfo.createdAt.slice(0, 10)}</UserCreatedAt>
+              </AboutUser>
+            </UserInfo>
+            <CreatedPostContainer>
+              {userInfo.postList.map((el) => (
+                <CreatedPost>
+                  <MusicInfoContainer>
+                    <MicIcon className="fas fa-microphone-alt" />
+                    <MusicTitle>{el.musicTitle}</MusicTitle>
+                    <MusicSinger>{el.musicArtist}</MusicSinger>
+                  </MusicInfoContainer>
+                  <CreatedInfoContainer>
+                    <ReactPlayer
+                      url={`https://www.youtube.com/watch?v=${el.url}`}
+                      loop
+                      width={'120px'}
+                      height={'90px'}
                     />
-                  ) : null}
-                </UserInfoButtonContainer>
-              </SidebarContainer>
-            </ModalBackdrop>
-          ) : null}
-        </MenuContainer>
+                    <CreatedInfo>
+                      <PostPlaceContainer>
+                        <PostPlaceIcon className="fas fa-map-marked-alt" />
+                        <PostCreatedPlace>{el.getAddress.slice(5)}</PostCreatedPlace>
+                      </PostPlaceContainer>
+                      <PostCreatedAtContainer>
+                        <PostCreatedAtIcon className="fas fa-calendar-day" />
+                        <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                      </PostCreatedAtContainer>
+                    </CreatedInfo>
+                  </CreatedInfoContainer>
+                </CreatedPost>
+              ))}
+            </CreatedPostContainer>
+            <UserInfoButtonContainer>
+              <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
+              <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
+              {userinfoOpen ? (
+                <MyInfoFixModal
+                  accessToken={accessToken}
+                  userinfoModalHandler={userinfoModalHandler}
+                  userInfo={userInfo}
+                  setAccessToken={setAccessToken}
+                  setIsLogin={setIsLogin}
+                />
+              ) : null}
+            </UserInfoButtonContainer>
+          </SidebarContainer>
+        </ModalBackdrop>
+      ) : null}
+    </MenuContainer>
   );
 };
 

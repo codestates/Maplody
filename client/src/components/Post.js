@@ -66,7 +66,7 @@ const PostStoryboard = styled.div`
   margin-left: 15px;
 `;
 const ButtonContainer = styled.button`
- height: 30px;
+  height: 30px;
   width: 70px;
   border: solid 3px;
   border-radius: 15px;
@@ -102,39 +102,36 @@ const ButtonContainer = styled.button`
   }
 `;
 const DeleteBtn = styled.div`
-font-size: 15px;
+  font-size: 15px;
 `;
 
 const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
-  
   const Swal = require('sweetalert2');
-  
+
   const DeleteBtnHandler = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, 
-      {id: id},
-      {withCredentials: true})
+      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, { id: id }, { withCredentials: true })
       .then((res) => {
         Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '포스트가 삭제되었습니다',
-            confirmButtonText: '확인',
-            confirmButtonColor: '#FF6E01',
-            width: '20rem',
-            timer: 2000,
-          }),
+          position: 'center',
+          icon: 'success',
+          title: '포스트가 삭제되었습니다',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
       })
       .catch((err) => {
         Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '잘 못 된 요청입니다',
-            confirmButtonText: '확인',
-            confirmButtonColor: '#FF6E01',
-            width: '20rem',
-            timer: 2000,
-          }),
+          position: 'center',
+          icon: 'error',
+          title: '잘 못 된 요청입니다',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
       });
   };
 
@@ -152,17 +149,11 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
         <PostCreatedAt>{createdAt.slice(0, 10)}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${url}`}
-          loop
-          controls
-          width={'420px'}
-          height={'250px'}
-        />
+        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} loop controls width={'420px'} height={'250px'} />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
       <ButtonContainer onClick={DeleteBtnHandler}>
-          <DeleteBtn>삭제</DeleteBtn>
+        <DeleteBtn>삭제</DeleteBtn>
       </ButtonContainer>
     </PostContainer>
   );
