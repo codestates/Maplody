@@ -357,6 +357,8 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                       accessToken={accessToken}
                       userinfoModalHandler={userinfoModalHandler}
                       userInfo={userInfo}
+                      setAccessToken={setAccessToken}
+                      setIsLogin={setIsLogin}
                     />
                   ) : null}
                 </UserInfoButtonContainer>
