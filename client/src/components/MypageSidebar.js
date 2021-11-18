@@ -9,7 +9,7 @@ import Loading from '../pages/Loading';
 
 const slideIn = keyframes`
     from {
-      right: -380px;
+      right: -400px;
     }
     to {
       right: 0;
@@ -61,7 +61,7 @@ const SidebarContainer = styled.div`
   align-items: center;
   border-radius: 20px 0 0 20px;
   height: 100%;
-  width: 385px;
+  width: 400px;
   margin-right: 0;
   margin-left: auto;
   background-color: white;
@@ -84,22 +84,18 @@ const AboutUser = styled.div`
   display: flex;
   align-items: end;
   flex-direction: column;
-  border-bottom: 3px dashed;
+  width: 200px;
 `;
 
 const UserNickName = styled.div`
   border-bottom: #ff0066 3px dashed;
-  margin-right: 40px;
 `;
 
-const UserId = styled.div`
-  margin-right: 40px;
-`;
+const UserId = styled.div``;
 
 const UserPostCountContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-right: 40px;
 `;
 
 const UserPostCountIcon = styled.div`
@@ -109,24 +105,23 @@ const UserPostCountIcon = styled.div`
 
 const UserPostCount = styled.div``;
 
-const UserCreatedAt = styled.div``;
+const UserCreatedAt = styled.div`
+  border-bottom: 3px dashed;
+`;
 
 const CreatedPostContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   height: 650px;
-  width: 340px;
-  padding: 15px;
+  width: 350px;
   box-shadow: 4px 4px 4px 4px gray;
   border-radius: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const CreatedPost = styled.div`
   width: 300px;
-  height: 140px;
-  margin: 5px;
+  height: 150px;
+  margin: 15px 5px 15px 20px;
   padding: 5px;
   box-shadow: 2px 2px 2px 2px gray;
   border-radius: 15px;
@@ -212,6 +207,8 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   const [isLoading, setisLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
 
+  const Swal = require('sweetalert2');
+
   const userInfoHandler = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
@@ -246,18 +243,32 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       .then((res) => {
         setAccessToken('');
         setIsLogin(false);
-        alert('로그아웃 되었습니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '로그아웃 되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
         navigate('/');
       })
       .catch((err) => {
-        alert('잘못된 요청입니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '잘 못된 요청입니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
       });
   };
 
   return (
     <>
       {isLoading ? (
-        <Loading />
+        'loading...'
       ) : (
         <MenuContainer>
           <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
@@ -292,7 +303,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                         />
                         <CreatedInfo>
                           <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-                          <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                          <PostCreatedAt>{el.createdAt}</PostCreatedAt>
                         </CreatedInfo>
                       </CreatedInfoContainer>
                     </CreatedPost>
@@ -303,12 +314,9 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
                   {userinfoOpen ? (
                     <MyInfoFixModal
-                      userInfo={userInfo}
-                      setUserInfo={setUserInfo}
                       accessToken={accessToken}
-                      setAccessToken={setAccessToken}
-                      setIsLogin={setIsLogin}
                       userinfoModalHandler={userinfoModalHandler}
+                      userInfo={userInfo}
                     />
                   ) : null}
                 </UserInfoButtonContainer>

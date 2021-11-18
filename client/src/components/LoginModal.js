@@ -6,16 +6,16 @@ import styled from 'styled-components';
 
 import SignupModal from './SignupModal';
 
-const LoginModalContainer = styled.div`
-  height: 13.5rem;
-`;
+const LoginModalContainer = styled.div``;
 const LoginModalBackdrop = styled.div`
   position: fixed;
-  z-index: 999;
+  z-index: 995;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
@@ -176,6 +176,7 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+  const Swal = require('sweetalert2');
 
   const handleChange = (e) => {
     if (e.target.type === 'text') {
@@ -194,13 +195,28 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
         { withCredentials: true },
       )
       .then((res) => {
-        console.log(res.data);
         setAccessToken(res.data.accessToken);
         setIsLogin(true);
-        alert('로그인되었습니다. 환영합니다!');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '로그인되었습니다. 환영합니다!',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
         navigate('/main');
       })
-      .catch((err) => alert('아이디와 비밀번호를 확인해주세요'));
+      .catch((err) =>
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '아이디와 비밀번호를 확인해주세요',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        }),
+      );
   };
 
   const openSignupHandler = () => {

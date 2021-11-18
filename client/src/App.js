@@ -40,7 +40,14 @@ function App() {
           />
           <Route
             path="/main"
-            element={<Main accessToken={accessToken} setIsLogin={setIsLogin} setAccessToken={setAccessToken} />}
+            element={
+              <Main
+                accessToken={accessToken}
+                setIsLogin={setIsLogin}
+                setAccessToken={setAccessToken}
+                issueTokens={issueTokens}
+              />
+            }
           />
           <Route path="/loading" element={<Loading />} />
         </Routes>
