@@ -4,13 +4,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
-        id: 2,
-        nickname: 'nickname',
-        userId: 'test',
+        id: 1,
+        nickname: '관리자',
+        userId: 'admin',
         password:
-          '541b6294f3839c1abd780e59265bb26b64d6afdfc4dea825f9d90cab70e03f471995e2829af44b9d4bc35e6a3db01f378e42020c305ad5001b0ca56daa799c74',
+          '4befdf84e456cbd509ed7dd45ee7d095e4659793e38c3d190e2e1ffb5cc240d400962d33c2ed581e3dfde142f1f6bbfad8549c1d1b9c08a2f3e4dbbd81f2fb53',
         email: 'email@email.com',
-        salt: `1462336181035`,
+        salt: `670866691073`,
         image: 'image',
         createdAt: new Date(),
         updatedAt: new Date(),

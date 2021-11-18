@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
-import Button from './Button'
 
 const PostContainer = styled.div`
   margin-bottom: 5px;

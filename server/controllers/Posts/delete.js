@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     Post.destroy({
       where: { id: postid },
     })
-      .then((res) => {
+      .then((findPost) => {
         return res.status(204).json({ message: '게시물이 삭제되었습니다' });
       })
       .catch((err) => {
