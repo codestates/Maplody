@@ -106,18 +106,35 @@ font-size: 15px;
 `;
 
 const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
-
+  
+  const Swal = require('sweetalert2');
+  
   const DeleteBtnHandler = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, 
       {id: id},
       {withCredentials: true})
       .then((res) => {
-        alert('포스트가 삭제되었습니다.');
-       return;
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '포스트가 삭제되었습니다',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#FF6E01',
+            width: '20rem',
+            timer: 2000,
+          }),
       })
       .catch((err) => {
-        alert('잘못된 요청입니다.');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '잘 못 된 요청입니다',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#FF6E01',
+            width: '20rem',
+            timer: 2000,
+          }),
       });
   };
 
@@ -139,8 +156,8 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
           url={`https://www.youtube.com/watch?v=${url}`}
           loop
           controls
-          width={'180px'}
-          height={'100px'}
+          width={'420px'}
+          height={'250px'}
         />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>

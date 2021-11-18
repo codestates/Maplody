@@ -60,7 +60,6 @@ const Map = ({ accessToken }) => {
     getPostHandler();
   }, [isOpenNewPostModal]);
 
-
   return (
     <GoogleMap
       defaultZoom={13}

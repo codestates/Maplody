@@ -30,8 +30,8 @@ module.exports = {
             nickname: nickname,
             password: hashPassword,
           });
+          res.status(200).json({ userinfo: findUser.dataValues, message: '정보가 수정 되었습니다.' });
         });
-        res.status(200).json({ message: '정보가 수정 되었습니다.' });
       }
     }
   },
