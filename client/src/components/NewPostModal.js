@@ -164,7 +164,8 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler, target}) => {
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken }) => {
+
   const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
@@ -207,7 +208,10 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target}) => {
           lat: target.lat,
           lng: target.lng,
         },
-        { withCredentials: true },
+        {
+          headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
       )
       .then((res) => {
         buttonClickHandler();

@@ -69,7 +69,13 @@ const Map = ({ accessToken }) => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal post={post} setPost={setPost} target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
+            <NewPostModal
+              post={post}
+              setPost={setPost}
+              target={target}
+              getAddress={getAddress}
+              openNewPostModalHandler={openNewPostModalHandler}
+            />
           </InfoWindow>
         ) : null}
       </Marker>

@@ -192,7 +192,9 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
       .post(
         `${process.env.REACT_APP_API_URL}/user-login`,
         { userId: userId, password: password },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+        },
       )
       .then((res) => {
         setAccessToken(res.data.accessToken);
