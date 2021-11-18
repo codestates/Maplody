@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import ReactPlayer from 'react-player';
 import MyInfoFixModal from './MyInfoFixModal';
-import Loading from '../pages/Loading';
 
 const slideIn = keyframes`
     from {
@@ -120,9 +119,9 @@ const CreatedPostContainer = styled.div`
 
 const CreatedPost = styled.div`
   width: 300px;
-  height: 150px;
+  height: fit-content;
   margin: 15px 5px 15px 20px;
-  padding: 5px;
+  padding: 5px 15px 15px 15px;
   box-shadow: 2px 2px 2px 2px gray;
   border-radius: 15px;
 `;
@@ -131,6 +130,11 @@ const MusicInfoContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   margin: 5px;
+`;
+
+const MicIcon = styled.i`
+  margin-right: 15px;
+  color: #dd4a68;
 `;
 
 const MusicTitle = styled.div`
@@ -147,14 +151,42 @@ const CreatedInfoContainer = styled.div`
 const CreatedInfo = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: 140px;
+  font-size: 18px;
 `;
 
-const PostCreatedPlace = styled.textarea`
+const PostPlaceContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const PostPlaceIcon = styled.i`
+  margin-left: 8px;
+  margin-right: 10px;
+  color: #dd4a68;
+  padding-top: 2px;
+`;
+
+const PostCreatedPlace = styled.text`
   border: none;
   resize: none;
+  font-size: 14px;
 `;
 
-const PostCreatedAt = styled.textarea`
+const PostCreatedAtIcon = styled.i`
+  margin-left: 15px;
+  margin-right: 10px;
+  color: #dd4a68;
+  padding-top: 2px;
+`;
+
+const PostCreatedAtContainer = styled.div`
+  display: flex;
+  width: 150px;
+`;
+
+const PostCreatedAt = styled.text`
   border: none;
   resize: none;
 `;
@@ -216,7 +248,6 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log('sidebar', res.data.userinfo);
         setUserInfo(res.data.userinfo);
         setisLoading(false);
       })
@@ -249,7 +280,8 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
           title: '로그아웃 되었습니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
         navigate('/');
       })
@@ -257,10 +289,11 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: '잘 못된 요청입니다.',
+          title: '잘 못 된 요청입니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
       });
   };
@@ -291,6 +324,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   {userInfo.postList.map((el) => (
                     <CreatedPost>
                       <MusicInfoContainer>
+                        <MicIcon className="fas fa-microphone-alt" />
                         <MusicTitle>{el.musicTitle}</MusicTitle>
                         <MusicSinger>{el.musicArtist}</MusicSinger>
                       </MusicInfoContainer>
@@ -298,12 +332,18 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                         <ReactPlayer
                           url={`https://www.youtube.com/watch?v=${el.url}`}
                           loop
-                          width={'80px'}
-                          height={'80px'}
+                          width={'120px'}
+                          height={'90px'}
                         />
                         <CreatedInfo>
-                          <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-                          <PostCreatedAt>{el.createdAt}</PostCreatedAt>
+                          <PostPlaceContainer>
+                            <PostPlaceIcon className="fas fa-map-marked-alt" />
+                            <PostCreatedPlace>{el.getAddress.slice(5)}</PostCreatedPlace>
+                          </PostPlaceContainer>
+                          <PostCreatedAtContainer>
+                            <PostCreatedAtIcon className="fas fa-calendar-day" />
+                            <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                          </PostCreatedAtContainer>
                         </CreatedInfo>
                       </CreatedInfoContainer>
                     </CreatedPost>

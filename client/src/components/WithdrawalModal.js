@@ -84,7 +84,16 @@ const WithdrawalComment = styled.div`
 const WithdrawalInput = styled.input.attrs({ type: 'text' })`
   font-size: 20px;
   width: 100%;
+  height: 50px;
   padding: 10px;
+  border: solid 3px;
+  border-radius: 5px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: 3px solid #ff0066;
+    border: hidden;
+  }
 `;
 const WithdrawalBtnContainer = styled.div`
   width: 100%;
@@ -201,7 +210,8 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
           text: '감사합니다!',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
         setIsLogin(false);
         navigate('/');
@@ -213,7 +223,8 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
           title: '잘 못된 요청입니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
       });
   };
@@ -231,9 +242,9 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
             <br />
             <p>등록하셨던 데이터는 모두 삭제되며, 다시 복구 할 수 없습니다.</p>
             <br />
-            <p>당신의 기억들로만 남아 있던 추억들이 이제는</p>
+            <p>당신의 기억들로만 남아 있던 추억들이</p>
             <br />
-            <p>저희들의 추억이 되어 영원히 함께 할 것입니다.</p>
+            <p>이제는 저희들의 추억이 되어 영원히 함께 할 것입니다.</p>
             <br />
             <p>그동안 사용해 주셔서 감사합니다.</p>
             <br />
