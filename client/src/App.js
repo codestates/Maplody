@@ -37,7 +37,7 @@ function App() {
             path="/"
             element={
               !isLogin ? (
-                <Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
+                <Landing setAccessToken={setAccessToken} isLogin={isLogin} setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
               ) : (
                 <Navigate to="/main" />
               )
