@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const PostContainer = styled.div`
   margin-bottom: 5px;
@@ -67,23 +66,55 @@ const PostStoryboard = styled.div`
   margin-left: 15px;
 `;
 const ButtonContainer = styled.button`
-  width: 55px;
-  height: 25px;
-  margin-top: 5px;
-  margin-left: 500px;
-  margin-bottom: -10px;
-  align-items: right;
+ height: 30px;
+  width: 70px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 100px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  margin-left: 380px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
 `;
 const DeleteBtn = styled.div`
-  font-size: 13px;
+font-size: 15px;
 `;
 
-const Post = ({ key, id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+
   const DeleteBtnHandler = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, { id: id }, { withCredentials: true })
+      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, 
+      {id: id},
+      {withCredentials: true})
       .then((res) => {
         alert('포스트가 삭제되었습니다.');
+       return;
       })
       .catch((err) => {
         alert('잘못된 요청입니다.');
@@ -104,11 +135,17 @@ const Post = ({ key, id, getAddress, musicTitle, musicArtist, createdAt, url, st
         <PostCreatedAt>{createdAt.slice(0, 10)}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
-        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} loop controls width={'180px'} height={'100px'} />
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${url}`}
+          loop
+          controls
+          width={'180px'}
+          height={'100px'}
+        />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
       <ButtonContainer onClick={DeleteBtnHandler}>
-        <DeleteBtn>삭제</DeleteBtn>
+          <DeleteBtn>삭제</DeleteBtn>
       </ButtonContainer>
     </PostContainer>
   );
