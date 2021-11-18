@@ -287,7 +287,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
         `${process.env.REACT_APP_API_URL}/userinfo`,
         { nickname: watch().nickname, password: watch().password },
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
           withCredentials: true,
         },
       )
@@ -296,7 +296,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
         alert('회원정보 수정이 완료 되었습니다.');
         setAccessToken('');
         axios
-          .get(`${process.env.REACT_APP_API_URL}/user-logout`)
+          .get(`${process.env.REACT_APP_API_URL}/user-logout`, { withCredentials: true })
           .then((res) => {
             console.log('logout please');
             setIsLogin(false);
