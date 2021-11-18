@@ -48,7 +48,6 @@ const PostCreatedAt = styled.div`
 `;
 
 const MyPost = ({ postList }) => {
-  console.log(postList[0].id);
   return (
     <>
       {postList.map((el) => (

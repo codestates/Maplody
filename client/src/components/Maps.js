@@ -28,7 +28,10 @@ const Map = ({ accessToken }) => {
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
-        { withCredentials: false },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: false,
+        },
       )
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
@@ -48,7 +51,7 @@ const Map = ({ accessToken }) => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post`, {
-        headers: { authorization: `Bearer ${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         withCredentials: true,
       })
       .then((res) => {
@@ -65,7 +68,12 @@ const Map = ({ accessToken }) => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
+            <NewPostModal
+              accessToken={accessToken}
+              target={target}
+              getAddress={getAddress}
+              openNewPostModalHandler={openNewPostModalHandler}
+            />
           </InfoWindow>
         ) : null}
       </Marker>
