@@ -214,6 +214,8 @@ const SignupSubmitBtn = styled.button`
 const SignupModal = ({ openSignupHandler }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
 
+  const Swal = require('sweetalert2');
+
   const {
     register,
     formState: { errors },
@@ -236,11 +238,25 @@ const SignupModal = ({ openSignupHandler }) => {
         },
       )
       .then((res) => {
-        alert('회원가입이 완료 되었습니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '회원가입이 완료 되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
         openSignupHandler();
       })
       .catch((err) => {
-        alert('입력된 정보를 다시 확인해 주세요');
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '입력된 정보를 다시 확인해 주세요',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
       });
   };
 

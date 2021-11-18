@@ -193,6 +193,8 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
       .catch((err) => console.log(err));
   };
 
+  const Swal = require('sweetalert2');
+
   const postHandler = () => {
     axios
       .post(
@@ -210,12 +212,26 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
       )
       .then((res) => {
         buttonClickHandler();
-        alert('등록되었습니다!');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '등록되었습니다',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
         openNewPostModalHandler();
         <Navigate to="/main" />;
       })
       .catch((err) => {
-        alert('잘못된 등록 요청입니다');
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '잘 못된 요청입니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
       });
   };
 
@@ -239,7 +255,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
       </MusicInfoContainer>
       <MarkerAddress>{getAddress}</MarkerAddress>
       <PostInfoContainer>
-        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} playing={false} width={'180px'} height={'100px'} />
+        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} playing={false} width={'280px'} height={'140px'} />
         <StoryBoard placeholder="사연을 적어 주세요." onChange={handleChange} />
       </PostInfoContainer>
       <NewPostButContainer>

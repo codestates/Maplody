@@ -173,6 +173,8 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
   const [check, setCheck] = useState(false);
   const [inputCheck, setInputCheck] = useState('');
 
+  const Swal = require('sweetalert2');
+
   const checkHandler = () => {
     setCheck(!check);
   };
@@ -192,12 +194,27 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
         withCredentials: true,
       })
       .then((res) => {
-        alert('탈퇴되었습니다. 그동안 감사했습니다. 더 좋은 서비스로 다시 찾아 뵙겠습니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '회원탈퇴가 완료 되었습니다',
+          text: '감사합니다!',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
         setIsLogin(false);
         navigate('/');
       })
       .catch((err) => {
-        alert('잘못된 요청입니다');
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '잘 못된 요청입니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 1500,
+        });
       });
   };
 
@@ -212,17 +229,14 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
           <WithdrawalWarning>
             <p>회원탈퇴를 신청하기 전에 안내사항을 꼭 확인해주세요.</p>
             <br />
-            <p>사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.</p>
+            <p>등록하셨던 데이터는 모두 삭제되며, 다시 복구 할 수 없습니다.</p>
             <br />
-            <p>탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니</p>
+            <p>당신의 기억들로만 남아 있던 추억들이 이제는</p>
             <br />
-            <p>신중하게 선택하시기 바랍니다.</p>
+            <p>저희들의 추억이 되어 영원히 함께 할 것입니다.</p>
             <br />
-            <p>탈퇴 후에는 가입되어있으신 아이디로 다시 가입할 수 없으며</p>
+            <p>그동안 사용해 주셔서 감사합니다.</p>
             <br />
-            <p>아이디와 데이터는 복구할 수 없습니다.</p>
-            <br />
-            <p>게시판형 서비스에 남아있는 게시글은 탈퇴 후 삭제할 수 없습니다.</p>
           </WithdrawalWarning>
           <CheckboxContainer>
             <Checkbox onClick={checkHandler} />
