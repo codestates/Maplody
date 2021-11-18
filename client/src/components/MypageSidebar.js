@@ -219,7 +219,6 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log('sidebar', res.data.userinfo);
         setUserInfo(res.data.userinfo);
         setisLoading(false);
       })
