@@ -255,67 +255,67 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
 
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Loading />
-      ) : (
-        <MenuContainer>
-          <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
-          {isOpen ? (
-            <ModalBackdrop onClick={openModalHandler}>
-              <SidebarContainer onClick={(e) => e.stopPropagation()}>
-                <UserInfo>
-                  <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
-                  <AboutUser>
-                    <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
-                    <UserId>{userInfo.userInfo.userId}</UserId>
-                    <UserPostCountContainer>
-                      <UserPostCountIcon className="fas fa-map-marked-alt" />
-                      <UserPostCount>{userInfo.postList.length}</UserPostCount>
-                    </UserPostCountContainer>
-                    <UserCreatedAt>{userInfo.userInfo.createdAt.slice(0, 10)}</UserCreatedAt>
-                  </AboutUser>
-                </UserInfo>
-                <CreatedPostContainer>
-                  {userInfo.postList.map((el) => (
-                    <CreatedPost>
-                      <MusicInfoContainer>
-                        <MusicTitle>{el.musicTitle}</MusicTitle>
-                        <MusicSinger>{el.musicArtist}</MusicSinger>
-                      </MusicInfoContainer>
-                      <CreatedInfoContainer>
-                        <ReactPlayer
-                          url={`https://www.youtube.com/watch?v=${el.url}`}
-                          loop
-                          width={'80px'}
-                          height={'80px'}
-                        />
-                        <CreatedInfo>
-                          <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-                          <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
-                        </CreatedInfo>
-                      </CreatedInfoContainer>
-                    </CreatedPost>
-                  ))}
-                </CreatedPostContainer>
-                <UserInfoButtonContainer>
-                  <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
-                  <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
-                  {userinfoOpen ? (
-                    <MyInfoFixModal
-                      userInfo={userInfo}
-                      setUserInfo={setUserInfo}
-                      accessToken={accessToken}
-                      setAccessToken={setAccessToken}
-                      setIsLogin={setIsLogin}
-                      userinfoModalHandler={userinfoModalHandler}
-                    />
-                  ) : null}
-                </UserInfoButtonContainer>
-              </SidebarContainer>
-            </ModalBackdrop>
-          ) : null}
-        </MenuContainer>
-      )}
+      ) : ( */}
+      <MenuContainer>
+        <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+        {isOpen ? (
+          <ModalBackdrop onClick={openModalHandler}>
+            <SidebarContainer onClick={(e) => e.stopPropagation()}>
+              <UserInfo>
+                <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
+                <AboutUser>
+                  <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
+                  <UserId>{userInfo.userInfo.userId}</UserId>
+                  <UserPostCountContainer>
+                    <UserPostCountIcon className="fas fa-map-marked-alt" />
+                    <UserPostCount>{userInfo.postList.length}</UserPostCount>
+                  </UserPostCountContainer>
+                  <UserCreatedAt>{userInfo.userInfo.createdAt.slice(0, 10)}</UserCreatedAt>
+                </AboutUser>
+              </UserInfo>
+              <CreatedPostContainer>
+                {userInfo.postList.map((el) => (
+                  <CreatedPost>
+                    <MusicInfoContainer>
+                      <MusicTitle>{el.musicTitle}</MusicTitle>
+                      <MusicSinger>{el.musicArtist}</MusicSinger>
+                    </MusicInfoContainer>
+                    <CreatedInfoContainer>
+                      <ReactPlayer
+                        url={`https://www.youtube.com/watch?v=${el.url}`}
+                        loop
+                        width={'80px'}
+                        height={'80px'}
+                      />
+                      <CreatedInfo>
+                        <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
+                        <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                      </CreatedInfo>
+                    </CreatedInfoContainer>
+                  </CreatedPost>
+                ))}
+              </CreatedPostContainer>
+              <UserInfoButtonContainer>
+                <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
+                <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
+                {userinfoOpen ? (
+                  <MyInfoFixModal
+                    userInfo={userInfo}
+                    setUserInfo={setUserInfo}
+                    accessToken={accessToken}
+                    setAccessToken={setAccessToken}
+                    setIsLogin={setIsLogin}
+                    userinfoModalHandler={userinfoModalHandler}
+                  />
+                ) : null}
+              </UserInfoButtonContainer>
+            </SidebarContainer>
+          </ModalBackdrop>
+        ) : null}
+      </MenuContainer>
+      {/* // )} */}
     </>
   );
 };
