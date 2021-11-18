@@ -4,19 +4,31 @@ const auth = require('../Users/auth');
 module.exports = {
   getAll: async (req, res) => {
     const userInfo = await auth(req);
-
-    Post.findAll({
-      where: { userId: userInfo.id },
-    })
-      .then((postList) => {
-        if (!postList) {
-          return res.status(400).json({ message: '' });
-        }
-        return res.status(200).json({ data: postList });
+    if (userInfo.userId === 'admin') {
+      Post.findAll({})
+        .then((postList) => {
+          if (!postList) {
+            return res.status(400).json({ message: '' });
+          }
+          return res.status(200).json({ data: postList });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      Post.findAll({
+        where: { userId: userInfo.id },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((postList) => {
+          if (!postList) {
+            return res.status(400).json({ message: '' });
+          }
+          return res.status(200).json({ data: postList });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   getOne: (req, res) => {
     const userInfo = auth(req);

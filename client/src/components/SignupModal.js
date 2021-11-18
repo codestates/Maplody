@@ -214,11 +214,12 @@ const SignupSubmitBtn = styled.button`
 const SignupModal = ({ openSignupHandler }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
 
+  const Swal = require('sweetalert2');
+
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
-    getValues,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
@@ -236,18 +237,34 @@ const SignupModal = ({ openSignupHandler }) => {
         },
       )
       .then((res) => {
-        alert('회원가입이 완료 되었습니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '회원가입이 완료 되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
         openSignupHandler();
       })
       .catch((err) => {
-        alert('입력된 정보를 다시 확인해 주세요');
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '중복된 아이디 입니다!',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
       });
   };
 
   return (
     <SignupModalContainer>
-      <SignupModalBackdrop onClick={openSignupHandler}>
-        <SignupModalWindow onClick={(e) => e.stopPropagation()}>
+      <SignupModalBackdrop>
+        <SignupModalWindow>
           <CloseBtn className="fas fa-times" onClick={openSignupHandler} />
           <IdPasswordContainer>
             <Title>회원가입</Title>
@@ -351,7 +368,15 @@ const SignupModal = ({ openSignupHandler }) => {
               ) : (
                 <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
               )}
-              <SignupSubmitBtn onClick={SignupBtnHandler}>회원가입</SignupSubmitBtn>
+              {!isValid || !passwordCheck ? (
+                <SignupSubmitBtn disabled={true} onClick={SignupBtnHandler}>
+                  회원가입
+                </SignupSubmitBtn>
+              ) : (
+                <SignupSubmitBtn disabled={false} onClick={SignupBtnHandler}>
+                  회원가입
+                </SignupSubmitBtn>
+              )}
             </SignupInputContainer>
           </IdPasswordContainer>
         </SignupModalWindow>
