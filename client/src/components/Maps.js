@@ -45,7 +45,7 @@ const Map = ({ accessToken }) => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
 
-  useEffect(() => {
+  const getPostHandler = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post`, {
         headers: { authorization: `Bearer ${accessToken}` },
@@ -54,7 +54,11 @@ const Map = ({ accessToken }) => {
       .then((res) => {
         setPost(res.data.data);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getPostHandler();
+  }, [isOpenNewPostModal]);
 
   return (
     <GoogleMap
