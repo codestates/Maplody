@@ -28,10 +28,7 @@ const Map = ({ accessToken }) => {
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: false,
-        },
+        { withCredentials: false },
       )
       .then((res) => {
         setGetAddress(res.data.results[0].formatted_address);
@@ -48,16 +45,20 @@ const Map = ({ accessToken }) => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
 
-  useEffect(() => {
+  const getPostHandler = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post`, {
-        headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        headers: { authorization: `Bearer ${accessToken}` },
         withCredentials: true,
       })
       .then((res) => {
         setPost(res.data.data);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getPostHandler();
+  }, [isOpenNewPostModal]);
 
   return (
     <GoogleMap
@@ -69,7 +70,8 @@ const Map = ({ accessToken }) => {
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
             <NewPostModal
-              accessToken={accessToken}
+              post={post}
+              setPost={setPost}
               target={target}
               getAddress={getAddress}
               openNewPostModalHandler={openNewPostModalHandler}
@@ -98,6 +100,7 @@ const Map = ({ accessToken }) => {
               }}>
               <Post
                 key={el.id}
+                id={el.id}
                 getAddress={el.getAddress}
                 musicArtist={el.musicArtist}
                 musicTitle={el.musicTitle}

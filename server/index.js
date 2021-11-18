@@ -22,13 +22,14 @@ app.use(
       'https://localhost:3000',
       'http://localhost:3000',
       'http://maplody.site/*',
-      'http://www.maplody.site/*',
       'https://www.maplody.site/*',
       'https://maplody.site/*',
+      `${process.env.CLOUDFRONT_ENDPOINT}`,
       `${process.env.S3_ENDPOINT}`,
     ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
   }),
 );
 
@@ -37,15 +38,8 @@ app.use('/post', postRouter);
 app.use('/', userRouter);
 
 let server;
-// if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
-//   const privateKey = fs.readFileSync(__dirname + '/key.pem', 'utf8');
-//   const certificate = fs.readFileSync(__dirname + '/cert.pem', 'utf8');
-//   const credentials = { key: privateKey, cert: certificate };
 
-//   server = https.createServer(credentials, app);
-//   server.listen(HTTPS_PORT, () => console.log('server running at 4000'));
-// } else {
 console.log(`server running at ${HTTPS_PORT}`);
 server = app.listen(HTTPS_PORT);
-// }
+
 module.exports = server;
