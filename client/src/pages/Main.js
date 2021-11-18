@@ -28,7 +28,6 @@ const Main = ({ accessToken, setAccessToken, setIsLogin, issueTokens }) => {
       <MypageSidebar
         accessToken={accessToken}
         setAccessToken={setAccessToken}
-        // userInfo={userInfo}
         setIsLogin={setIsLogin}
         issueTokens={issueTokens}
       />

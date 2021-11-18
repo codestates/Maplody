@@ -85,8 +85,8 @@ const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyB
           playing
           loop
           controls
-          width={'180px'}
-          height={'100px'}
+          width={'420px'}
+          height={'250px'}
         />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>

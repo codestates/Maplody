@@ -296,7 +296,8 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
           title: '회원정보 수정이 완료 되었습니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
         navigate('/main');
       })
@@ -307,7 +308,8 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
           title: '입력된 정보를 다시 확인해 주세요',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          width: '20rem',
+          timer: 2000,
         });
       });
   };
@@ -319,7 +321,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
   return (
     <MyInfoFixModalContainer>
       <MyInfoFixModalBackdrop>
-        <MyInfoFixModalWindow onClick={(e) => e.stopPropagation()}>
+        <MyInfoFixModalWindow>
           <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
           <IdPasswordContainer>
             <Title>회원정보 수정</Title>
