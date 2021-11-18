@@ -194,7 +194,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
         { withCredentials: true },
       )
       .then((res) => {
-        console.log(res.data);
         setAccessToken(res.data.accessToken);
         setUserInfo(res.data.userInfo);
         setIsLogin(true);
