@@ -8,7 +8,7 @@ import MyInfoFixModal from './MyInfoFixModal';
 
 const slideIn = keyframes`
     from {
-      right: -380px;
+      right: -400px;
     }
     to {
       right: 0;
@@ -60,7 +60,7 @@ const SidebarContainer = styled.div`
   align-items: center;
   border-radius: 20px 0 0 20px;
   height: 100%;
-  width: 385px;
+  width: 400px;
   margin-right: 0;
   margin-left: auto;
   background-color: white;
@@ -83,22 +83,18 @@ const AboutUser = styled.div`
   display: flex;
   align-items: end;
   flex-direction: column;
-  border-bottom: 3px dashed;
+  width: 200px;
 `;
 
 const UserNickName = styled.div`
   border-bottom: #ff0066 3px dashed;
-  margin-right: 40px;
 `;
 
-const UserId = styled.div`
-  margin-right: 40px;
-`;
+const UserId = styled.div``;
 
 const UserPostCountContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-right: 40px;
 `;
 
 const UserPostCountIcon = styled.div`
@@ -108,18 +104,91 @@ const UserPostCountIcon = styled.div`
 
 const UserPostCount = styled.div``;
 
-const UserCreatedAt = styled.div``;
+const UserCreatedAt = styled.div`
+  border-bottom: 3px dashed;
+`;
 
 const CreatedPostContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   height: 650px;
-  width: 340px;
-  padding: 15px;
+  width: 350px;
   box-shadow: 4px 4px 4px 4px gray;
   border-radius: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
+const CreatedPost = styled.div`
+  width: 300px;
+  height: fit-content;
+  margin: 15px 5px 15px 20px;
+  padding: 5px 15px 15px 15px;
+  box-shadow: 2px 2px 2px 2px gray;
+  border-radius: 15px;
+`;
+
+const MusicInfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px;
+`;
+
+const MicIcon = styled.i`
+  margin-right: 15px;
+  color: #dd4a68;
+`;
+
+const MusicTitle = styled.div`
+  margin-right: 15px;
+`;
+
+const MusicSinger = styled.div``;
+
+const CreatedInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const CreatedInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 140px;
+  font-size: 18px;
+`;
+
+const PostPlaceContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const PostPlaceIcon = styled.i`
+  margin-left: 8px;
+  margin-right: 10px;
+  color: #dd4a68;
+  padding-top: 2px;
+`;
+
+const PostCreatedPlace = styled.text`
+  border: none;
+  resize: none;
+  font-size: 14px;
+`;
+
+const PostCreatedAtIcon = styled.i`
+  margin-left: 15px;
+  margin-right: 10px;
+  color: #dd4a68;
+  padding-top: 2px;
+`;
+
+const PostCreatedAtContainer = styled.div`
+  display: flex;
+  width: 150px;
+`;
+
+const PostCreatedAt = styled.text`
+  border: none;
+  resize: none;
 `;
 
 const CreatedPost = styled.div`
@@ -208,8 +277,9 @@ const UserInfoButton = styled.button`
 const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
+
+  const Swal = require('sweetalert2');
 
   const userInfoHandler = () => {
     axios
@@ -219,15 +289,13 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       })
       .then((res) => {
         setUserInfo(res.data.userinfo);
-        setisLoading(false);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    setisLoading(true);
     userInfoHandler();
-  }, []);
+  }, [isOpen]);
 
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -244,18 +312,30 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       .then((res) => {
         setAccessToken('');
         setIsLogin(false);
-        alert('로그아웃 되었습니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '로그아웃 되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
         navigate('/');
       })
       .catch((err) => {
-        alert('잘못된 요청입니다.');
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '잘 못 된 요청입니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
       });
   };
   return (
-    <>
-      {isLoading ? (
-        'loading...'
-      ) : (
         <MenuContainer>
           <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
           {isOpen ? (
@@ -277,6 +357,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   {userInfo.postList.map((el) => (
                     <CreatedPost>
                       <MusicInfoContainer>
+                        <MicIcon className="fas fa-microphone-alt" />
                         <MusicTitle>{el.musicTitle}</MusicTitle>
                         <MusicSinger>{el.musicArtist}</MusicSinger>
                       </MusicInfoContainer>
@@ -284,12 +365,18 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                         <ReactPlayer
                           url={`https://www.youtube.com/watch?v=${el.url}`}
                           loop
-                          width={'80px'}
-                          height={'80px'}
+                          width={'120px'}
+                          height={'90px'}
                         />
                         <CreatedInfo>
-                          <PostCreatedPlace>{el.getAddress}</PostCreatedPlace>
-                          <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                          <PostPlaceContainer>
+                            <PostPlaceIcon className="fas fa-map-marked-alt" />
+                            <PostCreatedPlace>{el.getAddress.slice(5)}</PostCreatedPlace>
+                          </PostPlaceContainer>
+                          <PostCreatedAtContainer>
+                            <PostCreatedAtIcon className="fas fa-calendar-day" />
+                            <PostCreatedAt>{el.createdAt.slice(0, 10)}</PostCreatedAt>
+                          </PostCreatedAtContainer>
                         </CreatedInfo>
                       </CreatedInfoContainer>
                     </CreatedPost>
@@ -299,15 +386,19 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   <UserInfoButton onClick={LogoutBtnHandler}>로그아웃</UserInfoButton>
                   <UserInfoButton onClick={userinfoModalHandler}>회원정보 수정</UserInfoButton>
                   {userinfoOpen ? (
-                    <MyInfoFixModal accessToken={accessToken} userinfoModalHandler={userinfoModalHandler} />
+                    <MyInfoFixModal
+                      accessToken={accessToken}
+                      userinfoModalHandler={userinfoModalHandler}
+                      userInfo={userInfo}
+                      setAccessToken={setAccessToken}
+                      setIsLogin={setIsLogin}
+                    />
                   ) : null}
                 </UserInfoButtonContainer>
               </SidebarContainer>
             </ModalBackdrop>
           ) : null}
         </MenuContainer>
-      )}
-    </>
   );
 };
 

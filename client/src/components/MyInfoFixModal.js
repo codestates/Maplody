@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import WithdrawalModal from './WithdrawalModal';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
+import { useNavigate } from 'react-router';
 
 const slideIn = keyframes`
     from {
@@ -62,33 +63,18 @@ const IdPasswordContainer = styled.div`
 const Title = styled.div`
   font-size: 40px;
   text-align: center;
-`;
-const ProfileContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 35px;
-`;
-const ProfilePicture = styled.div`
-  border: solid 3px red;
-  width: 90px;
-  height: 90px;
-`;
-
-const ProfileText = styled.div`
-  font-size: 25px;
-  font-weight: bolder;
-  border-bottom: solid 3px #ff0066;
+  margin-bottom: 25px;
 `;
 
 const MyinfoInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 0 25px 35px;
+  padding: 35px 0 25px 35px;
 `;
 
 const NicknameText = styled.div`
   font-size: 25px;
+  margin-bottom: 25px;
 `;
 
 const NicknameInput = styled.input.attrs({ type: 'text' })`
@@ -106,11 +92,7 @@ const NicknameInput = styled.input.attrs({ type: 'text' })`
     border: hidden;
   }
 `;
-const Nicknameinform = styled.div`
-  font-size: 15.5px;
-  color: #ff0066;
-  margin: -10px 0 15px -25px;
-`;
+
 const EmailContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -119,6 +101,7 @@ const EmailContainer = styled.div`
 const EmailText = styled.div`
   font-size: 25px;
   padding: 10px 0 2px;
+  margin-bottom: 25px;
 `;
 
 const EmailUser = styled.div`
@@ -135,6 +118,7 @@ const IdContainer = styled.div`
 const IdText = styled.div`
   font-size: 25px;
   padding: 10px 0 2px;
+  margin-bottom: 25px;
 `;
 
 const IdUser = styled.div`
@@ -146,6 +130,7 @@ const IdUser = styled.div`
 const PwText = styled.div`
   font-size: 25px;
   padding: 10px 0 2px;
+  margin-bottom: 25px;
 `;
 
 const Validation_Check = styled.div`
@@ -176,12 +161,6 @@ const PwInput = styled.input.attrs({ type: 'password' })`
     outline: 3px solid #ff0066;
     border: hidden;
   }
-`;
-
-const Pwinform = styled.div`
-  font-size: 15.5px;
-  margin: 10px 5px 10px -20px;
-  color: #ff0066;
 `;
 
 const PwCheckText = styled.div`
@@ -218,6 +197,7 @@ const MyInfoFixSubmitBtn = styled.button`
   transition: 300ms ease all;
   padding-top: 2px;
   font-size: 25px;
+  margin-bottom: 25px;
 
   &:hover {
     box-shadow: gray 4px 4px 4px;
@@ -281,17 +261,15 @@ const WithdrawalBtn = styled.button`
   }
 `;
 
-const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccessToken, setIsLogin }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
 
+  const navigate = useNavigate();
+  const Swal = require('sweetalert2');
+
   const {
     register,
-    handleSubmit,
     formState: { errors, isValid },
     watch,
   } = useForm({ mode: 'onChange' });
@@ -307,15 +285,41 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
         { nickname: watch().nickname, password: watch().password },
         {
           headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         },
-        { withCredentials: true },
       )
       .then((res) => {
-        alert('회원정보 수정이 완료 되었습니다.');
         userinfoModalHandler();
+        setAccessToken('');
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/user-logout`, { withCredentials: true })
+          .then((res) => {
+            setIsLogin(false);
+            navigate('/');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '회원정보 수정이 완료 되었습니다.',
+          text: '다시 로그인해 주세요!',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          timer: 2000,
+        });
       })
       .catch((err) => {
-        alert('입력된 정보를 다시 확인해 주세요');
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '입력된 정보를 다시 확인해 주세요',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#FF6E01',
+          width: '20rem',
+          timer: 2000,
+        });
       });
   };
 
@@ -326,14 +330,10 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
   return (
     <MyInfoFixModalContainer>
       <MyInfoFixModalBackdrop>
-        <MyInfoFixModalWindow onClick={(e) => e.stopPropagation()}>
+        <MyInfoFixModalWindow>
           <CloseBtn className="fas fa-times" onClick={userinfoModalHandler} />
           <IdPasswordContainer>
             <Title>회원정보 수정</Title>
-            <ProfileContainer>
-              <ProfilePicture />
-              <ProfileText>프로필 사진</ProfileText>
-            </ProfileContainer>
             <MyinfoInputContainer>
               <NicknameText>
                 닉네임
@@ -357,14 +357,13 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
               ) : (
                 <Validation_Check />
               )}
-              <Nicknameinform>닉네임을 변경하지 않는 경우에는 원래 닉네임으로 기입해주시기 바랍니다.</Nicknameinform>
               <EmailContainer>
                 <EmailText>이메일</EmailText>
-                <EmailUser>admin@gmail.com</EmailUser>
+                <EmailUser>{userInfo.userInfo.email}</EmailUser>
               </EmailContainer>
               <IdContainer>
                 <IdText>아이디</IdText>
-                <IdUser>admin</IdUser>
+                <IdUser>{userInfo.userInfo.userId}</IdUser>
               </IdContainer>
               <PwText>
                 비밀번호
@@ -384,7 +383,6 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
                   }}
                 />
               </PwText>
-              <Pwinform>비밀번호를 변경하지 않는 경우에는 원래 비밀번호를 기입해주시기 바랍니다.</Pwinform>
               {errors.password ? (
                 <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
               ) : (
@@ -420,7 +418,11 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
               )}
               <WithdrawalBtn onClick={withdrawalModalHandler}>회원탈퇴</WithdrawalBtn>
               {withdrawalOpen ? (
-                <WithdrawalModal accessToken={accessToken} withdrawalModalHandler={withdrawalModalHandler} />
+                <WithdrawalModal
+                  accessToken={accessToken}
+                  setIsLogin={setIsLogin}
+                  withdrawalModalHandler={withdrawalModalHandler}
+                />
               ) : null}
             </MyinfoInputContainer>
           </IdPasswordContainer>
