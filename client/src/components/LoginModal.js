@@ -192,7 +192,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
         `${process.env.REACT_APP_API_URL}/user-login`,
         { userId: userId, password: password },
         {
-          headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         },
       )
