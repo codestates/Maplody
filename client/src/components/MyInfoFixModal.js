@@ -317,7 +317,6 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
           title: '입력된 정보를 다시 확인해 주세요',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
       });

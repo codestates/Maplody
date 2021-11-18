@@ -206,7 +206,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
           text: '환영합니다!',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
         navigate('/main');
@@ -218,7 +217,6 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
           title: '아이디와 비밀번호를 확인해주세요',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         }),
       );
