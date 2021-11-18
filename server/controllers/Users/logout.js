@@ -8,3 +8,4 @@ module.exports = (req, res) => {
     .status(200)
     .send('로그아웃 성공');
 };
+

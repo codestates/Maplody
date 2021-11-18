@@ -191,6 +191,47 @@ const PostCreatedAt = styled.text`
   resize: none;
 `;
 
+const CreatedPost = styled.div`
+  width: 300px;
+  height: 140px;
+  margin: 5px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px 2px gray;
+  border-radius: 15px;
+`;
+
+const MusicInfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px;
+`;
+
+const MusicTitle = styled.div`
+  margin-right: 15px;
+`;
+
+const MusicSinger = styled.div``;
+
+const CreatedInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const CreatedInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostCreatedPlace = styled.textarea`
+  border: none;
+  resize: none;
+`;
+
+const PostCreatedAt = styled.textarea`
+  border: none;
+  resize: none;
+`;
+
 const UserInfoButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -294,9 +335,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
         });
       });
   };
-
   return (
-    <>
         <MenuContainer>
           <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
           {isOpen ? (
@@ -360,8 +399,6 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
             </ModalBackdrop>
           ) : null}
         </MenuContainer>
-     
-    </>
   );
 };
 
