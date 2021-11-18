@@ -249,7 +249,6 @@ const SignupModal = ({ openSignupHandler }) => {
         openSignupHandler();
       })
       .catch((err) => {
-        console.log(err);
         Swal.fire({
           position: 'center',
           icon: 'error',
