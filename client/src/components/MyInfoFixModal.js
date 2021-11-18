@@ -290,16 +290,25 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
       )
       .then((res) => {
         userinfoModalHandler();
+        setAccessToken('');
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/user-logout`, { withCredentials: true })
+          .then((res) => {
+            setIsLogin(false);
+            navigate('/');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: '회원정보 수정이 완료 되었습니다.',
+          text: '다시 로그인해 주세요!',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
-        navigate('/main');
       })
       .catch((err) => {
         Swal.fire({
