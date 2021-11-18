@@ -3,9 +3,12 @@ const auth = require('../Users/auth');
 
 module.exports = async (req, res) => {
   const userInfo = await auth(req);
+  const refToken = req.cookies.refreshToken;
+
   if (!userInfo) {
     return res.status(400).json({ message: '로그인이 필요합니다' });
   }
+  
   User.destroy({ where: { userId: userInfo.userId } }).then((user) => {
     return res
       .clearCookie('refreshToken', {

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
@@ -64,8 +65,79 @@ const PostStoryboard = styled.div`
   padding: 10px;
   margin-left: 15px;
 `;
+const ButtonContainer = styled.button`
+ height: 30px;
+  width: 70px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 100px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  margin-left: 380px;
 
-const Post = ({ getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+`;
+const DeleteBtn = styled.div`
+font-size: 15px;
+`;
+
+const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+  
+  const Swal = require('sweetalert2');
+  
+  const DeleteBtnHandler = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, 
+      {id: id},
+      {withCredentials: true})
+      .then((res) => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '포스트가 삭제되었습니다',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#FF6E01',
+            width: '20rem',
+            timer: 2000,
+          }),
+      })
+      .catch((err) => {
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '잘 못 된 요청입니다',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#FF6E01',
+            width: '20rem',
+            timer: 2000,
+          }),
+      });
+  };
+
   return (
     <PostContainer>
       <MusicInfoContainer>
@@ -82,7 +154,6 @@ const Post = ({ getAddress, musicTitle, musicArtist, createdAt, url, storyBoard 
       <PostContentContainer>
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${url}`}
-          playing
           loop
           controls
           width={'420px'}
@@ -90,6 +161,9 @@ const Post = ({ getAddress, musicTitle, musicArtist, createdAt, url, storyBoard 
         />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
+      <ButtonContainer onClick={DeleteBtnHandler}>
+          <DeleteBtn>삭제</DeleteBtn>
+      </ButtonContainer>
     </PostContainer>
   );
 };

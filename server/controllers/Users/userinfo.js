@@ -1,4 +1,4 @@
-const { Post, User } = require('../../models');
+const { User, Post } = require('../../models');
 const auth = require('./auth');
 const crypto = require('crypto');
 
