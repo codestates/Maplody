@@ -284,7 +284,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   const userInfoHandler = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/userinfo`, {
-        headers: { authorization: `Bearer ${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         withCredentials: true,
       })
       .then((res) => {
@@ -308,7 +308,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
 
   const LogoutBtnHandler = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user-logout`)
+      .get(`${process.env.REACT_APP_API_URL}/user-logout`, { withCredentials: true })
       .then((res) => {
         setAccessToken('');
         setIsLogin(false);

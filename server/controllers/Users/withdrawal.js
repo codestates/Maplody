@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
         sameSite: 'none',
         secure: true,
         httpOnly: true,
+        domain: ['www.maplody.site', 'maplody.site'],
       })
       .status(204)
       .json({ message: '회원탈퇴가 완료되었습니다.' });

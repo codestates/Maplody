@@ -197,9 +197,7 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
   const withdrawalBtnHandler = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user-withdrawal`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         withCredentials: true,
       })
       .then((res) => {

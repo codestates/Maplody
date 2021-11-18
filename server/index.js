@@ -21,14 +21,15 @@ app.use(
     origin: [
       'https://localhost:3000',
       'http://localhost:3000',
-      'http://maplody.site',
-      'http://www.maplody.site',
-      'https://www.maplody.site',
-      'https://maplody.site',
+      'http://maplody.site/*',
+      'https://www.maplody.site/*',
+      'https://maplody.site/*',
+      `${process.env.CLOUDFRONT_ENDPOINT}`,
       `${process.env.S3_ENDPOINT}`,
     ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'authorization'],
   }),
 );
 
@@ -37,6 +38,8 @@ app.use('/post', postRouter);
 app.use('/', userRouter);
 
 let server;
+
 console.log(`server running at ${HTTPS_PORT}`);
 server = app.listen(HTTPS_PORT);
+
 module.exports = server;

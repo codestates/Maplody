@@ -284,7 +284,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
         `${process.env.REACT_APP_API_URL}/userinfo`,
         { nickname: watch().nickname, password: watch().password },
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
           withCredentials: true,
         },
       )
