@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
-import { Navigate } from 'react-router-dom';
 
 const NewPostModalContainer = styled.div`
   z-index: 998;
@@ -221,13 +220,12 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
           timer: 1500,
         });
         openNewPostModalHandler();
-        <Navigate to="/main" />;
       })
       .catch((err) => {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: '잘 못된 요청입니다.',
+          title: '잘 못 된 요청입니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
           timer: 1500,
