@@ -302,9 +302,12 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler }) => {
 
   const MyinfoFixHandler = () => {
     axios
-      .post(
+      .put(
         `${process.env.REACT_APP_API_URL}/userinfo`,
-        { nickname: nickname, password: password },
+        { nickname: watch().nickname, password: watch().password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
         { withCredentials: true },
       )
       .then((res) => {

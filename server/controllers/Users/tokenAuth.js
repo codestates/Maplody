@@ -8,7 +8,6 @@ module.exports = (req, res) => {
     if (!userInfo) {
       res.status(400).json({ message: '잘못된 요청입니다' });
     } else {
-      console.log(userInfo);
       res.status(200).json({ userInfo: userInfo });
     }
   } else {
