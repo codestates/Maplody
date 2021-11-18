@@ -45,17 +45,21 @@ const Map = ({ accessToken }) => {
     setIsOpenNewPostModal(!isOpenNewPostModal);
   };
 
-  useEffect(() => {
+  const getPostHandler = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post`, {
         headers: { authorization: `Bearer ${accessToken}` },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
         setPost(res.data.data);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getPostHandler();
+  }, [isOpenNewPostModal]);
+
 
   return (
     <GoogleMap
@@ -66,7 +70,7 @@ const Map = ({ accessToken }) => {
       <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
-            <NewPostModal target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
+            <NewPostModal post={post} setPost={setPost} target={target} getAddress={getAddress} openNewPostModalHandler={openNewPostModalHandler} />
           </InfoWindow>
         ) : null}
       </Marker>
@@ -91,6 +95,7 @@ const Map = ({ accessToken }) => {
               }}>
               <Post
                 key={el.id}
+                id={el.id}
                 getAddress={el.getAddress}
                 musicArtist={el.musicArtist}
                 musicTitle={el.musicTitle}

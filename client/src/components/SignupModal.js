@@ -218,7 +218,6 @@ const SignupModal = ({ openSignupHandler }) => {
     register,
     formState: { errors },
     watch,
-    getValues,
   } = useForm({ mode: 'onChange' });
 
   useEffect(() => {

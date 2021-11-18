@@ -7,10 +7,10 @@ module.exports = async (req, res) => {
   if (!userInfo) {
     return res.status(401).json({ message: '로그인이 필요합니다' });
   } else {
-    const { id } = req.params;
+    const { postid } = req.params;
 
     Post.destroy({
-      where: { id },
+      where: { id: postid },
     })
       .then((res) => {
         return res.status(204).json({ message: '게시물이 삭제되었습니다' });

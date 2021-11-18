@@ -165,7 +165,7 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target}) => {
   const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
