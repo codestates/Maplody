@@ -77,7 +77,7 @@ const DeleteBtn = styled.div`
 font-size: 13px;
 `;
 
-const Post = ({ key, id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
 
   const DeleteBtnHandler = () => {
     axios

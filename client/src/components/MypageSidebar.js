@@ -236,7 +236,6 @@ const UserInfoButton = styled.button`
 const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
 
   const Swal = require('sweetalert2');
@@ -249,15 +248,13 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       })
       .then((res) => {
         setUserInfo(res.data.userinfo);
-        setisLoading(false);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    setisLoading(true);
     userInfoHandler();
-  }, []);
+  }, [isOpen]);
 
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -300,9 +297,6 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
 
   return (
     <>
-      {isLoading ? (
-        'loading...'
-      ) : (
         <MenuContainer>
           <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
           {isOpen ? (
@@ -366,7 +360,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
             </ModalBackdrop>
           ) : null}
         </MenuContainer>
-      )}
+     
     </>
   );
 };
