@@ -217,7 +217,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
           title: '등록되었습니다',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          timer: 2000,
         });
         openNewPostModalHandler();
       })
@@ -228,7 +228,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target }) => {
           title: '잘 못 된 요청입니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          timer: 1500,
+          timer: 2000,
         });
       });
   };
