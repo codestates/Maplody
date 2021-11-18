@@ -296,7 +296,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
   useEffect(() => {
     userInfoHandler();
   }, [isOpen]);
-
+  
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };

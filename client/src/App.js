@@ -10,7 +10,6 @@ import Landing from './pages/Landing';
 function App() {
   const [accessToken, setAccessToken] = useState('');
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
 
   const issueTokens = () => {
     axios
@@ -36,11 +35,7 @@ function App() {
             exact
             path="/"
             element={
-              !isLogin ? (
-                <Landing setAccessToken={setAccessToken} isLogin={isLogin} setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
-              ) : (
-                <Navigate to="/main" />
-              )
+              !isLogin ? <Landing setAccessToken={setAccessToken} setIsLogin={setIsLogin} /> : <Navigate to="/main" />
             }
           />
           <Route
@@ -50,7 +45,7 @@ function App() {
                 accessToken={accessToken}
                 setIsLogin={setIsLogin}
                 setAccessToken={setAccessToken}
-                userInfo={userInfo}
+                issueTokens={issueTokens}
               />
             }
           />
