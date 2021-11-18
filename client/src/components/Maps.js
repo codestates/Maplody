@@ -52,7 +52,6 @@ const Map = ({ accessToken }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
         setPost(res.data.data);
       });
   }, []);
@@ -91,6 +90,7 @@ const Map = ({ accessToken }) => {
               }}>
               <Post
                 key={el.id}
+                id={el.id}
                 getAddress={el.getAddress}
                 musicArtist={el.musicArtist}
                 musicTitle={el.musicTitle}
