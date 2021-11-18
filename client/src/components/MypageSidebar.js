@@ -294,6 +294,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
         });
       });
   };
+
   return (
     <MenuContainer>
       <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />

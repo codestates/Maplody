@@ -208,7 +208,6 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
           text: '감사합니다!',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
         setIsLogin(false);
@@ -221,7 +220,6 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
           title: '잘 못된 요청입니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
       });

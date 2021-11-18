@@ -164,8 +164,7 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken }) => {
-
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken, navigate }) => {
   const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
@@ -224,6 +223,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken
           timer: 2000,
         });
         openNewPostModalHandler();
+        navigate('/');
       })
       .catch((err) => {
         Swal.fire({

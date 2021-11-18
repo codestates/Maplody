@@ -243,7 +243,6 @@ const SignupModal = ({ openSignupHandler }) => {
           title: '회원가입이 완료 되었습니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
         openSignupHandler();
@@ -255,7 +254,6 @@ const SignupModal = ({ openSignupHandler }) => {
           title: '중복된 아이디 입니다!',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
       });

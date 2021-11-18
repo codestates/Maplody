@@ -65,19 +65,23 @@ const PostStoryboard = styled.div`
   padding: 10px;
   margin-left: 15px;
 `;
-const ButtonContainer = styled.button`
-  height: 30px;
-  width: 70px;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const DeleteBtn = styled.button`
+  height: 50px;
   border: solid 3px;
   border-radius: 15px;
   background-color: white;
   box-shadow: gray 4px 4px 4px;
   cursor: pointer;
   text-align-last: center;
-  min-width: 100px;
+  min-width: 60px;
   transition: 300ms ease all;
-  font-size: 25px;
-  margin-left: 380px;
+  font-size: 20px;
 
   &:hover {
     box-shadow: gray 4px 4px 4px;
@@ -101,11 +105,8 @@ const ButtonContainer = styled.button`
     box-shadow: none;
   }
 `;
-const DeleteBtn = styled.div`
-  font-size: 15px;
-`;
 
-const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard, setSelected, navigate }) => {
   const Swal = require('sweetalert2');
 
   const DeleteBtnHandler = () => {
@@ -118,9 +119,10 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
           title: '포스트가 삭제되었습니다',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
+        setSelected(null);
+        navigate('/');
       })
       .catch((err) => {
         Swal.fire({
@@ -129,7 +131,6 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
           title: '잘 못 된 요청입니다',
           confirmButtonText: '확인',
           confirmButtonColor: '#FF6E01',
-          width: '20rem',
           timer: 2000,
         });
       });
@@ -152,8 +153,8 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
         <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} loop controls width={'420px'} height={'250px'} />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
-      <ButtonContainer onClick={DeleteBtnHandler}>
-        <DeleteBtn>삭제</DeleteBtn>
+      <ButtonContainer>
+        <DeleteBtn onClick={DeleteBtnHandler}>삭제</DeleteBtn>
       </ButtonContainer>
     </PostContainer>
   );
