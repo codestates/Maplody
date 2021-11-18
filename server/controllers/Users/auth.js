@@ -8,7 +8,6 @@ module.exports = (req) => {
     if (!userInfo) {
       return null;
     } else {
-      console.log(userInfo);
       return userInfo;
     }
   } else {

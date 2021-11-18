@@ -20,7 +20,7 @@ module.exports = (req, res) => {
             place,
             storyboard,
           })
-          .then((res) => {
+          .then((findPost) => {
             return res.status(200).json({ message: '게시물 수정이 완료되었습니다' });
           })
           .catch((err) => {

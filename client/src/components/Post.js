@@ -1,6 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const PostContainer = styled.div`
   margin-bottom: 5px;
@@ -64,8 +66,30 @@ const PostStoryboard = styled.div`
   padding: 10px;
   margin-left: 15px;
 `;
+const ButtonContainer = styled.button`
+  width: 55px;
+  height: 25px;
+  margin-top: 5px;
+  margin-left: 500px;
+  margin-bottom: -10px;
+  align-items: right;
+`;
+const DeleteBtn = styled.div`
+  font-size: 13px;
+`;
 
-const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+const Post = ({ key, id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
+  const DeleteBtnHandler = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, { id: id }, { withCredentials: true })
+      .then((res) => {
+        alert('포스트가 삭제되었습니다.');
+      })
+      .catch((err) => {
+        alert('잘못된 요청입니다.');
+      });
+  };
+
   return (
     <PostContainer>
       <MusicInfoContainer>
@@ -77,19 +101,15 @@ const Post = ({ key, getAddress, musicTitle, musicArtist, createdAt, url, storyB
         <PostPlaceIcon className="fas fa-map-marked-alt" />
         <PostCreatedPlace>{getAddress}</PostCreatedPlace>
         <PostCreatedAtIcon className="fas fa-calendar-day" />
-        <PostCreatedAt>{createdAt}</PostCreatedAt>
+        <PostCreatedAt>{createdAt.slice(0, 10)}</PostCreatedAt>
       </PostInfo>
       <PostContentContainer>
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${url}`}
-          playing
-          loop
-          controls
-          width={'180px'}
-          height={'100px'}
-        />
+        <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} loop controls width={'180px'} height={'100px'} />
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
+      <ButtonContainer onClick={DeleteBtnHandler}>
+        <DeleteBtn>삭제</DeleteBtn>
+      </ButtonContainer>
     </PostContainer>
   );
 };
