@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
+import Button from './Button'
 
 const PostContainer = styled.div`
   margin-bottom: 5px;
@@ -66,15 +67,43 @@ const PostStoryboard = styled.div`
   margin-left: 15px;
 `;
 const ButtonContainer = styled.button`
-width: 55px;
-height: 25px;
-margin-top: 5px;
-margin-left: 500px;
-margin-bottom: -10px;
-align-items: right;
+ height: 30px;
+  width: 70px;
+  border: solid 3px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: gray 4px 4px 4px;
+  cursor: pointer;
+  text-align-last: center;
+  min-width: 100px;
+  transition: 300ms ease all;
+  font-size: 25px;
+  margin-left: 380px;
+
+  &:hover {
+    box-shadow: gray 4px 4px 4px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    transition: ease all;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    width: 100%;
+    transition: ease all;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
 `;
 const DeleteBtn = styled.div`
-font-size: 13px;
+font-size: 15px;
 `;
 
 const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard }) => {
