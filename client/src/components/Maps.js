@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import { useNavigate } from 'react-router';
 import Post from './Post';
 import NewPostModal from './NewPostModal';
 
@@ -18,6 +19,8 @@ const Map = ({ accessToken }) => {
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
   const [post, setPost] = useState([]);
+
+  const navigate = useNavigate();
 
   const paramsAddress = {
     latlng: `${target.lat},${target.lng}`,
@@ -75,6 +78,7 @@ const Map = ({ accessToken }) => {
               target={target}
               getAddress={getAddress}
               openNewPostModalHandler={openNewPostModalHandler}
+              navigate={navigate}
             />
           </InfoWindow>
         ) : null}
@@ -107,6 +111,10 @@ const Map = ({ accessToken }) => {
                 createdAt={el.createdAt}
                 url={el.url}
                 storyBoard={el.storyBoard}
+                selected={selected}
+                setSelected={setSelected}
+                post={post}
+                navigate={navigate}
               />
             </InfoWindow>
           )}
