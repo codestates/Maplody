@@ -13,7 +13,7 @@ const MapContainer = styled.div`
   z-index: -100;
 `;
 
-const Map = ({ accessToken }) => {
+const Map = ({ accessToken, issueTokens }) => {
   const [target, setTarget] = useState({ lat: null, lng: null });
   const [selected, setSelected] = useState(null);
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
@@ -56,11 +56,15 @@ const Map = ({ accessToken }) => {
       })
       .then((res) => {
         setPost(res.data.data);
+      })
+      .catch((err) => {
+        issueTokens();
       });
   };
 
   useEffect(() => {
     getPostHandler();
+    markerAddressHandler();
   }, [isOpenNewPostModal]);
 
   return (
@@ -73,6 +77,7 @@ const Map = ({ accessToken }) => {
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
             <NewPostModal
+              issueTokens={issueTokens}
               post={post}
               setPost={setPost}
               target={target}
@@ -111,9 +116,8 @@ const Map = ({ accessToken }) => {
                 createdAt={el.createdAt}
                 url={el.url}
                 storyBoard={el.storyBoard}
-                selected={selected}
                 setSelected={setSelected}
-                post={post}
+                issueTokens={issueTokens}
                 navigate={navigate}
               />
             </InfoWindow>
@@ -126,10 +130,12 @@ const Map = ({ accessToken }) => {
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-const Maps = () => {
+const Maps = ({ accessToken, issueTokens }) => {
   return (
     <MapContainer>
       <WrappedMap
+        accessToken={accessToken}
+        issueTokens={issueTokens}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&
         libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
         loadingElement={<div style={{ height: '100%' }} />}

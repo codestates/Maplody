@@ -15,7 +15,7 @@ const slideIn = keyframes`
 `;
 
 const MyInfoFixModalContainer = styled.div`
-  height: 13.5rem;
+  height: 100vh;
 `;
 
 const MyInfoFixModalBackdrop = styled.div`
@@ -261,7 +261,7 @@ const WithdrawalBtn = styled.button`
   }
 `;
 
-const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccessToken, setIsLogin }) => {
+const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccessToken, setIsLogin, issueTokens }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
 
@@ -311,6 +311,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
         });
       })
       .catch((err) => {
+        issueTokens();
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -326,6 +327,10 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
     setWithdrawalOpen(!withdrawalOpen);
   };
 
+  const enterKey = (e) => {
+    if (isValid && e.key === 'Enter') return MyinfoFixHandler();
+  };
+
   return (
     <MyInfoFixModalContainer>
       <MyInfoFixModalBackdrop>
@@ -338,6 +343,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
                 닉네임
                 <NicknameInput
                   name="nickname"
+                  onKeyPress={enterKey}
                   placeholder={'Nickname'}
                   {...register('nickname', {
                     required: true,
@@ -368,6 +374,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
                 비밀번호
                 <PwInput
                   name="password"
+                  onKeyPress={enterKey}
                   placeholder={'Password'}
                   {...register('password', {
                     pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
@@ -391,6 +398,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
                 비밀번호 확인
                 <PwCheckInput
                   name="verifyPassword"
+                  onKeyPress={enterKey}
                   placeholder={'Verify Password'}
                   {...register('verifyPassword', { required: true })}
                   onInvalid={(e) => {
@@ -404,7 +412,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
               {!passwordCheck ? (
                 <Validation_Check>비밀번호가 일치하지 않습니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
+                <Validation_Check />
               )}
               {!isValid || !passwordCheck ? (
                 <MyInfoFixSubmitBtn disabled={true} onClick={MyinfoFixHandler}>
@@ -418,6 +426,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
               <WithdrawalBtn onClick={withdrawalModalHandler}>회원탈퇴</WithdrawalBtn>
               {withdrawalOpen ? (
                 <WithdrawalModal
+                  issueTokens={issueTokens}
                   accessToken={accessToken}
                   setIsLogin={setIsLogin}
                   withdrawalModalHandler={withdrawalModalHandler}

@@ -15,7 +15,10 @@ const slideIn = keyframes`
     }
 `;
 
-const MenuContainer = styled.div``;
+const MenuContainer = styled.div`
+  position: absolute;
+  height: 100vh;
+`;
 
 const MyProfile = styled.img`
   width: 90px;
@@ -59,11 +62,24 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 20px 0 0 20px;
-  height: 100%;
+  height: 100vh;
   width: 400px;
   margin-right: 0;
   margin-left: auto;
   background-color: white;
+`;
+
+const CloseBtn = styled.span`
+  border-radius: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  margin-right: 180px;
+  position: absolute;
+  transition: 300ms ease all;
+
+  &:hover {
+    color: #dd4a68;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -109,7 +125,7 @@ const UserCreatedAt = styled.div`
 `;
 
 const CreatedPostContainer = styled.div`
-  height: 650px;
+  height: 73vh;
   width: 350px;
   box-shadow: 4px 4px 4px 4px gray;
   border-radius: 15px;
@@ -196,6 +212,7 @@ const UserInfoButtonContainer = styled.div`
   justify-content: space-between;
   width: 335px;
   margin-top: 15px;
+  margin-bottom: 5px;
 `;
 
 const UserInfoButton = styled.button`
@@ -233,7 +250,7 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
+const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin, issueTokens }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
@@ -249,7 +266,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       .then((res) => {
         setUserInfo(res.data.userinfo);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => issueTokens());
   };
 
   useEffect(() => {
@@ -304,6 +321,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
             <UserInfo>
               <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
               <AboutUser>
+                <CloseBtn className="fas fa-times" onClick={openModalHandler} />
                 <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
                 <UserId>{userInfo.userInfo.userId}</UserId>
                 <UserPostCountContainer>
@@ -352,6 +370,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   userInfo={userInfo}
                   setAccessToken={setAccessToken}
                   setIsLogin={setIsLogin}
+                  issueTokens={issueTokens}
                 />
               ) : null}
             </UserInfoButtonContainer>

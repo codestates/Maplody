@@ -28,12 +28,12 @@ const Main = ({ accessToken, setAccessToken, setIsLogin, issueTokens }) => {
       <MypageSidebar
         accessToken={accessToken}
         setAccessToken={setAccessToken}
-        setIsLogin={setIsLogin}
         issueTokens={issueTokens}
+        setIsLogin={setIsLogin}
       />
       <Logo src={require('../img/Maplody_Logo.png').default} />
       <MapContainer>
-        <Maps accessToken={accessToken} />
+        <Maps accessToken={accessToken} issueTokens={issueTokens} />
       </MapContainer>
     </MainContainer>
   );

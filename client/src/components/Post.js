@@ -106,7 +106,18 @@ const DeleteBtn = styled.button`
   }
 `;
 
-const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBoard, setSelected, navigate }) => {
+const Post = ({
+  id,
+  getAddress,
+  musicTitle,
+  musicArtist,
+  createdAt,
+  url,
+  storyBoard,
+  setSelected,
+  navigate,
+  issueTokens,
+}) => {
   const Swal = require('sweetalert2');
 
   const DeleteBtnHandler = () => {
@@ -125,14 +136,7 @@ const Post = ({ id, getAddress, musicTitle, musicArtist, createdAt, url, storyBo
         navigate('/');
       })
       .catch((err) => {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '잘 못 된 요청입니다',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#FF6E01',
-          timer: 2000,
-        });
+        issueTokens();
       });
   };
 

@@ -15,30 +15,26 @@ require('dotenv').config();
 axios.defaults.withCredentials = true;
 
 const LandingContainer = styled.div`
-  width: 100vw;
   height: 100vh;
-  min-width: fit-content;
-  min-height: fit-content;
-  background: url(${img}) 25%;
+  background-image: url(${img});
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const AboutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 620px;
+  width: fit-content;
+  margin-left: 15px;
+  height: 80%;
 `;
 
 const Logo = styled.img`
-  height: 450px;
-  width: fit-content;
-  margin-left: 30px;
+  height: 40%;
 `;
 
 const About = styled.div`
-  padding: 20px 0 0 35px;
-  border: none;
-  margin-bottom: 45px;
+  font-size: 1.2rem;
+  text-align: center;
+  word-break: keep-all;
 `;
 
 const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
@@ -67,7 +63,7 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
               <br />
               <p>누구나 한 순간 기억하고 싶은 때가 있습니다.</p>
               <p>그 순간을 함께한 소중한 인연과</p>
-              <p>그때 들려오던 음악을 저장하고 추억을 언제나 꺼내 보세요.</p>
+              <p>그때 들려오던 음악을 저장하고 추억을 언제나 꺼내보세요.</p>
               <br />
               <p>언젠가 그때 그 노래가 들려오면...</p>
               <p>다시 그곳에 방문하면...</p>
@@ -75,8 +71,8 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
               <p>당신을 다시 그곳으로 돌려 놓을</p>
               <br />
               <p>"Maplody 하세요"</p>
+              <Button text="시작하기" onClick={openModalHandler} />
             </About>
-            <Button text="시작하기" onClick={openModalHandler} />
             {loginOpen ? (
               <LoginModal
                 accessToken={accessToken}

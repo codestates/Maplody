@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
@@ -164,7 +164,7 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken, navigate }) => {
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken, navigate, issueTokens }) => {
   const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
@@ -226,14 +226,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken
         navigate('/');
       })
       .catch((err) => {
-        Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          title: '잘 못 된 요청입니다.',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#FF6E01',
-          timer: 2000,
-        });
+        issueTokens();
       });
   };
 
