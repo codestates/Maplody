@@ -227,14 +227,6 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken
       })
       .catch((err) => {
         issueTokens();
-        Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          title: '잘 못 된 요청입니다.',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#FF6E01',
-          timer: 2000,
-        });
       });
   };
 

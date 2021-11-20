@@ -4,6 +4,9 @@ const auth = require('../Users/auth');
 module.exports = {
   getAll: async (req, res) => {
     const userInfo = await auth(req);
+    if (!userInfo) {
+      return res.status(401).json({ message: '로그인이 필요합니다' });
+    }
     if (userInfo.userId === 'admin') {
       Post.findAll({})
         .then((postList) => {
