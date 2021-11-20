@@ -226,6 +226,10 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
     setSignupOpen(!signupOpen);
   };
 
+  const enterKey = (e) => {
+    if (e.key === 'Enter') return loginBtnHandler();
+  };
+
   return (
     <LoginModalContainer>
       <LoginModalBackdrop onClick={openModalHandler}>
@@ -235,11 +239,11 @@ const LoginModal = ({ setAccessToken, openModalHandler, setIsLogin, setUserInfo 
             <Title>Login</Title>
             <IdText>
               아이디
-              <IdInput onChange={handleChange} />
+              <IdInput onChange={handleChange} onKeyPress={enterKey} />
             </IdText>
             <PwText>
               비밀번호
-              <PwInput onChange={handleChange} />
+              <PwInput onChange={handleChange} onKeyPress={enterKey} />
             </PwText>
             <LoginBtnContainer>
               <LoginBtn onClick={loginBtnHandler}>로그인</LoginBtn>

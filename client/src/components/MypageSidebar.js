@@ -15,7 +15,10 @@ const slideIn = keyframes`
     }
 `;
 
-const MenuContainer = styled.div``;
+const MenuContainer = styled.div`
+  position: absolute;
+  height: 100vh;
+`;
 
 const MyProfile = styled.img`
   width: 90px;
@@ -59,11 +62,24 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 20px 0 0 20px;
-  height: 100%;
+  height: 100vh;
   width: 400px;
   margin-right: 0;
   margin-left: auto;
   background-color: white;
+`;
+
+const CloseBtn = styled.span`
+  border-radius: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  margin-right: 180px;
+  position: absolute;
+  transition: 300ms ease all;
+
+  &:hover {
+    color: #dd4a68;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -304,6 +320,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
             <UserInfo>
               <MyProfile onClick={openModalHandler} src={require('../img/user.png').default} />
               <AboutUser>
+                <CloseBtn className="fas fa-times" onClick={openModalHandler} />
                 <UserNickName>{userInfo.userInfo.nickname}</UserNickName>
                 <UserId>{userInfo.userInfo.userId}</UserId>
                 <UserPostCountContainer>

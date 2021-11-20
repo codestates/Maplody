@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const SignupModalContainer = styled.div`
-  height: 13.5rem;
+  height: fit-content;
 `;
 
 const SignupModalBackdrop = styled.div`
@@ -23,7 +23,7 @@ const SignupModalWindow = styled.div`
   border-radius: 15px;
   background-color: white;
   width: 450px;
-  height: 800px;
+  height: fit-content;
 `;
 
 const CloseBtn = styled.div`
@@ -49,49 +49,8 @@ const Title = styled.div`
 const SignupInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 70px;
+  margin-top: 40px;
   padding: 0 0 25px 35px;
-`;
-
-const NicknameText = styled.div`
-  font-size: 25px;
-`;
-
-const NicknameInput = styled.input.attrs({ type: 'text' })`
-  font-size: 17px;
-  width: 250px;
-  height: 40px;
-  border: solid 3px;
-  border-radius: 5px;
-  margin-left: 42px;
-  padding: 10px;
-  transition: 100ms ease all;
-
-  &:focus {
-    outline: 3px solid #ff0066;
-    border: hidden;
-  }
-`;
-
-const EmailText = styled.div`
-  font-size: 25px;
-  padding: 10px 0 2px;
-`;
-
-const EmailInput = styled.input.attrs({ type: 'text' })`
-  font-size: 17px;
-  width: 250px;
-  height: 40px;
-  border: solid 3px;
-  border-radius: 5px;
-  margin-left: 42px;
-  padding: 10px;
-  transition: 100ms ease all;
-
-  &:focus {
-    outline: 3px solid #ff0066;
-    border: hidden;
-  }
 `;
 
 const IdText = styled.div`
@@ -125,13 +84,7 @@ const Validation_Check = styled.div`
   font-size: 17px;
   width: fit-content;
   margin: 10px 0 15px 0;
-`;
-
-const Validation_Check_Green = styled.div`
-  color: green;
-  font-size: 17px;
-  width: fit-content;
-  margin: 10px 0 15px 0;
+  transition: 200ms ease all;
 `;
 
 const PwInput = styled.input.attrs({ type: 'password' })`
@@ -171,6 +124,48 @@ const PwCheckInput = styled.input.attrs({ type: 'password' })`
   }
 `;
 
+const NicknameText = styled.div`
+  font-size: 25px;
+  padding: 10px 0 2px;
+`;
+
+const NicknameInput = styled.input.attrs({ type: 'text' })`
+  font-size: 17px;
+  width: 250px;
+  height: 40px;
+  border: solid 3px;
+  border-radius: 5px;
+  margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: 3px solid #ff0066;
+    border: hidden;
+  }
+`;
+
+const EmailText = styled.div`
+  font-size: 25px;
+  padding: 10px 0 2px;
+`;
+
+const EmailInput = styled.input.attrs({ type: 'text' })`
+  font-size: 17px;
+  width: 250px;
+  height: 40px;
+  border: solid 3px;
+  border-radius: 5px;
+  margin-left: 42px;
+  padding: 10px;
+  transition: 100ms ease all;
+
+  &:focus {
+    outline: 3px solid #ff0066;
+    border: hidden;
+  }
+`;
+
 const SignupSubmitBtn = styled.button`
   align-items: center;
   height: 45px;
@@ -182,7 +177,7 @@ const SignupSubmitBtn = styled.button`
   text-align-last: center;
   min-width: 200px;
   transition: 300ms ease all;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-right: 35px;
   padding-top: 2px;
   font-size: 25px;
@@ -220,7 +215,7 @@ const SignupModal = ({ openSignupHandler }) => {
     register,
     formState: { errors, isValid },
     watch,
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ mode: 'onBlur' });
 
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
@@ -267,6 +262,66 @@ const SignupModal = ({ openSignupHandler }) => {
           <IdPasswordContainer>
             <Title>회원가입</Title>
             <SignupInputContainer>
+              <IdText>
+                아이디
+                <IdInput
+                  name="userId"
+                  placeholder={'ID'}
+                  {...register('userId', {
+                    pattern: /^[a-z0-9_-]{4,20}$/,
+                    maxLength: 20,
+                    minLength: 4,
+                    required: true,
+                  })}
+                />
+              </IdText>
+              {errors.userId ? (
+                <Validation_Check>아이디는 소문자, 숫자 4~20 글자여야 합니다.</Validation_Check>
+              ) : (
+                <Validation_Check />
+              )}
+              <PwText>
+                비밀번호
+                <PwInput
+                  name="password"
+                  placeholder={'Password'}
+                  {...register('password', {
+                    pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
+                    required: true,
+                    minLength: 8,
+                  })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwText>
+              {errors.password ? (
+                <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
+              ) : (
+                <Validation_Check />
+              )}
+              <PwCheckText>
+                비밀번호 확인
+                <PwCheckInput
+                  name="verifyPassword"
+                  placeholder={'Verify Password'}
+                  {...register('verifyPassword', { required: true })}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
+                  }}
+                  onInput={(e) => {
+                    e.target.setCustomValidity('');
+                  }}
+                />
+              </PwCheckText>
+              {!passwordCheck ? (
+                <Validation_Check>비밀번호가 일치하지 않습니다.</Validation_Check>
+              ) : (
+                <Validation_Check />
+              )}
               <NicknameText>
                 닉네임
                 <NicknameInput
@@ -304,67 +359,7 @@ const SignupModal = ({ openSignupHandler }) => {
               {errors.email ? (
                 <Validation_Check>올바른 이메일 형식이 아닙니다.</Validation_Check>
               ) : (
-                <Validation_Check_Green>사용가능한 이메일 입니다.</Validation_Check_Green>
-              )}
-              <IdText>
-                아이디
-                <IdInput
-                  name="userId"
-                  placeholder={'ID'}
-                  {...register('userId', {
-                    pattern: /^[a-z0-9_-]{4,20}$/,
-                    maxLength: 20,
-                    minLength: 4,
-                    required: true,
-                  })}
-                />
-              </IdText>
-              {errors.userId ? (
-                <Validation_Check>아이디는 소문자, 숫자 4~20 글자여야 합니다.</Validation_Check>
-              ) : (
-                <Validation_Check_Green>사용가능한 아이디 입니다.</Validation_Check_Green>
-              )}
-              <PwText>
-                비밀번호
-                <PwInput
-                  name="password"
-                  placeholder={'Password'}
-                  {...register('password', {
-                    pattern: /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/,
-                    required: true,
-                    minLength: 8,
-                  })}
-                  onInvalid={(e) => {
-                    e.target.setCustomValidity('비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.');
-                  }}
-                  onInput={(e) => {
-                    e.target.setCustomValidity('');
-                  }}
-                />
-              </PwText>
-              {errors.password ? (
-                <Validation_Check>비밀번호는 8글자 이상, 영문, 숫자 조합이어야 합니다.</Validation_Check>
-              ) : (
-                <Validation_Check_Green>사용가능한 비밀번호 입니다.</Validation_Check_Green>
-              )}
-              <PwCheckText>
-                비밀번호 확인
-                <PwCheckInput
-                  name="verifyPassword"
-                  placeholder={'Verify Password'}
-                  {...register('verifyPassword', { required: true })}
-                  onInvalid={(e) => {
-                    e.target.setCustomValidity('비밀번호가 일치하지 않습니다.');
-                  }}
-                  onInput={(e) => {
-                    e.target.setCustomValidity('');
-                  }}
-                />
-              </PwCheckText>
-              {!passwordCheck ? (
-                <Validation_Check>비밀번호가 일치하지 않습니다.</Validation_Check>
-              ) : (
-                <Validation_Check_Green>비밀번호가 일치합니다.</Validation_Check_Green>
+                <Validation_Check />
               )}
               {!isValid || !passwordCheck ? (
                 <SignupSubmitBtn disabled={true} onClick={SignupBtnHandler}>
