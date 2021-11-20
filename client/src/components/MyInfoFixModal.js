@@ -261,7 +261,7 @@ const WithdrawalBtn = styled.button`
   }
 `;
 
-const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccessToken, setIsLogin }) => {
+const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccessToken, setIsLogin, issueTokens }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
 
@@ -311,6 +311,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
         });
       })
       .catch((err) => {
+        issueTokens();
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -425,6 +426,7 @@ const MyInfoFixModal = ({ accessToken, userinfoModalHandler, userInfo, setAccess
               <WithdrawalBtn onClick={withdrawalModalHandler}>회원탈퇴</WithdrawalBtn>
               {withdrawalOpen ? (
                 <WithdrawalModal
+                  issueTokens={issueTokens}
                   accessToken={accessToken}
                   setIsLogin={setIsLogin}
                   withdrawalModalHandler={withdrawalModalHandler}

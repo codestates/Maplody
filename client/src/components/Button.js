@@ -2,18 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StratButton = styled.button`
-  height: 50px;
-  width: 300px;
+  height: 2.3rem;
+  width: 15rem;
   border: solid 3px;
   border-radius: 15px;
   background-color: white;
   box-shadow: #c85a4d 4px 4px 4px;
   cursor: pointer;
-  text-align-last: center;
-  min-width: 200px;
+  text-align: center;
   transition: 300ms ease all;
-  font-size: 25px;
-  margin-left: 140px;
+  font-size: 1.2rem;
+  margin-top: 30px;
 
   &:hover {
     box-shadow: #c85a4d 4px 4px 4px;

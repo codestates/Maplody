@@ -125,7 +125,7 @@ const UserCreatedAt = styled.div`
 `;
 
 const CreatedPostContainer = styled.div`
-  height: 650px;
+  height: 73vh;
   width: 350px;
   box-shadow: 4px 4px 4px 4px gray;
   border-radius: 15px;
@@ -212,6 +212,7 @@ const UserInfoButtonContainer = styled.div`
   justify-content: space-between;
   width: 335px;
   margin-top: 15px;
+  margin-bottom: 5px;
 `;
 
 const UserInfoButton = styled.button`
@@ -249,7 +250,7 @@ const UserInfoButton = styled.button`
   }
 `;
 
-const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
+const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin, issueTokens }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [userinfoOpen, setUserinfoOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({ userInfo: { nickname: '', userId: '', createdAt: '' }, postList: [] });
@@ -265,7 +266,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
       .then((res) => {
         setUserInfo(res.data.userinfo);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => issueTokens());
   };
 
   useEffect(() => {
@@ -369,6 +370,7 @@ const MypageSidebar = ({ accessToken, setAccessToken, setIsLogin }) => {
                   userInfo={userInfo}
                   setAccessToken={setAccessToken}
                   setIsLogin={setIsLogin}
+                  issueTokens={issueTokens}
                 />
               ) : null}
             </UserInfoButtonContainer>

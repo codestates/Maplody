@@ -215,7 +215,7 @@ const SignupModal = ({ openSignupHandler }) => {
     register,
     formState: { errors, isValid },
     watch,
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({ mode: 'onChange' });
 
   useEffect(() => {
     setPasswordCheck(watch('verifyPassword') === watch('password'));
@@ -278,7 +278,7 @@ const SignupModal = ({ openSignupHandler }) => {
               {errors.userId ? (
                 <Validation_Check>아이디는 소문자, 숫자 4~20 글자여야 합니다.</Validation_Check>
               ) : (
-                <Validation_Check />
+                <Validation_Check></Validation_Check>
               )}
               <PwText>
                 비밀번호

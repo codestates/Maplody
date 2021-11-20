@@ -178,7 +178,7 @@ const BackBtn = styled.button`
   }
 `;
 
-const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) => {
+const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin, issueTokens }) => {
   const [check, setCheck] = useState(false);
   const [inputCheck, setInputCheck] = useState('');
 
@@ -214,6 +214,7 @@ const WithdrawalModal = ({ accessToken, withdrawalModalHandler, setIsLogin }) =>
         navigate('/');
       })
       .catch((err) => {
+        issueTokens();
         Swal.fire({
           position: 'center',
           icon: 'warning',
