@@ -5,6 +5,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Hanna', fantasy;
+  src: url(//fonts.googleapis.com/earlyaccess/hanna.css) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .App {
   height: 100%;
 }
