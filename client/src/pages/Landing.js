@@ -32,19 +32,13 @@ const LandingTitleContainer = styled.div`
   background-image: url(${img});
   background-repeat: no-repeat;
   background-size: cover;
-  margin-top: 60px;
-  padding: 210px 0 0 30px;
+  margin-top: 65px;
+  padding: 350px 0 0 30px;
+  box-shadow: gray 15px 15px 15px;
 `;
 
 const About = styled.div`
   font-size: 20px;
-`;
-
-const Title = styled.h5`
-  letter-spacing: 20px;
-  color: white;
-  font-family: Hanna;
-  margin-top: 80px;
 `;
 
 const MainCatchphrase = styled.h1`
@@ -75,12 +69,26 @@ const Button = styled.button`
 const SubCatchphraseContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  width: 70%;
+  width: 55%;
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 35px;
 `;
 
-const SubCatchphrase = styled.div``;
+const SubCatchphrase = styled.div`
+  p {
+    font-family: Hanna;
+  }
+`;
+
+const Shape = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 65px;
+  height: 52vh;
+  z-index: -1;
+  opacity: 0.8;
+  background-color: #a0937d;
+`;
 
 const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -101,10 +109,10 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
         <Loading />
       ) : (
         <LandingContainer>
+          <Shape />
           <Logo src={require('../img/Maplody_Logo.png').default} />
           <LandingTitleContainer>
             <About>
-              <Title>Maplody</Title>
               <MainCatchphrase>기억하고 싶은 순간의 들리던 음악을 소중한 추억으로 간직하세요</MainCatchphrase>
             </About>
             <ButtonContainer>
