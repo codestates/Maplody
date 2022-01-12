@@ -19,7 +19,7 @@ const Map = ({ accessToken, issueTokens }) => {
   const [isOpenNewPostModal, setIsOpenNewPostModal] = useState(false);
   const [getAddress, setGetAddress] = useState(null);
   const [post, setPost] = useState([]);
-
+  const [markerVisible, setMarkerVisible] = useState(true);
   const navigate = useNavigate();
 
   const paramsAddress = {
@@ -27,7 +27,7 @@ const Map = ({ accessToken, issueTokens }) => {
   };
 
   const markerAddressHandler = () => {
-    if (paramsAddress.latlng === ',') return;
+    if (paramsAddress.latlng === ',' || target.lat === null) return;
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${paramsAddress.latlng}&language=ko&key=${process.env.REACT_APP_GEOCODING_KEY}`,
@@ -72,12 +72,16 @@ const Map = ({ accessToken, issueTokens }) => {
       defaultZoom={13}
       defaultCenter={{ lat: 37.51249519205713, lng: 126.99480974427608 }}
       options={{ disableDefaultUI: true }}
-      onClick={addMarkerHandler}>
-      <Marker onClick={openNewPostModalHandler} animation={2} position={target}>
+      onClick={(e) => {
+        addMarkerHandler(e);
+        setMarkerVisible(true);
+      }}>
+      <Marker onClick={openNewPostModalHandler} animation={2} position={target} visible={markerVisible}>
         {isOpenNewPostModal ? (
           <InfoWindow zIndex={998}>
             <NewPostModal
               issueTokens={issueTokens}
+              setMarkerVisible={setMarkerVisible}
               post={post}
               setPost={setPost}
               target={target}
