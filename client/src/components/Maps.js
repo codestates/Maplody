@@ -1,16 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
-import { useNavigate } from 'react-router';
 import Post from './Post';
 import NewPostModal from './NewPostModal';
 import Loading from '../pages/Loading';
+import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
+import '@reach/combobox/styles.css';
 
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '100vw',
   height: '100vh',
 };
+
+const ComboboxContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+
+  .input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+  }
+`;
 
 const options = {
   disableDefaultUI: true,
@@ -44,7 +63,6 @@ const Maps = ({ accessToken, issueTokens }) => {
       .then((res) => {
         setPosts(res.data.data);
         setIsDeleted(false);
-        console.log('res.data', res.data.data);
       })
       .catch((err) => {
         issueTokens();
@@ -68,9 +86,22 @@ const Maps = ({ accessToken, issueTokens }) => {
     return;
   };
 
+  const onMapClick = useCallback((e) => {
+    setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+    setMarkerVisible(true);
+  }, []);
+
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(15);
+  }, []);
   useEffect(() => {
     getPostHandler();
-    console.log('useEffect');
   }, [isOpenNewPostModal, isDeleted]);
 
   if (loadError) {
@@ -86,6 +117,7 @@ const Maps = ({ accessToken, issueTokens }) => {
 
   return (
     <div>
+      <Search panTo={panTo} />
       <GoogleMap
         accessToken={accessToken}
         issueTokens={issueTokens}
@@ -93,11 +125,8 @@ const Maps = ({ accessToken, issueTokens }) => {
         zoom={13}
         center={center}
         options={options}
-        onClick={(e) => {
-          setTarget({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-          markerAddressHandler();
-          setMarkerVisible(true);
-        }}>
+        onClick={onMapClick}
+        onLoad={onMapLoad}>
         <Marker
           onClick={() => {
             openNewPostModalHandler();
@@ -107,7 +136,11 @@ const Maps = ({ accessToken, issueTokens }) => {
           position={target}
           visible={markerVisible}>
           {isOpenNewPostModal ? (
-            <InfoWindow zIndex={998}>
+            <InfoWindow
+              zIndex={998}
+              onCloseClick={() => {
+                openNewPostModalHandler();
+              }}>
               <NewPostModal
                 issueTokens={issueTokens}
                 setMarkerVisible={setMarkerVisible}
@@ -131,7 +164,9 @@ const Maps = ({ accessToken, issueTokens }) => {
             onClick={() => {
               setSelected(el);
             }}
-            icon={{ url: require('../img/music-notes.png').default }}>
+            icon={{
+              url: require('../img/music-notes.png').default,
+            }}>
             {selected && selected.id === el.id && (
               <InfoWindow
                 key={el.id}
@@ -160,6 +195,54 @@ const Maps = ({ accessToken, issueTokens }) => {
         ))}
       </GoogleMap>
     </div>
+  );
+};
+
+const Search = ({ panTo }) => {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      location: { lat: () => 37.51249519205713, lng: () => 126.99480974427608 },
+      radius: 200 * 1000,
+    },
+  });
+
+  return (
+    <ComboboxContainer>
+      <Combobox
+        onSelect={async (address) => {
+          setValue(address, false);
+          clearSuggestions();
+          try {
+            const results = await getGeocode({ address: address });
+            const { lat, lng } = await getLatLng(results[0]);
+            panTo({ lat, lng });
+            setValue('');
+          } catch (err) {
+            console.log('error');
+          }
+        }}>
+        <ComboboxInput
+          className="input"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+          disabled={!ready}
+          placeholder={'주소를 입력하세요'}
+        />
+        <ComboboxPopover>
+          <ComboboxList>
+            {status === 'OK' && data.map(({ id, description }) => <ComboboxOption key={id} value={description} />)}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </ComboboxContainer>
   );
 };
 
