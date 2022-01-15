@@ -115,12 +115,12 @@ const Post = ({
   url,
   storyBoard,
   setSelected,
-  navigate,
   issueTokens,
+  setIsDeleted,
 }) => {
   const Swal = require('sweetalert2');
 
-  const DeleteBtnHandler = () => {
+  const deleteBtnHandler = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/post/${id}`, { id: id }, { withCredentials: true })
       .then((res) => {
@@ -132,8 +132,8 @@ const Post = ({
           confirmButtonColor: '#FF6E01',
           timer: 2000,
         });
+        setIsDeleted(true);
         setSelected(null);
-        navigate('/');
       })
       .catch((err) => {
         issueTokens();
@@ -158,7 +158,7 @@ const Post = ({
         <PostStoryboard>{storyBoard}</PostStoryboard>
       </PostContentContainer>
       <ButtonContainer>
-        <DeleteBtn onClick={DeleteBtnHandler}>삭제</DeleteBtn>
+        <DeleteBtn onClick={deleteBtnHandler}>삭제</DeleteBtn>
       </ButtonContainer>
     </PostContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
@@ -164,7 +164,7 @@ const RegisterButton = styled.button`
   }
 `;
 
-const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken, navigate, issueTokens }) => {
+const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken, issueTokens, setMarkerVisible }) => {
   const [musicArtist, setMusicArtist] = useState('');
   const [musicTitle, setMusicTitle] = useState('');
   const [storyBoard, setStoryBoard] = useState('');
@@ -223,7 +223,7 @@ const NewPostModal = ({ getAddress, openNewPostModalHandler, target, accessToken
           timer: 2000,
         });
         openNewPostModalHandler();
-        navigate('/');
+        setMarkerVisible(false);
       })
       .catch((err) => {
         issueTokens();

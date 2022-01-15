@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/combobox": "^0.16.5",
+    "@react-google-maps/api": "^2.7.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -10,13 +12,13 @@
     "dotenv": "^10.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-google-maps": "^9.4.5",
     "react-hook-form": "^7.19.5",
     "react-player": "^2.9.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.1.10",
+    "use-places-autocomplete": "^1.11.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
