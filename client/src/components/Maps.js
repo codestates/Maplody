@@ -98,7 +98,7 @@ const Maps = ({ accessToken, issueTokens }) => {
 
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(15);
+    mapRef.current.setZoom(20);
   }, []);
 
   useEffect(() => {
