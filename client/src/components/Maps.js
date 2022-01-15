@@ -100,6 +100,7 @@ const Maps = ({ accessToken, issueTokens }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
   }, []);
+
   useEffect(() => {
     getPostHandler();
   }, [isOpenNewPostModal, isDeleted]);
