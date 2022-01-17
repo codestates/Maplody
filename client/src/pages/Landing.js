@@ -105,6 +105,7 @@ const Landing = ({ accessToken, setAccessToken, setIsLogin, setUserInfo }) => {
 
   return (
     <>
+      <Loading />
       {isLoading ? (
         <Loading />
       ) : (
