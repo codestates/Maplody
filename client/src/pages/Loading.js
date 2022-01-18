@@ -13,7 +13,20 @@ const LoadingLogoContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-height: 100vh;
+  background-color: white;
+  border-radius: 15px;
+`;
+
+const LoadingBackdrop = styled.div`
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
 `;
 
 const animation = keyframes`
@@ -25,23 +38,30 @@ const animation = keyframes`
 const LogoBorder = styled.div`
   border: 10px solid;
   border-radius: 15px;
-  box-shadow: 15px 15px 15px 15px gray;
 `;
 
 const Logo = styled.img`
-  height: 60vh;
+  height: 23vh;
   transition: all ease 1s;
   animation: ${animation} 4s linear infinite;
+`;
+
+const LoadingText = styled.div`
+  position: absolute;
+  top: 59vh;
 `;
 
 const Loading = () => {
   return (
     <LoadingPageContainer>
-      <LoadingLogoContainer>
-        <LogoBorder>
-          <Logo src={require('../img/Maplody_Logo.png').default} />
-        </LogoBorder>
-      </LoadingLogoContainer>
+      <LoadingBackdrop>
+        <LoadingLogoContainer>
+          <LogoBorder>
+            <Logo src={require('../img/Maplody_Logo.png').default} />
+          </LogoBorder>
+          <LoadingText>Loading...</LoadingText>
+        </LoadingLogoContainer>
+      </LoadingBackdrop>
     </LoadingPageContainer>
   );
 };
