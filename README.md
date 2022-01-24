@@ -65,8 +65,7 @@
 
 ### 랜딩페이지
 
-<br/>
-<img width="800" alt="랜딩페이지 배포" src="https://user-images.githubusercontent.com/83822798/142554851-47a5d8fb-e032-4eef-9ebe-b6dcc02709c5.png">
+![스크린샷 2022-01-24 오후 4 39 25](https://user-images.githubusercontent.com/83294139/150741062-ecafbb7b-557f-47d0-9f80-ecd9a66a4924.png)
 
 ### 회원가입
 
